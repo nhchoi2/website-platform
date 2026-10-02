@@ -41,7 +41,9 @@ export default function Pricing() {
         <section className="m-plan">
           <p className="m-kicker">02 / ONGOING CARE</p>
           <h2>운영·관리</h2>
-          <p className="m-plan-description">공개 이후에도 가게의 소식을 편하게 관리합니다.</p>
+          <p className="m-plan-description">
+            기본 호스팅·이미지 보관 비용이 포함되어 별도 호스팅비를 더하지 않습니다.
+          </p>
           <p className="m-plan-price">
             {formatWon(pricing.monthly)}
             <span>부터 / 월</span>

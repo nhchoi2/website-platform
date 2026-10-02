@@ -5,7 +5,7 @@ import { marketingMetadata } from '@/lib/server/marketing';
 
 export const metadata = marketingMetadata(
   '웹사이트 제작 사례',
-  'DKEVINZ Tax Lab, 용스 다이닝, Oren Gym과 인트라넷 콘셉트. 쿠피랩의 실제 웹사이트 제작 사례와 서비스 디자인을 살펴보세요.',
+  "THE KEVIN'S TAX LAB, 용스 다이닝, Oren Gym과 인트라넷 콘셉트. 쿠피랩의 웹사이트 제작 사례와 서비스 디자인을 살펴보세요.",
   '/projects',
 );
 export default function Projects() {
@@ -38,6 +38,7 @@ export default function Projects() {
               <p className="m-kicker">{project.category}</p>
               <h2>{project.name}</h2>
               <p>{project.description}</p>
+              {'statusNote' in project && <p>{project.statusNote}</p>}
               <a
                 className="m-text-link"
                 href={project.href}

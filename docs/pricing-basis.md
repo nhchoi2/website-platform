@@ -30,7 +30,7 @@
 
 | 이름            | 원본 구분 | 원본 상세 페이지         | 원본 이미지 경로                 |
 | --------------- | --------- | ------------------------ | -------------------------------- |
-| DKEVINZ Tax Lab | 제작 사례 | `/products/tax-lab`      | `/products/thekevins-taxlab.png` |
+| THE KEVIN'S TAX LAB | 제작 사례 | `/products/tax-lab`      | `/products/thekevins-taxlab.png` |
 | Yong's Dining   | 제작 사례 | `/products/yongs-dining` | `/products/yongs-dining.png`     |
 | Oren Gym        | 제작 사례 | `/products/oren-gym`     | `/products/orengym.png`          |
 | Intranet System | 콘셉트    | `/products/intranet`     | `/products/intranet.png`         |
@@ -38,3 +38,7 @@
 실제로 원본 페이지에 표시된 640px WebP 이미지를 `public/marketing/projects/`에 보관했습니다. 외부 이미지 핫링크나 자동 스크래핑에 의존하지 않습니다. 원본을 새 디자인으로 재현하거나 용스 템플릿을 추가한 것이 아닙니다. 용스의 실제 템플릿 구현은 원본 프로젝트 확인 후 별도로 진행합니다.
 
 카탈로그 데이터는 `components/marketing/content.ts`, 화면은 `app/(marketing)/projects/page.tsx`에 있습니다. 운영 사례와 콘셉트를 구분하고, 고객 수·매출·성과·후기를 추가로 만들어 넣지 않았습니다. 이 페이지의 사례는 직접 만들기에서 선택할 수 있는 템플릿 목록이 아닙니다.
+
+운영자 정정 반영: 택스랩의 화면 제목·대체 텍스트·메타 설명은 공식 홈페이지의 `THE KEVIN'S TAX LAB` 표기로 수정했습니다. 기존 썸네일 이미지 자체는 원본을 유지합니다. 오렌짐은 운영자가 웹사이트 운영을 종료했다고 알려 주어 ‘과거 제작 사례’와 운영 종료 안내를 표시했습니다. 링크는 실제 운영 사이트가 아닌 쿠피랩의 제작 사례 설명 페이지입니다.
+
+기본 호스팅은 월 관리비에 포함합니다. 운영자가 지불하는 Vercel·DB·저장소·메일 비용은 서비스 원가이며 없어지는 비용이 아닙니다. 추가 사용량은 기존 안내대로 사전 협의합니다.
