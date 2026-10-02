@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SiteShell, StartCTA, contactUrl } from './SiteShell';
 import { TemplateVisual } from './TemplateCard';
+import { pricing, formatWon } from './content';
 export function HomePage() {
   return (
     <SiteShell>
@@ -132,37 +133,6 @@ export function HomePage() {
             <TemplateVisual />
           </div>
         </section>
-        <section className="m-container m-section" id="projects">
-          <div className="m-section-heading">
-            <div>
-              <p className="m-kicker">FROM KOOFY LAB</p>
-              <h2>쿠피가 만들어 온 웹사이트.</h2>
-            </div>
-            <p>
-              쿠피의 기존 웹사이트 제작 사례를 살펴보세요.
-              <br />
-              사례마다 제작 범위와 디자인은 다릅니다.
-            </p>
-          </div>
-          <a
-            className="m-project-link"
-            href="https://www.koofy.co.kr/products#projects"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="m-project-type">
-              KOOFY
-              <br />
-              <span>SELECTED WORKS</span>
-            </div>
-            <div>
-              <h3>브랜드를 담는 다양한 방식</h3>
-              <p>쿠피 공식 사이트에서 실제 프로젝트와 제작 사례를 확인하세요.</p>
-              <small>기존 제작 사례는 이 서비스에서 선택하는 템플릿과 구분됩니다.</small>
-            </div>
-            <span className="m-project-arrow">↗</span>
-          </a>
-        </section>
         <section className="m-container m-section m-process-section">
           <div className="m-section-heading">
             <div>
@@ -192,7 +162,10 @@ export function HomePage() {
           <div>
             <p className="m-kicker">CLEAR FROM THE START</p>
             <h2>필요한 범위부터 함께 정합니다.</h2>
-            <p>제작과 관리 범위, 도메인 비용을 구분해 상담 후 안내합니다.</p>
+            <p>
+              기본 제작 {formatWon(pricing.setup)}부터 · 운영·관리 월 {formatWon(pricing.monthly)}
+              부터.
+            </p>
           </div>
           <Link className="m-button m-outline" href="/pricing">
             비용과 포함 범위 보기 ↗

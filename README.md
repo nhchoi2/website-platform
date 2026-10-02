@@ -164,10 +164,11 @@ Supabase DB/Storage/전송량·백업, SMTP 발송 서비스, Vercel의 상업�
 
 - 회사 홈페이지: `https://www.koofy.co.kr/` (별도 기존 프로젝트)
 - 이 서비스의 대표 주소: `https://sites.koofy.co.kr/`
-- `/`: 로그인 없이 볼 수 있는 서비스 소개, 사례 연결, 시작 버튼
+- `/`: 로그인 없이 볼 수 있는 서비스 소개와 시작 버튼
 - `/templates`: 현재 제공하는 혜화 템플릿 1종 안내
 - `/templates/hyehwa`: 실제 Restaurant 컴포넌트로 렌더링한 공개 샘플. `?theme=olive|charcoal|warm` 지원
-- `/pricing`: 상담 후 안내하는 비용과 제공 범위 (확정 요금 없음)
+- `/projects`: 쿠피랩의 실제 썸네일·설명을 옮긴 제작 사례 3개와 콘셉트 1개
+- `/pricing`: 기본 제작 390,000원부터 / 운영·관리 월 33,000원부터의 요금 초안과 제공 범위 (부가세 포함, 최종 견적 상담)
 - `/guide`: 제작 절차, 자료 준비, FAQ
 - `/account`: 서버가 인증·운영자 권한을 확인해 `/admin` 또는 `/dashboard`로 이동
 - `/login`: 가입·로그인·복구. 로그인된 계정은 자신의 관리 화면으로 이동하며 복구/비밀번호 재설정 경로는 유지
@@ -198,7 +199,7 @@ Supabase SMTP 발신 이름은 `쿠피 · 소상공인 웹사이트 제작`, 발
 
 ### 검색 노출과 회사 홈페이지 연결
 
-공개 페이지 5개만 사이트맵에 포함합니다. 고객·운영자·미리보기·인증·API 경로는 noindex이며 Preview 배포 전체도 noindex입니다. 공개 샘플과 고객의 비공개 초안 미리보기는 다른 경로입니다. 색상별 샘플 URL은 하나의 canonical 주소로 모읍니다.
+공개 페이지 6개만 사이트맵에 포함합니다. 고객·운영자·미리보기·인증·API 경로는 noindex이며 Preview 배포 전체도 noindex입니다. 공개 샘플과 고객의 비공개 초안 미리보기는 다른 경로입니다. 색상별 샘플 URL은 하나의 canonical 주소로 모읍니다.
 
 새 코드가 대표 도메인에 배포된 후 Google Search Console과 네이버 서치어드바이저에 대표 주소 소유 확인 및 `https://sites.koofy.co.kr/sitemap.xml` 제출을 진행합니다. 아직 검색 도구 등록이나 실제 색인 완료를 의미하지 않으며 검색 순위는 보장하지 않습니다.
 
@@ -216,3 +217,5 @@ node --import tsx scripts/marketing-acceptance.ts
 ```
 
 이 스크립트는 별도 임시 PGlite DB와 `127.0.0.1:3011` 서버에서 실제 로컬 로그인, 고객/운영자 이동, 고객의 운영자 접근 차단, 고객 도메인 분리, 공개 페이지·샘플 색상·SEO를 검증한 뒤 서버와 DB를 정리합니다. 운영 Supabase 계정이나 권한을 수정하지 않습니다. 실제 운영 인증은 새 배포에서 별도로 검증합니다.
+
+제작 사례·가격 데이터는 `components/marketing/content.ts`에서 수정합니다. 공개 가격 비교와 산정 이유, 원본 사례 이미지 출처는 [요금·사례 근거](docs/pricing-basis.md)에 기록합니다.

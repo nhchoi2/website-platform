@@ -109,14 +109,17 @@ try {
     await new Promise((r) => setTimeout(r, 250));
   }
   assert.ok(ready, logs);
-  for (const path of ['/', '/templates', '/templates/hyehwa', '/pricing', '/guide']) {
+  for (const path of ['/', '/templates', '/templates/hyehwa', '/projects', '/pricing', '/guide']) {
     const res = await get(path);
     assert.equal(res.status, 200, path);
     assert.match(res.body, /rel="canonical"/);
     assert.doesNotMatch(res.body, /name="robots" content="noindex/);
     assert.equal(res.headers['x-robots-tag'], undefined);
   }
-  assert.match((await get('/pricing')).body, /상담 후 안내/);
+  assert.match((await get('/pricing')).body, /390,000원/);
+  assert.match((await get('/pricing')).body, /33,000원/);
+  assert.match((await get('/projects')).body, /Intranet System/);
+  assert.equal((await get('/marketing/projects/yongs-dining.webp')).status, 200);
   assert.match((await get('/templates/hyehwa?theme=warm')).body, /#653c2c/);
   assert.equal((await get('/marketing/hyehwa-food.jpeg')).status, 200);
   for (const path of ['/account', '/dashboard', '/admin']) {

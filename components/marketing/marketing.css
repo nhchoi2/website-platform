@@ -430,46 +430,6 @@
   font-size: 11px;
   color: #737769;
 }
-.m-project-link {
-  display: grid;
-  grid-template-columns: 225px 1fr 45px;
-  gap: 38px;
-  padding: 28px;
-  border: 1px solid #d9dcd2;
-  align-items: center;
-  transition: background 0.2s;
-}
-.m-project-link:hover {
-  background: #eeefe9;
-}
-.m-project-type {
-  background: #272e29;
-  color: #e9ebde;
-  padding: 36px;
-  font-size: 30px;
-  font-weight: 750;
-  letter-spacing: -1px;
-  line-height: 1.6;
-}
-.m-project-type span {
-  font-size: 10px;
-  letter-spacing: 1px;
-  font-weight: 400;
-}
-.m-project-link h3 {
-  font-size: 24px;
-}
-.m-project-link p {
-  font-size: 14px;
-  color: var(--m-muted);
-}
-.m-project-link small {
-  font-size: 11px;
-  color: #75796e;
-}
-.m-project-arrow {
-  font-size: 28px;
-}
 .m-process-section {
   border-top: 1px solid #dedfd7;
 }
@@ -653,36 +613,6 @@
   left: 0;
   color: var(--m-blue);
 }
-.m-pricing-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 65px;
-}
-.m-price-card {
-  padding: 45px;
-  background: #eaece3;
-}
-.m-price-card h2 {
-  font-size: 27px;
-}
-.m-price-card .m-price {
-  font-size: 39px;
-  font-weight: 600;
-  letter-spacing: -2px;
-  margin-block: 35px 20px;
-}
-.m-price-card > p:not(.m-price, .m-kicker) {
-  font-size: 14px;
-  color: var(--m-muted);
-  line-height: 1.9;
-  margin-bottom: 28px;
-}
-.m-scope {
-  padding-top: 30px;
-}
-.m-scope h2 {
-  font-size: 26px;
-}
 .m-info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -840,13 +770,6 @@
   .m-template-grid {
     gap: 45px;
   }
-  .m-project-link {
-    grid-template-columns: 180px 1fr 25px;
-    gap: 25px;
-  }
-  .m-project-type {
-    padding: 25px;
-  }
 }
 @media (max-width: 760px) {
   .m-container {
@@ -1002,23 +925,6 @@
     grid-template-columns: 1fr;
     gap: 35px;
   }
-  .m-project-link {
-    grid-template-columns: 1fr 25px;
-    padding: 22px;
-    gap: 23px;
-  }
-  .m-project-type {
-    grid-column: 1/-1;
-    padding: 35px;
-    font-size: 34px;
-  }
-  .m-project-link h3 {
-    font-size: 21px;
-    margin-bottom: 12px;
-  }
-  .m-project-link p {
-    font-size: 13px;
-  }
   .m-steps {
     grid-template-columns: 1fr 1fr;
     gap: 25px;
@@ -1077,28 +983,12 @@
     font-size: 14px;
   }
   .m-template-list,
-  .m-pricing-grid,
   .m-info-grid {
     grid-template-columns: 1fr;
     gap: 35px;
   }
   .m-template-list {
     margin-bottom: 55px;
-  }
-  .m-price-card {
-    padding: 30px;
-  }
-  .m-price-card h2 {
-    font-size: 24px;
-  }
-  .m-price-card .m-price {
-    font-size: 34px;
-  }
-  .m-scope {
-    padding-top: 0;
-  }
-  .m-scope h2 {
-    font-size: 25px;
   }
   .m-guide-steps section {
     gap: 22px;
@@ -1132,5 +1022,223 @@
   }
   .marketing * {
     transition: none;
+  }
+}
+
+.m-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 55px 36px;
+}
+.m-case-image {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e8e9e3;
+}
+.m-case-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 640 / 427;
+  display: block;
+  object-fit: contain;
+}
+.m-case-image > span {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 1px solid #dadcd5;
+  border-radius: 50%;
+  font-size: 22px;
+}
+.m-case-image:hover > span {
+  color: var(--m-blue);
+}
+.m-case-caption {
+  padding-top: 25px;
+}
+.m-case-caption .m-kicker {
+  margin-bottom: 11px;
+  color: var(--m-muted);
+  font-size: 11px;
+}
+.marketing .m-case h2 {
+  font-size: 27px;
+  letter-spacing: -0.7px;
+  margin-bottom: 14px;
+}
+.m-case-caption > p:not(.m-kicker) {
+  color: var(--m-muted);
+  font-size: 14px;
+  line-height: 1.9;
+  margin-bottom: 19px;
+  max-width: 510px;
+}
+.m-projects-note {
+  border-top: 1px solid #d7dbcf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 30px;
+  margin-block: 55px 65px;
+}
+.m-projects-note p {
+  max-width: 750px;
+  font-size: 13px;
+  color: var(--m-muted);
+  margin: 0;
+}
+.m-projects-note a {
+  flex-shrink: 0;
+}
+.m-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.m-price-disclosure {
+  font-size: 12px;
+  color: var(--m-muted);
+  margin-bottom: 22px;
+}
+.m-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+.m-plan {
+  padding: 38px;
+  border: 1px solid #d6dbd0;
+  background: #f3f4ee;
+}
+.m-plan-setup {
+  background: #eaece3;
+}
+.marketing .m-plan h2 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+.m-plan .m-kicker {
+  color: var(--m-muted);
+}
+.m-plan-description {
+  color: var(--m-muted);
+  font-size: 14px;
+}
+.m-plan-price {
+  font-size: 44px;
+  font-weight: 650;
+  letter-spacing: -2px;
+  margin-block: 34px 20px;
+  line-height: 1.4;
+}
+.m-plan-price > span {
+  display: block;
+  font-size: 13px;
+  color: var(--m-muted);
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-top: 7px;
+}
+.m-plan .m-checklist {
+  margin-bottom: 30px;
+}
+.m-plan .m-button {
+  width: 100%;
+}
+.m-year-budget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  border-bottom: 1px solid #d6dbd0;
+  padding: 38px 0;
+}
+.m-year-budget .m-kicker {
+  font-size: 10px;
+  margin-bottom: 10px;
+  color: var(--m-blue);
+}
+.marketing .m-year-budget h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.m-year-budget p:not(.m-kicker) {
+  font-size: 13px;
+  color: var(--m-muted);
+  margin: 0;
+}
+.m-year-budget > div:last-child {
+  text-align: right;
+}
+.m-year-budget strong {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+.m-year-budget strong small {
+  margin-left: 7px;
+  font-size: 13px;
+  font-weight: 400;
+}
+.m-pricing-note {
+  color: var(--m-muted);
+  font-size: 12px;
+  line-height: 1.9;
+  margin-top: 22px;
+  max-width: 900px;
+}
+@media (max-width: 760px) {
+  .m-projects-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+  .m-case-caption {
+    padding-top: 20px;
+  }
+  .marketing .m-case h2 {
+    font-size: 24px;
+  }
+  .m-projects-note {
+    display: block;
+    margin-block: 35px 45px;
+  }
+  .m-projects-note a {
+    margin-top: 18px;
+  }
+  .m-plan-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .m-plan {
+    padding: 28px 24px;
+  }
+  .marketing .m-plan h2 {
+    font-size: 25px;
+  }
+  .m-plan-price {
+    font-size: 38px;
+  }
+  .m-year-budget {
+    display: block;
+    padding-block: 28px;
+  }
+  .m-year-budget > div:last-child {
+    text-align: left;
+    margin-top: 22px;
+  }
+  .m-year-budget strong {
+    font-size: 28px;
   }
 }

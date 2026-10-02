@@ -25,7 +25,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Brand />
           <nav aria-label="서비스 안내" className="m-nav">
             <Link href="/templates">템플릿</Link>
-            <Link href="/#projects">제작 사례</Link>
+            <Link href="/projects">제작 사례</Link>
             <Link href="/pricing">비용 안내</Link>
             <Link href="/guide">이용 방법</Link>
           </nav>
