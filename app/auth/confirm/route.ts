@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     const { error } = await client.auth.exchangeCodeForSession(code);
     if (!error)
       return NextResponse.redirect(
-        new URL(params.get('flow') === 'recovery' ? '/login?mode=reset' : '/dashboard', appUrl()),
+        new URL(params.get('flow') === 'recovery' ? '/login?mode=reset' : '/account', appUrl()),
         { headers: { 'Cache-Control': 'no-store' } },
       );
   }
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     const { error } = await client.auth.verifyOtp({ token_hash: token, type });
     if (!error)
       return NextResponse.redirect(
-        new URL(type === 'recovery' ? '/login?mode=reset' : '/dashboard', appUrl()),
+        new URL(type === 'recovery' ? '/login?mode=reset' : '/account', appUrl()),
         { headers: { 'Cache-Control': 'no-store' } },
       );
   }

@@ -28,7 +28,7 @@ export function AuthForm({
     <div className="auth-page">
       <div className="auth-story">
         <Link className="wordmark" href="/">
-          가게담<span className="tiny-tag">FOR RESTAURANTS</span>
+          쿠피<span className="tiny-tag">소상공인 웹사이트 제작</span>
         </Link>
         <div>
           <p className="eyebrow">A PLACE FOR YOUR PLACE</p>
@@ -83,7 +83,7 @@ export function AuthForm({
                   token,
                 });
                 if (result.ok)
-                  window.location.assign(new URL('/dashboard', window.location.origin).href);
+                  window.location.assign(new URL('/account', window.location.origin).href);
                 else {
                   setMessage(result.message || '처리되었습니다.');
                   setRecovery(result.localRecoveryUrl || '');

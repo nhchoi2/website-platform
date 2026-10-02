@@ -1,4 +1,4 @@
-# 가게담 · 음식점 홈페이지 제작·관리
+# 쿠피 · 소상공인 웹사이트 제작·관리
 
 하나의 Next.js 프로그램에서 고객별 콘텐츠와 도메인을 분리합니다. 고객은 자기 매장 한 곳의 초안을 편집하고, 운영자가 제출본을 검수한 뒤 공개합니다. 콘텐츠 게시에는 재배포가 필요하지 않습니다.
 
@@ -159,3 +159,60 @@ npm run build
 ## 비용 확인
 
 Supabase DB/Storage/전송량·백업, SMTP 발송 서비스, Vercel의 상업용 플랜·초과 사용량, 고객 도메인 갱신이 비용 항목입니다. 요금은 [Supabase 공식 페이지](https://supabase.com/pricing)와 [Vercel 공식 페이지](https://vercel.com/pricing)에서 확인하세요. 도메인은 고객 소유이며 자동 구매하지 않습니다.
+
+## 공개 서비스 홈페이지와 접속 경로
+
+- 회사 홈페이지: `https://www.koofy.co.kr/` (별도 기존 프로젝트)
+- 이 서비스의 대표 주소: `https://sites.koofy.co.kr/`
+- `/`: 로그인 없이 볼 수 있는 서비스 소개, 사례 연결, 시작 버튼
+- `/templates`: 현재 제공하는 혜화 템플릿 1종 안내
+- `/templates/hyehwa`: 실제 Restaurant 컴포넌트로 렌더링한 공개 샘플. `?theme=olive|charcoal|warm` 지원
+- `/pricing`: 상담 후 안내하는 비용과 제공 범위 (확정 요금 없음)
+- `/guide`: 제작 절차, 자료 준비, FAQ
+- `/account`: 서버가 인증·운영자 권한을 확인해 `/admin` 또는 `/dashboard`로 이동
+- `/login`: 가입·로그인·복구. 로그인된 계정은 자신의 관리 화면으로 이동하며 복구/비밀번호 재설정 경로는 유지
+- 고객이 연결한 도메인의 `/`에서는 그 고객의 승인된 공개본만 표시. 서비스 안내 페이지는 고객 도메인에서 열리지 않음
+
+공개 문구·상담 이메일·헤더/푸터는 `components/marketing/`, 페이지는 `app/(marketing)/`에서 수정합니다. 서비스 루트와 고객 도메인 분기는 `app/page.tsx`, SEO 공통 메타데이터는 `lib/server/marketing.ts`, 검색 목록은 `app/sitemap.ts`, 검색 정책은 `app/robots.ts`입니다.
+
+`public/marketing/hyehwa-food.jpeg`는 기존 혜화 프로젝트에서 가져온 고정 템플릿 소개용 사진입니다. 샘플 문구·메뉴는 예시로 표시하며 고객 계정에 복사하지 않습니다. 고객 업로드는 기존 비공개 Storage에만 저장합니다. 용스 템플릿은 추가하지 않았습니다.
+
+### 서비스 도메인 배포 설정
+
+2026-10-02에 다음 외부 설정을 적용했습니다. 새 공개 홈페이지 코드의 온라인 반영에는 해당 커밋의 Git 푸시 및 Vercel 배포가 필요합니다. Git 푸시는 운영자가 직접 합니다.
+
+1. Vercel **website-platform** 프로젝트의 Production에 `sites.koofy.co.kr` 연결.
+2. 가비아 `koofy.co.kr`에 CNAME `sites` → `5b20872568a02d7b.vercel-dns-017.com.` (TTL 600) 추가. 기존 12개 레코드는 그대로 보존. 향후 Vercel이 안내하는 값이 바뀌면 해당 프로젝트의 Domains 화면을 기준으로 확인.
+3. Vercel Production 환경 변수:
+   - `APP_URL=https://sites.koofy.co.kr`
+   - `PLATFORM_HOSTS=sites.koofy.co.kr,website-platform-one.vercel.app`
+   - 기존 Supabase 비밀 환경 변수는 유지. Preview에는 Production 대표 주소를 강제로 적용하지 않음.
+4. Supabase Site URL은 `https://sites.koofy.co.kr`. Redirect URLs에 아래 두 주소를 추가하고 기존 테스트/로컬 콜백 주소는 유지:
+   - `https://sites.koofy.co.kr/auth/confirm`
+   - `https://sites.koofy.co.kr/auth/confirm?flow=recovery`
+5. 실제 새 배포 후 홈·가입·로그인·복구·운영자 이동과 `/sitemap.xml`의 대표 도메인을 다시 확인.
+
+Vercel 환경 변수는 다음 배포부터 적용됩니다. 도메인 변경 뒤 브라우저 세션 쿠키는 도메인별로 별개이므로 새 주소에서는 다시 로그인해야 합니다. DB의 기존 계정과 매장 데이터는 공유됩니다.
+
+Supabase SMTP 발신 이름은 `쿠피 · 소상공인 웹사이트 제작`, 발신 주소는 `noreply@auth.koofy.co.kr`입니다. 인증 메일 본문과 제목의 한국어 전환은 아직 남아 있습니다. SMTP 비밀번호는 변경하지 않았습니다.
+
+### 검색 노출과 회사 홈페이지 연결
+
+공개 페이지 5개만 사이트맵에 포함합니다. 고객·운영자·미리보기·인증·API 경로는 noindex이며 Preview 배포 전체도 noindex입니다. 공개 샘플과 고객의 비공개 초안 미리보기는 다른 경로입니다. 색상별 샘플 URL은 하나의 canonical 주소로 모읍니다.
+
+새 코드가 대표 도메인에 배포된 후 Google Search Console과 네이버 서치어드바이저에 대표 주소 소유 확인 및 `https://sites.koofy.co.kr/sitemap.xml` 제출을 진행합니다. 아직 검색 도구 등록이나 실제 색인 완료를 의미하지 않으며 검색 순위는 보장하지 않습니다.
+
+기존 회사 홈페이지의 `/products#projects`에는 아래 링크를 추가하면 됩니다. 기존 회사 홈페이지의 실제 프로젝트를 확인한 뒤 그 저장소에서 변경·배포해야 합니다.
+
+```html
+<a href="https://sites.koofy.co.kr/">소상공인 웹사이트 제작 · 내 홈페이지 만들기 ↗</a>
+```
+
+### 공개 페이지·로그인 분기 회귀 검증
+
+```bash
+npm run build
+node --import tsx scripts/marketing-acceptance.ts
+```
+
+이 스크립트는 별도 임시 PGlite DB와 `127.0.0.1:3011` 서버에서 실제 로컬 로그인, 고객/운영자 이동, 고객의 운영자 접근 차단, 고객 도메인 분리, 공개 페이지·샘플 색상·SEO를 검증한 뒤 서버와 DB를 정리합니다. 운영 Supabase 계정이나 권한을 수정하지 않습니다. 실제 운영 인증은 새 배포에서 별도로 검증합니다.

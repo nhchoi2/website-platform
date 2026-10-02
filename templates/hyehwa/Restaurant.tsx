@@ -11,14 +11,17 @@ export function Restaurant({
   content,
   siteId,
   privateImages = false,
+  sampleImages,
 }: {
   content: Content;
   siteId: string;
   privateImages?: boolean;
+  // Only the public template demo supplies bundled, non-customer sample assets.
+  sampleImages?: Record<string, string>;
 }) {
   const colors = palettes[content.theme];
   const image = (id: string) =>
-    `/api/media/${id}${privateImages ? `?private=1&site=${siteId}` : ''}`;
+    sampleImages?.[id] || `/api/media/${id}${privateImages ? `?private=1&site=${siteId}` : ''}`;
   const featured = content.menus.filter((m) => m.featured);
   const categories = [...new Set(content.menus.map((m) => m.category || '메뉴'))];
   return (

@@ -10,13 +10,6 @@ export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   response.headers.set('Cache-Control', 'private, no-store');
   if (
-    pathname.startsWith('/dashboard') ||
-    pathname.startsWith('/admin') ||
-    pathname.startsWith('/preview') ||
-    pathname.startsWith('/login')
-  )
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-  if (
     platform &&
     process.env.APP_MODE === 'supabase' &&
     process.env.SUPABASE_URL &&
@@ -48,6 +41,14 @@ export async function proxy(request: NextRequest) {
     );
     await client.auth.getUser();
   }
+  // Apply these after session refresh, which can replace the response object.
+  if (
+    process.env.VERCEL_ENV === 'preview' ||
+    ['/dashboard', '/admin', '/preview', '/login', '/account', '/auth', '/api', '/s/'].some(
+      (prefix) => pathname.startsWith(prefix),
+    )
+  )
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;
 }
 export const config = { matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'] };

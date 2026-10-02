@@ -13,14 +13,16 @@ export function Shell({
   return (
     <div className="workspace">
       <aside className="sidebar">
-        <Link href="/dashboard" className="wordmark">
-          <span className="brand-mark">담</span> 가게담
+        <Link href="/" className="wordmark">
+          <span className="brand-mark">k</span> 쿠피
         </Link>
         <p className="sidebar-label">WORKSPACE</p>
         <nav>
-          <Link href="/dashboard" aria-current={active === 'dashboard' ? 'page' : undefined}>
-            <span>▤</span> 내 홈페이지
-          </Link>
+          {!user.admin && (
+            <Link href="/dashboard" aria-current={active === 'dashboard' ? 'page' : undefined}>
+              <span>▤</span> 내 홈페이지
+            </Link>
+          )}
           {user.admin && (
             <Link href="/admin" aria-current={active === 'admin' ? 'page' : undefined}>
               <span>▦</span> 운영자 관리

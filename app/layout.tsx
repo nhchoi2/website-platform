@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { mode } from '@/lib/server/config';
 import './globals.css';
 export const metadata: Metadata = {
-  title: { default: '가게담 · 음식점 홈페이지 관리', template: '%s | 가게담' },
-  description: '가게의 이야기를 한 페이지에 담다.',
+  title: { default: '소상공인 웹사이트 제작·관리 | 쿠피', template: '%s | 쿠피' },
+  description: '사진과 메뉴를 직접 편집하고, 검수 후 공개하는 음식점 홈페이지 제작·관리 서비스.',
 };
 export const dynamic = 'force-dynamic';
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

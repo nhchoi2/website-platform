@@ -1,0 +1,162 @@
+// Run after npm run build. An isolated local database is created and removed.
+import assert from 'node:assert/strict';
+import { spawn } from 'node:child_process';
+import { once } from 'node:events';
+import { request } from 'node:http';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { createLocalDatabase, localRpc } from '../lib/local/database';
+import { localRegister } from '../lib/local/auth';
+import { emptyContent } from '../lib/content';
+import type { Site, SiteDetail, Submission } from '../lib/types';
+const port = 3011;
+const host = `127.0.0.1:${port}`;
+const base = `http://${host}`;
+const dir = await mkdtemp(join(tmpdir(), 'koofy-routing-'));
+const db = await createLocalDatabase(dir);
+const password = randomUUID() + 'aA1!';
+const customer = await localRegister(db, 'customer@local.invalid', password);
+const admin = await localRegister(db, 'admin@local.invalid', password);
+await db.query('insert into admin_users(user_id) values($1)', [admin]);
+const site = await localRpc<Site>(db, customer, 'create_site', {
+  p_slug: 'customer-a',
+  p_content: { ...emptyContent(), name: 'Customer A', address: 'Seoul', phone: '02-123-4567' },
+});
+const detail = await localRpc<SiteDetail>(db, customer, 'get_site_detail', { p_site: site.id });
+const submission = await localRpc<Submission>(db, customer, 'submit_site', {
+  p_site: site.id,
+  p_expected: detail.site.draft_version,
+  p_key: randomUUID(),
+});
+await localRpc(db, admin, 'review_submission', {
+  p_site: site.id,
+  p_submission: submission.id,
+  p_revision: submission.revision_id,
+  p_action: 'approve',
+  p_feedback: '',
+  p_key: randomUUID(),
+});
+await localRpc(db, admin, 'save_domain', {
+  p_site: site.id,
+  p_hostname: 'customer.local.test',
+  p_status: 'connected',
+  p_expires: null,
+  p_notes: 'isolated routing test',
+});
+await db.close();
+const env: NodeJS.ProcessEnv = {
+  ...process.env,
+  APP_MODE: 'local',
+  APP_URL: base,
+  PLATFORM_HOSTS: host,
+  LOCAL_DATA_DIR: dir,
+};
+delete env.VERCEL;
+delete env.VERCEL_ENV;
+const server = spawn(
+  process.execPath,
+  ['node_modules/next/dist/bin/next', 'start', '-H', '127.0.0.1', '-p', String(port)],
+  { env, stdio: ['ignore', 'pipe', 'pipe'] },
+);
+let logs = '';
+server.stdout.on('data', (d) => {
+  logs += d;
+});
+server.stderr.on('data', (d) => {
+  logs += d;
+});
+function get(path: string, options: { host?: string; cookie?: string; body?: unknown } = {}) {
+  return new Promise<{
+    status: number;
+    headers: import('node:http').IncomingHttpHeaders;
+    body: string;
+  }>((resolve, reject) => {
+    const req = request(
+      {
+        hostname: '127.0.0.1',
+        port,
+        path,
+        method: options.body ? 'POST' : 'GET',
+        headers: {
+          host: options.host || host,
+          ...(options.cookie ? { cookie: options.cookie } : {}),
+          ...(options.body ? { 'content-type': 'application/json', origin: base } : {}),
+        },
+      },
+      (res) => {
+        let body = '';
+        res.on('data', (d) => {
+          body += d;
+        });
+        res.on('end', () => resolve({ status: res.statusCode!, headers: res.headers, body }));
+      },
+    );
+    req.on('error', reject);
+    req.end(options.body ? JSON.stringify(options.body) : undefined);
+  });
+}
+try {
+  let ready = false;
+  for (let i = 0; i < 80; i++) {
+    try {
+      if ((await get('/')).status === 200) {
+        ready = true;
+        break;
+      }
+    } catch {}
+    await new Promise((r) => setTimeout(r, 250));
+  }
+  assert.ok(ready, logs);
+  for (const path of ['/', '/templates', '/templates/hyehwa', '/pricing', '/guide']) {
+    const res = await get(path);
+    assert.equal(res.status, 200, path);
+    assert.match(res.body, /rel="canonical"/);
+    assert.doesNotMatch(res.body, /name="robots" content="noindex/);
+    assert.equal(res.headers['x-robots-tag'], undefined);
+  }
+  assert.match((await get('/pricing')).body, /상담 후 안내/);
+  assert.match((await get('/templates/hyehwa?theme=warm')).body, /#653c2c/);
+  assert.equal((await get('/marketing/hyehwa-food.jpeg')).status, 200);
+  for (const path of ['/account', '/dashboard', '/admin']) {
+    const res = await get(path);
+    assert.equal(res.status, 307);
+    assert.equal(res.headers.location, '/login');
+    assert.equal(res.headers['x-robots-tag'], 'noindex, nofollow');
+  }
+  const login = async (email: string) => {
+    const res = await get('/api/auth/login', { body: { email, password } });
+    assert.equal(res.status, 200);
+    return res.headers['set-cookie']!.map((v) => v.split(';')[0]).join('; ');
+  };
+  const customerCookie = await login('customer@local.invalid');
+  const adminCookie = await login('admin@local.invalid');
+  assert.equal((await get('/account', { cookie: customerCookie })).headers.location, '/dashboard');
+  assert.equal((await get('/account', { cookie: adminCookie })).headers.location, '/admin');
+  assert.equal((await get('/dashboard', { cookie: adminCookie })).headers.location, '/admin');
+  assert.equal((await get('/admin', { cookie: customerCookie })).status, 404);
+  assert.equal((await get('/admin', { cookie: adminCookie })).status, 200);
+  assert.equal((await get('/dashboard', { cookie: customerCookie })).status, 200);
+  assert.equal((await get('/login', { cookie: adminCookie })).headers.location, '/admin');
+  assert.equal((await get('/login?mode=reset', { cookie: adminCookie })).status, 200);
+  assert.equal((await get('/', { cookie: adminCookie })).status, 200);
+  const tenant = await get('/', { host: 'customer.local.test' });
+  assert.equal(tenant.status, 200);
+  assert.match(tenant.body, /<title>Customer A<\/title>/);
+  assert.doesNotMatch(tenant.body, /가게는 작아도/);
+  for (const path of ['/', '/templates', '/admin', '/s/customer-a'])
+    assert.equal((await get(path, { host: 'unknown.local.test' })).status, 404);
+  assert.equal((await get('/templates', { host: 'customer.local.test' })).status, 404);
+  const sitemap = await get('/sitemap.xml');
+  assert.match(sitemap.body, /<loc>http:\/\/127.0.0.1:3011\/guide<\/loc>/);
+  assert.doesNotMatch(sitemap.body, /dashboard|admin|customer-a/);
+  assert.match((await get('/robots.txt')).body, /Disallow: \/admin/);
+  console.log(
+    'PASS: public pages, template themes, assets, SEO, real local login, role routing, recovery access, tenant host isolation.',
+  );
+} finally {
+  server.kill('SIGTERM');
+  if (server.exitCode === null) await once(server, 'exit');
+  await rm(dir, { recursive: true, force: true });
+}
