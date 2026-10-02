@@ -1,5 +1,5 @@
 // Koofy Lab's public project catalogue, verified 2026-10-02.
-// Preserve original assets; apply owner corrections to names and operating status.
+// Apply owner corrections to brand lettering, names and operating status.
 export const projects = [
   {
     slug: 'tax-lab',
@@ -7,7 +7,7 @@ export const projects = [
     category: '제작 사례',
     description: '세무 회계, 컨설팅, 기업 성장 지원을 전문적으로 보여주는 랜딩 사이트입니다.',
     image: '/marketing/projects/tax-lab.webp',
-    alt: "THE KEVIN'S TAX LAB 제작 당시 웹사이트 이미지",
+    alt: "THE KEVIN'S TAX LAB 브랜드 표기를 정정한 소개 이미지",
     href: 'https://www.koofy.co.kr/products/tax-lab',
   },
   {
