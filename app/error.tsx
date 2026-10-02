@@ -1,0 +1,12 @@
+'use client';
+export default function ErrorPage({ reset }: { reset: () => void }) {
+  return (
+    <main className="error-page">
+      <h1>페이지를 불러오지 못했습니다</h1>
+      <p>잠시 후 다시 시도하세요. 저장소 설정이 완료되었는지도 확인해 주세요.</p>
+      <button className="button primary" onClick={reset}>
+        다시 시도
+      </button>
+    </main>
+  );
+}
