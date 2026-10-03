@@ -6,6 +6,7 @@ import { CommonFeatures } from './CommonFeatures';
 import { ContentFeatures } from './ContentFeatures';
 import { PreviewBridge } from './PreviewBridge';
 import { StandalonePreviewControls } from './StandalonePreviewControls';
+import { TemplateHeader } from './TemplateHeader';
 import { Visit } from './Visit';
 import { Table } from './designs/Table';
 import { Editorial } from './designs/Editorial';
@@ -63,31 +64,25 @@ export function DemoSite({
       {options.features.includes('notice') && (
         <div className="t-notice">방문 안내 · 휴무나 행사 소식을 이곳에 표시할 수 있습니다.</div>
       )}
-      <header className="t-header">
-        <a className="t-brand" href={sectionLink('home')}>
-          {template.brand}
-          <span>✳</span>
-        </a>
-        <nav aria-label="예시 사이트 메뉴">
-          {one ? (
-            <>
-              <a href="#about">소개</a>
-              <a href="#services">{template.serviceLabel}</a>
-              <a href="#visit">방문·문의</a>
-            </>
-          ) : (
-            demoPages(options.pages, template).map((nav) => (
-              <Link
-                key={nav.id}
-                href={sectionLink(nav.id)}
-                aria-current={page === nav.id ? 'page' : undefined}
-              >
-                {nav.label}
-              </Link>
-            ))
-          )}
-        </nav>
-      </header>
+      <TemplateHeader brand={template.brand} home={sectionLink('home')} options={options}>
+        {one ? (
+          <>
+            <a href="#about">소개</a>
+            <a href="#services">{template.serviceLabel}</a>
+            <a href="#visit">방문·문의</a>
+          </>
+        ) : (
+          demoPages(options.pages, template).map((nav) => (
+            <Link
+              key={nav.id}
+              href={sectionLink(nav.id)}
+              aria-current={page === nav.id ? 'page' : undefined}
+            >
+              {nav.label}
+            </Link>
+          ))
+        )}
+      </TemplateHeader>
       <main id="demo-main">
         {page !== 'home' && (
           <div className="t-inner-title">

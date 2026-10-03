@@ -133,20 +133,46 @@ export function TemplateConfigurator({
             ))}
           </div>
         </fieldset>
+        <fieldset>
+          <legend>02 · 기본 디자인 · 추가 비용 없음</legend>
+          <p className="m-option-note">
+            반응형 화면과 기본 검색 설정은 포함됩니다. 로고·브라우저 탭 아이콘은 제공한 파일을 제작
+            시 적용합니다. 새 로고 디자인은 별도입니다.
+          </p>
+          <label className="m-basic-design-choice">
+            메뉴 위치
+            <select
+              value={options.nav || 'right'}
+              onChange={(e) =>
+                setOptions({ ...options, nav: e.target.value as PreviewOptions['nav'] })
+              }
+            >
+              <option value="left">왼쪽 · 상호 옆</option>
+              <option value="center">가운데</option>
+              <option value="right">오른쪽</option>
+            </select>
+          </label>
+          <label className="m-basic-design-choice">
+            모바일 메뉴
+            <select
+              value={options.mobileNav || 'expanded'}
+              onChange={(e) =>
+                setOptions({ ...options, mobileNav: e.target.value as PreviewOptions['mobileNav'] })
+              }
+            >
+              <option value="expanded">메뉴 펼쳐보기</option>
+              <option value="hamburger">메뉴 버튼으로 열기</option>
+            </select>
+          </label>
+        </fieldset>
         {[
-          {
-            title: '02 · 콘텐츠 기능',
-            ids: ['gallery', 'priceTable', 'team', 'schedule', 'news', 'process', 'faq'],
-          },
-          {
-            title: '03 · 안내·외부 연결',
-            ids: ['notice', 'consult', 'reserve', 'place', 'kakao', 'top'],
-          },
+          { title: '03 · 무료 선택 · 기본 제작비 포함', cost: 'included' },
+          { title: '04 · 유료 추가 · 상담 후 견적', cost: 'paid' },
         ].map((group) => (
           <fieldset key={group.title}>
             <legend>{group.title}</legend>
             {featureOptions
-              .filter((feature) => group.ids.includes(feature.id))
+              .filter((feature) => feature.cost === group.cost)
               .map((feature) => (
                 <div className="m-feature-choice" key={feature.id}>
                   <label>
@@ -170,7 +196,12 @@ export function TemplateConfigurator({
                       }}
                     />
                     <span>
-                      <strong>{feature.label}</strong>
+                      <strong>
+                        {feature.label}{' '}
+                        <small className="m-option-cost">
+                          {feature.cost === 'included' ? '기본 포함' : '유료 추가'}
+                        </small>
+                      </strong>
                       <small>{feature.description}</small>
                     </span>
                   </label>
@@ -214,7 +245,7 @@ export function TemplateConfigurator({
           <p>
             {quote.needsQuote
               ? '선택한 구성의 최종 금액은 상담 후 확정합니다. 추가 페이지·기능 요금은 아직 미정입니다.'
-              : '기본 구성 기준 예상 금액입니다. 최종 견적은 상담 후 확정합니다.'}
+              : '선택한 기본 항목과 메뉴 배치는 추가 비용이 없습니다. 최종 제작 범위는 상담으로 확인합니다.'}
           </p>
           <small>
             운영·관리 월 {formatWon(pricing.monthly)}부터 · 기본 호스팅 포함 · 도메인 별도

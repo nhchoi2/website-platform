@@ -332,3 +332,53 @@
     font-size: 11px !important;
   }
 }
+
+/* Fixed design choices: desktop menu alignment and a mobile menu button. */
+.t-header.t-nav-left {
+  justify-content: flex-start;
+}
+.t-header.t-nav-center {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+.t-nav-center nav {
+  grid-column: 2;
+}
+.t-menu-toggle {
+  display: none;
+}
+@media (max-width: 768px) {
+  .t-header.t-nav-center {
+    display: flex;
+  }
+  .t-header.t-mobile-hamburger {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    gap: 12px;
+  }
+  .t-mobile-hamburger .t-menu-toggle {
+    display: block;
+    border: 1px solid var(--t-accent);
+    color: var(--t-ink);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+  }
+  .t-mobile-hamburger nav {
+    display: none;
+    width: 100%;
+  }
+  .t-mobile-hamburger nav.is-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--t-accent);
+  }
+  .t-mobile-hamburger nav a {
+    padding: 14px 0;
+  }
+}

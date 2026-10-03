@@ -62,6 +62,33 @@ test('inquiry contains selected configuration and never invents unknown add-on p
   assert.equal(quoteSummary(parseOptions({})).needsQuote, false);
 });
 
+test('basic business content and menu layout choices do not trigger an extra quote', () => {
+  const basic = parseOptions({
+    features: 'priceTable,team,schedule,process,faq,top',
+    nav: 'center',
+    mobileNav: 'hamburger',
+  });
+  assert.equal(quoteSummary(basic).needsQuote, false);
+  assert.equal(quoteSummary({ ...basic, pages: 3 }).needsQuote, true);
+  for (const feature of ['gallery', 'news', 'consult', 'reserve', 'place', 'kakao', 'notice']) {
+    assert.equal(
+      quoteSummary(parseOptions({ features: `priceTable,${feature}` })).needsQuote,
+      true,
+    );
+  }
+  const body = new URL(inquiryHref(findTemplate('hyehwa')!, basic)).searchParams.get('body')!;
+  assert.match(body, /기본 포함 선택: 가격·서비스 비교표/);
+  assert.match(body, /유료 추가 선택: 없음/);
+  assert.match(body, /메뉴 위치: 가운데/);
+  assert.match(body, /모바일 메뉴: 메뉴 버튼/);
+  assert.deepEqual(
+    parseOptions(Object.fromEntries(new URLSearchParams(optionsQuery(basic)))),
+    basic,
+  );
+  assert.equal(parseOptions({ nav: 'arbitrary-css', mobileNav: 'unknown' }).nav, undefined);
+  assert.equal(parseOptions({ nav: 'arbitrary-css', mobileNav: 'unknown' }).mobileNav, undefined);
+});
+
 test('a design accepts another industry without changing its layout identity, palette or URL', () => {
   const design = findTemplate('salon')!;
   const food = findTemplate('hyehwa')!;

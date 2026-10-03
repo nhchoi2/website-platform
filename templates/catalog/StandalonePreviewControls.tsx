@@ -100,14 +100,39 @@ export function StandalonePreviewControls({
                 ))}
               </select>
             </label>
+            <label>
+              메뉴 위치 · 기본 포함
+              <select
+                value={options.nav || 'right'}
+                onChange={(e) =>
+                  change({ ...options, nav: e.target.value as PreviewOptions['nav'] })
+                }
+              >
+                <option value="left">왼쪽 · 상호 옆</option>
+                <option value="center">가운데</option>
+                <option value="right">오른쪽</option>
+              </select>
+            </label>
+            <label>
+              모바일 메뉴 · 기본 포함
+              <select
+                value={options.mobileNav || 'expanded'}
+                onChange={(e) =>
+                  change({ ...options, mobileNav: e.target.value as PreviewOptions['mobileNav'] })
+                }
+              >
+                <option value="expanded">메뉴 펼쳐보기</option>
+                <option value="hamburger">메뉴 버튼으로 열기</option>
+              </select>
+            </label>
             {[
               {
-                title: '콘텐츠 기능',
-                choices: featureOptions.filter((x) => !x.floating && x.id !== 'notice'),
+                title: '무료 선택 · 기본 제작비 포함',
+                choices: featureOptions.filter((x) => x.cost === 'included'),
               },
               {
-                title: '안내·외부 연결',
-                choices: featureOptions.filter((x) => x.floating || x.id === 'notice'),
+                title: '유료 추가 · 상담 후 견적',
+                choices: featureOptions.filter((x) => x.cost === 'paid'),
               },
             ].map((group) => (
               <div className="sp-feature-group" key={group.title}>
@@ -165,7 +190,7 @@ export function StandalonePreviewControls({
               : '선택 내용은 주소에 저장되며, 페이지 이동·새로고침 후 유지됩니다.'}
           </p>
           <p>
-            설정을 닫고 사이트 메뉴로 페이지를 이동하세요. 추가 페이지·기능 비용은 상담 후
+            설정을 닫고 사이트 메뉴로 페이지를 이동하세요. 유료 옵션과 추가 페이지 비용은 상담 후
             확정합니다.
           </p>
           <a className="sp-inquiry" href={inquiryHref(template, options)}>

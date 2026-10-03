@@ -42,3 +42,7 @@
 ## 별도 창 미리보기
 
 `/template-preview/...`를 별도 창에서 열면 상단 ‘미리보기 설정’으로 페이지 수, 예시 업종, 모든 콘텐츠·안내 옵션과 외부 연결 주소를 바꿀 수 있습니다. 선택은 URL에 기록되며 메뉴 이동과 새로고침 후 유지됩니다. 4페이지 소개 화면에서 3페이지로 바꾸거나 내부 화면에서 원페이지로 바꾸면 유효한 홈으로 이동합니다. ‘상세보기’로 돌아갈 때도 선택 구성을 전달합니다. 임베드된 iframe 안에서는 별도 설정을 숨기고 원래 상세 화면의 설정을 사용합니다. 구현 위치는 `templates/catalog/StandalonePreviewControls.tsx`와 `preview-controls.css`입니다.
+
+## 옵션의 가격 구분
+
+기본 포함/유료 분류와 미구현 기술 옵션은 [상품 구성 기준](template-option-policy.md)을 참고합니다. `options.ts`의 `cost`가 두 미리보기 화면의 공통 기준입니다. 메뉴 위치(`nav=left|center|right`)와 모바일 메뉴(`mobileNav=expanded|hamburger`)는 기본 포함 선택이며 페이지 이동·새로고침에 유지됩니다. 제공된 로고·탭 아이콘 파일 등록과 지도 API는 아직 연동되지 않았습니다.

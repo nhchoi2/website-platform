@@ -506,3 +506,34 @@
     margin: 10px 0;
   }
 }
+
+.m-config-options select {
+  width: 100%;
+  margin: 6px 0 14px;
+  padding: 10px;
+  background: white;
+  color: #182c25;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font: inherit;
+}
+.m-config-options .m-option-note {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #626b67;
+  margin-bottom: 15px;
+}
+.m-feature-choice .m-option-cost {
+  display: inline;
+  padding: 2px 6px;
+  border: 1px solid #d4ded8;
+  border-radius: 4px;
+  margin-left: 4px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.m-config-options .m-basic-design-choice {
+  display: block;
+  margin-bottom: 12px;
+}
