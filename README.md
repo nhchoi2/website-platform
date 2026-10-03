@@ -55,7 +55,7 @@ PGlite는 여러 프로세스가 동일한 데이터 폴더를 동시에 열면 
 ## Supabase 설정
 
 1. 별도 프로젝트를 생성합니다. 현재 대상은 `website-platform`, 서울 리전입니다.
-2. SQL Editor에서 `supabase/migrations/001_platform.sql`, `002_storage.sql`, `003_customer_directory.sql` 순서대로 실행합니다. 새 프로젝트에 한 번만 적용합니다. 세 파일 전체를 `begin; ... commit;`으로 감싸면 함께 적용할 수 있습니다. 이후 변경은 기존 파일을 고치지 말고 번호가 증가하는 새 마이그레이션으로 기록하세요.
+2. SQL Editor에서 `supabase/migrations/001_platform.sql`, `002_storage.sql`, `003_customer_directory.sql`, `004_accounts_and_consent.sql` 순서대로 실행합니다. 새 프로젝트에 한 번만 적용합니다. 기존 프로젝트에는 아직 적용하지 않은 번호만 실행합니다. 전체를 `begin; ... commit;`으로 감싸면 함께 적용할 수 있습니다. 이후 변경은 기존 파일을 고치지 말고 번호가 증가하는 새 마이그레이션으로 기록하세요.
 3. 앱의 모든 테이블에 RLS를 적용합니다. `anon`은 테이블을 조회할 수 없고, `authenticated`는 소유자 또는 DB의 `admin_users`에 등록된 운영자만 조회합니다. 테이블 직접 쓰기는 금지하고, 권한을 검사하는 DB 함수로만 변경합니다.
 4. `restaurant-images` 버킷은 **private**입니다. JPG/PNG/WebP 입력을 서버에서 실제 디코딩하고 최대 2400px WebP로 재인코딩합니다. EXIF 정보는 제거합니다. 입력 한 장 3MB, 4천만 픽셀 이하, 고객별 원본 250개 제한입니다. 저장소의 직접 INSERT/UPDATE/DELETE는 허용하지 않습니다. 서버는 소유권을 검사한 후 기존 키를 덮어쓰지 않는 방식으로 업로드합니다.
 5. Authentication → URL Configuration에 `APP_URL`을 Site URL로 지정하고, 정확한 `/auth/confirm`과 `/auth/confirm?flow=recovery`를 Redirect URLs에 등록합니다. 개발 주소도 필요하면 별도로 등록합니다. 임의의 외부 URL이나 넓은 wildcard는 허용하지 마세요.
@@ -110,6 +110,8 @@ scripts/                    운영자 지정·로컬 백업·명시적 원격 �
 - 페이지에서 사진 제거/교체는 해당 초안의 참조만 바꿉니다. 이전 제출본·공개 이력에 사용한 원본은 복구를 위해 보관합니다. 어디에도 사용하지 않는 원본만 영구 삭제할 수 있습니다.
 
 ## GitHub / Vercel 배포
+
+가입·구글 OAuth·동의 기록·담당자 정보와 활성화 환경 변수는 [가입 설정 문서](docs/account-onboarding.md)에 정리했습니다. 약관 초안은 운영자 정보와 외부 처리 조건을 확정한 뒤 `LEGAL_PUBLISHED=true`로 활성화합니다. Google 연결은 실제 provider 검증 후 `GOOGLE_AUTH_ENABLED=true`로 활성화합니다.
 
 하나의 GitHub 저장소 `nhchoi2/website-platform`과 하나의 Vercel 프로젝트를 사용합니다. 고객마다 복제하지 않습니다. 기존 혜화·용스 Vercel 프로젝트에 이 저장소를 연결하지 마세요.
 

@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { mode, appUrl } from '@/lib/server/config';
 import { sessionClient } from '@/lib/server/supabase';
 import { sameOrigin, readJson, json, failure, HttpError } from '@/lib/server/http';
+import { legalAcceptance } from '@/lib/legal';
+import { legalPublished } from '@/lib/server/legal';
 const credentials = z.object({
   email: z
     .email()
@@ -15,6 +17,13 @@ export async function POST(request: Request, context: { params: Promise<{ action
     sameOrigin(request);
     const { action } = await context.params;
     const input = await readJson(request);
+    if ((action === 'signup' || action === 'google') && !legalPublished())
+      throw new HttpError(
+        503,
+        '가입 안내와 약관을 준비 중입니다. 기존 고객은 이메일로 로그인해 주세요.',
+      );
+    if (action === 'signup' && input.acceptedTerms !== true)
+      throw new HttpError(400, '이용약관과 개인정보 수집·이용 내용을 확인하고 동의해 주세요.');
     const jar = await cookies();
     if (mode() === 'local') {
       const { localDatabase } = await import('@/lib/local/database');
@@ -29,7 +38,8 @@ export async function POST(request: Request, context: { params: Promise<{ action
       await auth.localRateLimit(db, `${action}:${email || 'reset'}`);
       if (action === 'signup' || action === 'login') {
         const data = credentials.parse(input);
-        if (action === 'signup') await auth.localRegister(db, data.email, data.password);
+        if (action === 'signup')
+          await auth.localRegister(db, data.email, data.password, legalAcceptance);
         const token = await auth.localLogin(db, data.email, data.password);
         jar.set('restaurant_session', token, {
           httpOnly: true,
@@ -58,6 +68,24 @@ export async function POST(request: Request, context: { params: Promise<{ action
       }
     } else {
       const client = await sessionClient();
+      if (action === 'google') {
+        if (process.env.GOOGLE_AUTH_ENABLED !== 'true')
+          throw new HttpError(503, '구글 로그인 연결을 준비 중입니다. 이메일로 이용해 주세요.');
+        const { data, error } = await client.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${appUrl()}/auth/confirm`,
+            skipBrowserRedirect: true,
+            queryParams: { prompt: 'select_account' },
+          },
+        });
+        if (error || !data.url)
+          throw new HttpError(
+            503,
+            '구글 로그인을 시작하지 못했습니다. 이메일 로그인을 이용해 주세요.',
+          );
+        return json({ url: data.url });
+      }
       if (action === 'login') {
         const { error } = await client.auth.signInWithPassword(credentials.parse(input));
         if (error) throw new HttpError(400, '이메일 인증 여부와 로그인 정보를 확인하세요.');
@@ -66,7 +94,7 @@ export async function POST(request: Request, context: { params: Promise<{ action
       if (action === 'signup') {
         const { data, error } = await client.auth.signUp({
           ...credentials.parse(input),
-          options: { emailRedirectTo: `${appUrl()}/auth/confirm` },
+          options: { emailRedirectTo: `${appUrl()}/auth/confirm`, data: legalAcceptance },
         });
         if (error)
           throw new HttpError(

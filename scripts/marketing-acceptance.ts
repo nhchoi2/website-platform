@@ -10,6 +10,7 @@ import { randomUUID } from 'node:crypto';
 import { createLocalDatabase, localRpc } from '../lib/local/database';
 import { localRegister } from '../lib/local/auth';
 import { emptyContent } from '../lib/content';
+import { legalAcceptance } from '../lib/legal';
 import type { Site, SiteDetail, Submission } from '../lib/types';
 const port = 3011;
 const host = `127.0.0.1:${port}`;
@@ -17,8 +18,9 @@ const base = `http://${host}`;
 const dir = await mkdtemp(join(tmpdir(), 'koofy-routing-'));
 const db = await createLocalDatabase(dir);
 const password = randomUUID() + 'aA1!';
-const customer = await localRegister(db, 'customer@local.invalid', password);
-const admin = await localRegister(db, 'admin@local.invalid', password);
+const customer = await localRegister(db, 'customer@local.invalid', password, legalAcceptance);
+const admin = await localRegister(db, 'admin@local.invalid', password, legalAcceptance);
+await localRegister(db, 'existing@local.invalid', password);
 await db.query('insert into admin_users(user_id) values($1)', [admin]);
 const site = await localRpc<Site>(db, customer, 'create_site', {
   p_slug: 'customer-a',
@@ -135,6 +137,56 @@ try {
   };
   const customerCookie = await login('customer@local.invalid');
   const adminCookie = await login('admin@local.invalid');
+  const existingCookie = await login('existing@local.invalid');
+  assert.equal(
+    (await get('/dashboard', { cookie: existingCookie })).headers.location,
+    '/account/consent',
+  );
+  assert.equal((await get('/account/consent', { cookie: existingCookie })).status, 200);
+  assert.equal(
+    (
+      await get('/api/sites', {
+        cookie: existingCookie,
+        body: { slug: 'blocked-site', template: 'hyehwa' },
+      })
+    ).status,
+    403,
+  );
+  assert.equal(
+    (
+      await get('/api/account/consent', {
+        cookie: existingCookie,
+        body: { accepted: true, termsVersion: '2026-10-03', privacyVersion: '2026-10-03' },
+      })
+    ).status,
+    200,
+  );
+  assert.equal((await get('/dashboard', { cookie: existingCookie })).status, 200);
+  assert.equal((await get('/account/settings', { cookie: customerCookie })).status, 200);
+  const contact = await get('/api/account/contact', {
+    cookie: customerCookie,
+    body: { name: '담당자', phone: '010-1234-5678', consent: true },
+  });
+  assert.equal(contact.status, 200);
+  assert.match(
+    (await get('/account/settings', { cookie: await login('customer@local.invalid') })).body,
+    /01012345678/,
+  );
+  const deniedSignup = await get('/api/auth/signup', {
+    body: { email: 'without-consent@local.invalid', password },
+  });
+  assert.equal(deniedSignup.status, 400);
+  const signup = await get('/api/auth/signup', {
+    body: { email: 'new@local.invalid', password, acceptedTerms: true },
+  });
+  assert.equal(signup.status, 200);
+  const newCookie = signup.headers['set-cookie']!.map((v) => v.split(';')[0]).join('; ');
+  assert.equal(
+    (await get('/account', { cookie: newCookie })).headers.location,
+    '/account/settings',
+  );
+  assert.equal((await get('/terms')).status, 200);
+  assert.equal((await get('/privacy')).status, 200);
   assert.equal((await get('/account', { cookie: customerCookie })).headers.location, '/dashboard');
   assert.equal((await get('/account', { cookie: adminCookie })).headers.location, '/admin');
   assert.equal((await get('/dashboard', { cookie: adminCookie })).headers.location, '/admin');

@@ -2,6 +2,8 @@ import { currentUser } from '@/lib/server/auth';
 import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { AuthForm } from '@/components/auth/AuthForm';
+import { mode } from '@/lib/server/config';
+import { legalPublished } from '@/lib/server/legal';
 export const metadata: Metadata = { title: '로그인', robots: { index: false, follow: false } };
 export default async function Login({
   searchParams,
@@ -20,6 +22,11 @@ export default async function Login({
       }
       token={params.token || ''}
       expired={!!params.error}
+      googleEnabled={
+        legalPublished() && mode() === 'supabase' && process.env.GOOGLE_AUTH_ENABLED === 'true'
+      }
+      signupEnabled={legalPublished()}
+      localDemo={mode() === 'local'}
     />
   );
 }

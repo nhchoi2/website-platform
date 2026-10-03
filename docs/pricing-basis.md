@@ -28,12 +28,12 @@
 
 [쿠피랩 웹사이트 제작 사례](https://www.koofy.co.kr/products#projects)의 한국어 화면을 직접 확인해 제목·설명·썸네일·상세 링크를 옮겼습니다.
 
-| 이름            | 원본 구분 | 원본 상세 페이지         | 원본 이미지 경로                 |
-| --------------- | --------- | ------------------------ | -------------------------------- |
+| 이름                | 원본 구분 | 원본 상세 페이지         | 원본 이미지 경로                 |
+| ------------------- | --------- | ------------------------ | -------------------------------- |
 | THE KEVIN'S TAX LAB | 제작 사례 | `/products/tax-lab`      | `/products/thekevins-taxlab.png` |
-| Yong's Dining   | 제작 사례 | `/products/yongs-dining` | `/products/yongs-dining.png`     |
-| Oren Gym        | 제작 사례 | `/products/oren-gym`     | `/products/orengym.png`          |
-| Intranet System | 콘셉트    | `/products/intranet`     | `/products/intranet.png`         |
+| Yong's Dining       | 제작 사례 | `/products/yongs-dining` | `/products/yongs-dining.png`     |
+| Oren Gym            | 제작 사례 | `/products/oren-gym`     | `/products/orengym.png`          |
+| Intranet System     | 콘셉트    | `/products/intranet`     | `/products/intranet.png`         |
 
 실제로 원본 페이지에 표시된 640px WebP 이미지를 `public/marketing/projects/`에 보관했습니다. 외부 이미지 핫링크나 자동 스크래핑에 의존하지 않습니다. 원본을 새 디자인으로 재현하거나 용스 템플릿을 추가한 것이 아닙니다. 용스의 실제 템플릿 구현은 원본 프로젝트 확인 후 별도로 진행합니다.
 

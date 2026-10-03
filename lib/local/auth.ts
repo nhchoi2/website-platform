@@ -10,10 +10,15 @@ function matches(password: string, stored: string) {
   const [salt, hash] = stored.split(':');
   return timingSafeEqual(Buffer.from(hash, 'hex'), scryptSync(password, salt, 64));
 }
-export async function localRegister(db: PGlite, email: string, password: string) {
+export async function localRegister(
+  db: PGlite,
+  email: string,
+  password: string,
+  metadata: Record<string, unknown> = {},
+) {
   const result = await db.query<{ id: string }>(
-    'insert into auth.users(email,password_hash) values($1,$2) returning id',
-    [email, hashPassword(password)],
+    'insert into auth.users(email,password_hash,raw_user_meta_data) values($1,$2,$3) returning id',
+    [email, hashPassword(password), JSON.stringify(metadata)],
   );
   return result.rows[0].id;
 }

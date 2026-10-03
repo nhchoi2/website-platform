@@ -1724,3 +1724,65 @@ input[type='checkbox'] {
     transition: none !important;
   }
 }
+/* Account onboarding: private contact information, separate from restaurant content. */
+.account-page {
+  max-width: 880px;
+  padding: 48px 32px;
+  margin: 0 auto;
+}
+.account-page > p {
+  margin: 18px 0;
+  line-height: 1.8;
+}
+.account-page .panel {
+  margin: 24px 0;
+}
+.account-page form label {
+  display: block;
+  margin: 18px 0;
+}
+.consent-check {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.7;
+}
+.consent-check input {
+  flex: 0 0 auto;
+  margin-top: 5px;
+}
+.consent-check a,
+.legal-document a {
+  text-decoration: underline;
+}
+.account-page .button {
+  margin: 12px 12px 0 0;
+}
+.google-auth {
+  margin: 26px 0;
+}
+.google-auth small {
+  display: block;
+  margin-top: 10px;
+}
+.google-auth > p {
+  text-align: center;
+  margin-top: 24px;
+}
+.legal-document {
+  padding-bottom: 72px;
+}
+.legal-document section {
+  margin: 32px 0;
+  max-width: 900px;
+}
+.legal-document section p {
+  line-height: 1.9;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .account-page {
+    padding: 28px 18px;
+  }
+}

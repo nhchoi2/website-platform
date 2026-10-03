@@ -6,10 +6,16 @@ export function AuthForm({
   initialMode,
   token,
   expired,
+  googleEnabled,
+  signupEnabled,
+  localDemo,
 }: {
   initialMode: string;
   token: string;
   expired: boolean;
+  googleEnabled: boolean;
+  signupEnabled: boolean;
+  localDemo: boolean;
 }) {
   const [mode, setMode] = useState(initialMode);
   const [message, setMessage] = useState(
@@ -57,6 +63,12 @@ export function AuthForm({
         <div className="auth-box">
           <p className="eyebrow">YOUR RESTAURANT, ONLINE</p>
           <h2>{titles[mode] || titles.login}</h2>
+          {localDemo && (
+            <p className="notice">
+              로컬 시연 환경입니다. 이메일·문자 발송과 구글 로그인은 연결하지 않으며, 입력한 정보는
+              이 컴퓨터의 시연 DB에 저장됩니다.
+            </p>
+          )}
           <p className="muted">
             {mode === 'login'
               ? '로그인하고 홈페이지 관리를 이어가세요.'
@@ -64,7 +76,43 @@ export function AuthForm({
                 ? '계정 하나로 매장 하나를 관리할 수 있습니다.'
                 : '안전하게 계정 접근을 되찾으세요.'}
           </p>
+          {mode === 'signup' && !signupEnabled && (
+            <p className="notice">
+              새로운 가입 안내와 약관을 준비 중입니다. 기존 고객은 로그인할 수 있습니다.
+            </p>
+          )}
+          {(mode === 'login' || mode === 'signup') && (
+            <div className="google-auth">
+              <button
+                type="button"
+                className="button secondary full"
+                disabled={busy || !googleEnabled}
+                onClick={async () => {
+                  setBusy(true);
+                  setError('');
+                  try {
+                    const result = await post<{ url: string }>('/api/auth/google', {});
+                    window.location.assign(result.url);
+                  } catch (err) {
+                    setError((err as Error).message);
+                    setBusy(false);
+                  }
+                }}
+              >
+                Google로 계속하기
+              </button>
+              {!googleEnabled && (
+                <small className="muted">
+                  {signupEnabled
+                    ? '구글 로그인 연결 준비 중 · 이메일 가입을 이용할 수 있습니다.'
+                    : '새 가입을 준비 중입니다. 기존 고객은 이메일로 로그인할 수 있습니다.'}
+                </small>
+              )}
+              <p className="muted">또는 이메일로 계속하기</p>
+            </div>
+          )}
           <form
+            method="post"
             onSubmit={async (e) => {
               e.preventDefault();
               setBusy(true);
@@ -81,6 +129,7 @@ export function AuthForm({
                   email: data.get('email'),
                   password: data.get('password'),
                   token,
+                  acceptedTerms: data.get('acceptedTerms') === 'on',
                 });
                 if (result.ok)
                   window.location.assign(new URL('/account', window.location.origin).href);
@@ -122,6 +171,28 @@ export function AuthForm({
                 />
               </label>
             )}
+            {mode === 'signup' && (
+              <>
+                <label className="consent-check">
+                  <input type="checkbox" name="acceptedTerms" required />
+                  <span>
+                    [필수]{' '}
+                    <Link href="/terms" target="_blank">
+                      이용약관
+                    </Link>{' '}
+                    및{' '}
+                    <Link href="/privacy" target="_blank">
+                      필수 개인정보 수집·이용
+                    </Link>{' '}
+                    내용을 확인하고 동의합니다.
+                  </span>
+                </label>
+                <p className="muted">
+                  가입·초안 작성만으로 비용이 청구되지 않습니다. 제작 진행과 비용은 상담 후
+                  확정합니다.
+                </p>
+              </>
+            )}
             {error && (
               <p role="alert" className="error-message">
                 {error}
@@ -137,7 +208,10 @@ export function AuthForm({
                 로컬 복구 링크 열기 ↗
               </a>
             )}
-            <button className="button primary full" disabled={busy}>
+            <button
+              className="button primary full"
+              disabled={busy || (mode === 'signup' && !signupEnabled)}
+            >
               {busy
                 ? '처리 중…'
                 : {
@@ -148,6 +222,7 @@ export function AuthForm({
                   }[mode]}
             </button>
           </form>
+          <noscript>가입과 로그인을 이용하려면 브라우저에서 JavaScript를 허용해 주세요.</noscript>
           <div className="auth-switch">
             {mode === 'login' ? (
               <>

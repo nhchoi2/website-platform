@@ -2,6 +2,7 @@ import 'server-only';
 import { ZodError } from 'zod';
 import { currentUser } from './auth';
 import { isPlatformHost } from '../hosts';
+import { legalPublished } from './legal';
 export class HttpError extends Error {
   constructor(
     public status: number,
@@ -16,12 +17,17 @@ export function sameOrigin(request: Request) {
   if (!isPlatformHost(host) || !origin || new URL(origin).host !== host)
     throw new HttpError(403, '허용되지 않은 요청입니다.');
 }
-export async function apiUser(request: Request, admin = false) {
+export async function apiUser(request: Request, admin = false, skipConsent = false) {
   if (!isPlatformHost(request.headers.get('host') || ''))
     throw new HttpError(404, '찾을 수 없습니다.');
   const user = await currentUser();
   if (!user) throw new HttpError(401, '로그인이 필요합니다.');
   if (admin && !user.admin) throw new HttpError(403, '운영자 권한이 필요합니다.');
+  if (!skipConsent && legalPublished()) {
+    const { rpc } = await import('./data');
+    if (!(await rpc<boolean>(user, 'has_account_consent')))
+      throw new HttpError(403, '약관을 먼저 확인해 주세요. 내 정보에서 동의할 수 있습니다.');
+  }
   return user;
 }
 export async function readJson(request: Request) {
@@ -36,6 +42,10 @@ export async function readJson(request: Request) {
   }
 }
 const messages: Record<string, [number, string]> = {
+  CONSENT_VERSION: [409, '약관이 변경되었습니다. 새로고침 후 다시 확인하세요.'],
+  CONSENT_REQUIRED: [403, '서비스 약관을 먼저 확인해 주세요.'],
+  CONTACT_CONSENT_REQUIRED: [400, '담당자 정보 수집·이용에 동의해 주세요.'],
+  INVALID_CONTACT: [400, '담당자 이름과 연락처를 확인하세요.'],
   FORBIDDEN: [403, '접근 권한이 없습니다.'],
   UNAUTHORIZED: [401, '로그인이 필요합니다.'],
   VERSION_CONFLICT: [

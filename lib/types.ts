@@ -1,5 +1,21 @@
 import type { Content } from './content';
 export type User = { id: string; email: string; admin: boolean };
+export type AccountDetails = {
+  contact: {
+    user_id: string;
+    contact_name: string;
+    contact_phone: string;
+    contact_consent_at: string | null;
+    updated_at: string;
+  } | null;
+  consents: {
+    id: string;
+    terms_version: string;
+    privacy_version: string;
+    accepted_at: string;
+    source: string;
+  }[];
+};
 export type Site = {
   id: string;
   owner_id: string;

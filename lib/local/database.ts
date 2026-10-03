@@ -20,7 +20,14 @@ export async function createLocalDatabase(directory: string) {
     create or replace function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
     grant usage on schema public,auth to anon,authenticated;
     grant execute on function auth.uid() to anon,authenticated;`);
-  for (const migration of ['001_platform.sql', '003_customer_directory.sql']) {
+  await db.exec(
+    "alter table auth.users add column if not exists raw_user_meta_data jsonb not null default '{}'::jsonb",
+  );
+  for (const migration of [
+    '001_platform.sql',
+    '003_customer_directory.sql',
+    '004_accounts_and_consent.sql',
+  ]) {
     const applied = await db.query('select name from local_migrations where name=$1', [migration]);
     if (!applied.rows.length) {
       const sql = await readFile(
@@ -44,6 +51,10 @@ export function localDatabase() {
 
 // Exactly the same stored functions and RLS as production; only Auth/Storage are local.
 export const rpcParameters: Record<string, string[]> = {
+  has_account_consent: [],
+  get_account_details: ['p_user'],
+  accept_account_terms: ['p_terms', 'p_privacy'],
+  save_account_contact: ['p_name', 'p_phone', 'p_consent'],
   list_customers: [],
   get_own_site: [],
   is_admin: [],

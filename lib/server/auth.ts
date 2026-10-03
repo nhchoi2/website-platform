@@ -5,6 +5,7 @@ import { mode } from './config';
 import { sessionClient } from './supabase';
 import { isPlatformHost } from '../hosts';
 import type { User } from '../types';
+import { legalPublished } from './legal';
 export async function currentUser(): Promise<User | null> {
   if (!isPlatformHost((await headers()).get('host') || '')) return null;
   if (mode() === 'local') {
@@ -24,9 +25,13 @@ export async function currentUser(): Promise<User | null> {
   if (roleError) throw roleError;
   return { id: user.id, email: user.email || '', admin: !!data };
 }
-export async function requireUser(admin = false) {
+export async function requireUser(admin = false, skipConsent = false) {
   const user = await currentUser();
   if (!user) redirect('/login');
   if (admin && !user.admin) notFound();
+  if (!skipConsent && legalPublished()) {
+    const { rpc } = await import('./data');
+    if (!(await rpc<boolean>(user, 'has_account_consent'))) redirect('/account/consent');
+  }
   return user;
 }

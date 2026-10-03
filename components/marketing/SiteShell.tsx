@@ -56,6 +56,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <a href={contactUrl}>제작 상담</a>
               <Link href="/guide#faq">자주 묻는 질문</Link>
               <Link href="/account">홈페이지 관리</Link>
+              <Link href="/terms">이용약관</Link>
+              <Link href="/privacy">개인정보처리방침</Link>
             </div>
           </div>
           <div className="m-footer-bottom">

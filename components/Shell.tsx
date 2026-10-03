@@ -7,7 +7,7 @@ export function Shell({
   children,
 }: {
   user: User;
-  active: 'dashboard' | 'admin';
+  active: 'dashboard' | 'admin' | 'account';
   children: React.ReactNode;
 }) {
   return (
@@ -18,6 +18,9 @@ export function Shell({
         </Link>
         <p className="sidebar-label">WORKSPACE</p>
         <nav>
+          <Link href="/account/settings" aria-current={active === 'account' ? 'page' : undefined}>
+            <span>◎</span> 내 정보
+          </Link>
           {!user.admin && (
             <Link href="/dashboard" aria-current={active === 'dashboard' ? 'page' : undefined}>
               <span>▤</span> 내 홈페이지
