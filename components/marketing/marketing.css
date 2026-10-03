@@ -1424,3 +1424,16 @@
     font-size: 12px;
   }
 }
+
+.m-faq-group {
+  margin-top: 32px;
+}
+.m-faq-group h3 {
+  font-size: 18px;
+  color: var(--m-blue);
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d6dbd0;
+}
+.m-faq-group details {
+  scroll-margin-top: 100px;
+}
