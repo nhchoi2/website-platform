@@ -65,6 +65,7 @@ export function DesignThumbnail({ template: t }: { template: Template }) {
       {t.slug === 'fitness' && (
         <>
           {title}
+          <div className="dt-motion-photo">{art}</div>
           <div className="dt-motion-strip">{t.highlights.join(' / ')}</div>
           <div className="dt-motion-programs">{items}</div>
         </>
@@ -88,12 +89,14 @@ export function DesignThumbnail({ template: t }: { template: Template }) {
             {title}
             <div>{items}</div>
           </div>
+          <div className="dt-partner-photo">{art}</div>
           <div className="dt-partner-standard">OUR STANDARD / {t.highlights[0]}</div>
         </>
       )}
       {t.slug === 'care' && (
         <>
           {title}
+          <div className="dt-care-photo">{art}</div>
           <div className="dt-care-quick">
             <span>운영시간</span>
             <span>이용 안내</span>

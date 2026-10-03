@@ -13,6 +13,9 @@ export function Care({ template: t, options, page, href }: DesignProps) {
             <h1>{t.headline}</h1>
             <p>{t.tagline}</p>
           </div>
+          <div className="d-care-banner">
+            <TemplateArt template={t} />
+          </div>
           <div className="d-care-quick">
             <a href={href('visit')}>
               <span>01</span>

@@ -184,6 +184,8 @@ Supabase DB/Storage/전송량·백업, SMTP 발송 서비스, Vercel의 상업�
 
 공개 문구·상담 이메일·헤더/푸터는 `components/marketing/`, 페이지는 `app/(marketing)/`에서 수정합니다. 서비스 루트와 고객 도메인 분기는 `app/page.tsx`, SEO 공통 메타데이터는 `lib/server/marketing.ts`, 검색 목록은 `app/sitemap.ts`, 검색 정책은 `app/robots.ts`입니다.
 
+카탈로그 7종의 AI 예시 사진 22장은 `public/template-images/`에 있습니다. 이미지 교체·생성 기록은 `docs/template-images.md`, 선택 코드는 `templates/catalog/images.ts`를 수정합니다.
+
 `public/marketing/hyehwa-food.jpeg`는 기존 혜화 프로젝트에서 가져온 고정 템플릿 소개용 사진입니다. 샘플 문구·메뉴는 예시로 표시하며 고객 계정에 복사하지 않습니다. 고객 업로드는 기존 비공개 Storage에만 저장합니다. 용스 템플릿은 추가하지 않았습니다.
 
 ### 서비스 도메인 배포 설정

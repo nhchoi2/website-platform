@@ -119,7 +119,8 @@ export function DemoSite({
         )}
         <ContentFeatures template={template} options={options} />
         <p className="t-example-note d-width">
-          이름·사진·상품·서비스·가격·운영시간은 디자인 확인을 위한 예시입니다.
+          사진은 AI로 제작한 예시입니다. 이름·상품·서비스·가격·운영시간은 실제 사업장 안내가
+          아닙니다.
         </p>
       </main>
       <footer className="t-footer">

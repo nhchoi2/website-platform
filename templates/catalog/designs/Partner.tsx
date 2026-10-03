@@ -1,3 +1,4 @@
+import { TemplateArt } from '../TemplateArt';
 import type { DesignProps } from './types';
 
 export function Partner({ template: t, options, page, href }: DesignProps) {
@@ -35,6 +36,11 @@ export function Partner({ template: t, options, page, href }: DesignProps) {
             ))}
           </aside>
         </section>
+      )}
+      {home && (
+        <div className="d-width d-partner-photo">
+          <TemplateArt template={t} />
+        </div>
       )}
       {(one || page === 'services' || home) && (
         <section id="services" className="t-section d-partner-services">

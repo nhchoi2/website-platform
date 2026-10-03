@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import type { Template } from './catalog';
 import type { PreviewOptions } from './options';
 import { TemplateArt } from './TemplateArt';
+import { templatePhotos } from './images';
 
 // Shared optional content modules; selection persists across demo pages.
 export function ContentFeatures({
@@ -12,6 +13,7 @@ export function ContentFeatures({
   template: Template;
   options: PreviewOptions;
 }) {
+  const photos = templatePhotos(t).items;
   const has = (id: PreviewOptions['features'][number]) => options.features.includes(id);
   const [photo, setPhoto] = useState(0);
   const [day, setDay] = useState(0);
@@ -23,21 +25,21 @@ export function ContentFeatures({
         <section id="feature-gallery" className="t-section">
           <p className="t-eyebrow">GALLERY</p>
           <h2>사진 갤러리</h2>
-          <p>사진을 눌러 크게 살펴보세요. 현재는 동작 확인을 위한 예시 이미지입니다.</p>
+          <p>사진을 눌러 크게 살펴보세요. 업종에 맞춰 제작한 AI 생성 예시 이미지입니다.</p>
           <div className="d-gallery">
-            {t.highlights.map((x, i) => (
+            {photos.map((x, i) => (
               <button
-                key={x}
+                key={x.src}
                 onClick={() => {
                   setPhoto(i);
                   gallery.current?.showModal();
                 }}
-                aria-label={`${x} 이미지 크게 보기`}
+                aria-label={`${x.alt} 이미지 크게 보기`}
               >
                 <div className={`d-gallery-image d-gallery-image-${i}`}>
-                  <TemplateArt template={t} compact />
+                  <TemplateArt template={t} compact photoIndex={i} />
                 </div>
-                <span>{x} ↗</span>
+                <span>{x.alt} ↗</span>
               </button>
             ))}
           </div>
@@ -46,18 +48,16 @@ export function ContentFeatures({
               닫기 ×
             </button>
             <div className={`d-gallery-image d-gallery-image-${photo}`}>
-              <TemplateArt template={t} compact />
+              <TemplateArt template={t} compact photoIndex={photo} fullSize />
             </div>
             <p role="status">
-              {photo + 1} / {t.highlights.length} · {t.highlights[photo]}
+              {photo + 1} / {photos.length} · {photos[photo].alt}
             </p>
             <div className="d-gallery-controls">
-              <button
-                onClick={() => setPhoto((photo + t.highlights.length - 1) % t.highlights.length)}
-              >
+              <button onClick={() => setPhoto((photo + photos.length - 1) % photos.length)}>
                 ← 이전
               </button>
-              <button onClick={() => setPhoto((photo + 1) % t.highlights.length)}>다음 →</button>
+              <button onClick={() => setPhoto((photo + 1) % photos.length)}>다음 →</button>
             </div>
           </dialog>
         </section>

@@ -1,0 +1,134 @@
+[
+  {
+    "slug": "hyehwa",
+    "prompt": "Create one photorealistic premium Korean restaurant website photograph, landscape 3:2, no text, no logos, no watermarks, no collage. Beautiful golden grilled samgyeopsal pork slices on a dark ceramic platter with ssam lettuce, kimchi and small understated side dishes on warm oak table in a cozy contemporary Korean restaurant. Natural window light, editorial food photography, realistic edible textures, warm cream and olive palette, generous space around the food for responsive cropping. Fictional business demo asset, not a real brand.",
+    "original": "exec-bb139f3f-2cd6-494a-a598-74a7a4a902fd.png",
+    "output": "public/template-images/hyehwa.webp"
+  },
+  {
+    "slug": "cafe",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, polished but believable local business, composition with margin suitable for responsive cropping. Sunlit independent cafe, close foreground ceramic latte with delicate latte art and flaky croissant on walnut table, softly visible large windows, terracotta and cream interior and leafy plant, calm magazine photography.",
+    "original": "exec-3daa1cdf-4765-41dc-b14e-d75526d237c5.png",
+    "output": "public/template-images/cafe.webp"
+  },
+  {
+    "slug": "salon",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, polished but believable local business, composition with margin suitable for responsive cropping. Contemporary boutique hair salon interior, large arched mirrors, beige styling chairs, dusty rose walls, warm wood, beautiful sunlight, clean uncluttered styling stations, no people.",
+    "original": "exec-30983933-269d-431f-a8ac-847d757c86f6.png",
+    "output": "public/template-images/salon.webp"
+  },
+  {
+    "slug": "fitness",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, polished but believable local business, composition with margin suitable for responsive cropping. Modern neighborhood strength-training studio, dark charcoal interior, black dumbbell rack prominent foreground, squat racks and warm directional light, subtle lime accents, energetic premium sports editorial photography, no people.",
+    "original": "exec-82b93f23-8a3f-495a-b4a0-d87b05b954ef.png",
+    "output": "public/template-images/fitness.webp"
+  },
+  {
+    "slug": "market",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, believable local business, generous margin for responsive cropping. Fresh seasonal fruit display in a friendly neighborhood grocery, wooden crates of tangerines, apples and pears, baskets, green-painted accents, bright clean daylight, appealing produce foreground.",
+    "original": "exec-63cffa57-616f-4be7-af4f-3a82ac81fa92.png",
+    "output": "public/template-images/market.webp"
+  },
+  {
+    "slug": "professional",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, believable local business, generous margin for responsive cropping. Calm contemporary small tax and accounting office consultation room, navy upholstered chairs around an oak meeting table, laptop, tidy blank document folders, daylight through glass partition, muted blue grey palette, no people, no readable documents.",
+    "original": "exec-066ea5db-fca7-4ef6-8c87-7e48b5191dc2.png",
+    "output": "public/template-images/professional.webp"
+  },
+  {
+    "slug": "care",
+    "prompt": "Photorealistic editorial photograph for a fictional Korean small-business website demo. Landscape 3:2, no text, no logos, no watermarks, no collage, natural realistic textures, believable local business, generous margin for responsive cropping. Welcoming small neighborhood clinic reception and waiting area, soft cream and pale teal palette, light wood front desk, simple comfortable chairs, leafy plant, clean bright natural daylight, calm accessible atmosphere, no people, no medical equipment, no signage.",
+    "original": "exec-f487519b-1cae-445d-9d85-68490ec0ac55.png",
+    "output": "public/template-images/care.webp"
+  },
+  {
+    "slug": "hyehwa-1",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean restaurant or cafe website, no text, no logos, no watermark, no collage, warm natural window light, realistic food texture, dark ceramic dishes on oak table, ample margin for cropping. A steaming bowl of Korean kimchi jjigae with tofu, pork and aged kimchi, small white rice bowl and simple side dish, cozy Korean restaurant background softly out of focus.",
+    "original": "exec-1434ef0e-93ba-414a-8fb9-2299ee47bba0.png",
+    "output": "public/template-images/hyehwa-1.webp"
+  },
+  {
+    "slug": "hyehwa-2",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean restaurant or cafe website, no text, no logos, no watermark, no collage, warm natural window light, realistic food texture, dark ceramic dishes on oak table, ample margin for cropping. A seasonal Korean hansang meal arranged on an oak table: rice, small soup, grilled fish, vegetables, namul, kimchi in distinct small ceramic bowls, elegant believable everyday restaurant meal.",
+    "original": "exec-f5f484ee-4488-4260-baaa-1a11469e0b4b.png",
+    "output": "public/template-images/hyehwa-2.webp"
+  },
+  {
+    "slug": "cafe-1",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean restaurant or cafe website, no text, no logos, no watermark, no collage, warm natural window light, realistic food texture, dark ceramic dishes on oak table, ample margin for cropping. Fresh buttery croissant and sliced sourdough on a ceramic plate, bread-centered close-up, crumbs and linen napkin, warm terracotta cafe in background.",
+    "original": "exec-4ead725a-461f-4924-b82d-40e542510f8e.png",
+    "output": "public/template-images/cafe-1.webp"
+  },
+  {
+    "slug": "cafe-2",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for fictional Korean small-business website demo. No text, logos, watermark or collage. Realistic natural textures, beautiful soft daylight, central subject with generous crop margin. A ceramic cup of clear amber seasonal tea with citrus slices beside a small glass teapot, cream linen and walnut cafe table, terracotta background.",
+    "original": "exec-1bd738f3-ee72-4a2e-843e-a30a26e2dc0f.png",
+    "output": "public/template-images/cafe-2.webp"
+  },
+  {
+    "slug": "salon-0",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for fictional Korean small-business website demo. No text, logos, watermark or collage. Realistic natural textures, beautiful soft daylight, central subject with generous crop margin. Back view of an adult woman with a beautiful precisely cut natural dark brown bob haircut, shoulders covered with neutral salon cape, softly blurred dusty rose salon mirrors, focus on hair texture, no visible face.",
+    "original": "exec-818a07d0-1ce5-4f61-a12b-d48fdaac713f.png",
+    "output": "public/template-images/salon-0.webp"
+  },
+  {
+    "slug": "salon-1",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for fictional Korean small-business website demo. No text, logos, watermark or collage. Realistic natural textures, beautiful soft daylight, central subject with generous crop margin. Back view of an adult woman with softly waved shoulder-length chestnut balayage hair, elegant healthy hair texture, cream blouse, blurred warm rose boutique salon, no visible face.",
+    "original": "exec-f5198800-f964-4c91-b5d3-01c2503f998a.png",
+    "output": "public/template-images/salon-1.webp"
+  },
+  {
+    "slug": "salon-2",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for fictional Korean small-business website demo. No text, logos, watermark, collage. Realistic anatomy and materials, central subject with crop margin. Hair care still life in a dusty rose boutique salon: unbranded amber pump bottles, ceramic bowl with white hair treatment cream, wooden brush and folded warm ivory towels on oak counter, soft daylight.",
+    "original": "exec-872f0ed3-2be7-4caa-85f3-fbdfec285828.png",
+    "output": "public/template-images/salon-2.webp"
+  },
+  {
+    "slug": "fitness-0",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for fictional Korean small-business website demo. No text, logos, watermark, collage. Realistic anatomy and materials, central subject with crop margin. Adult Korean female personal trainer in modest black sportswear guiding an adult female client in a simple standing dumbbell exercise, correct controlled posture, both fully visible with realistic hands, modern dark charcoal gym, subtle lime accent, warm directional light.",
+    "original": "exec-aa8a8f8a-7925-434f-a165-d3b2ad4a7e1e.png",
+    "output": "public/template-images/fitness-0.webp"
+  },
+  {
+    "slug": "fitness-1",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for fictional Korean small-business website demo. No text, logos, watermark, collage. Realistic anatomy and materials, central subject with crop margin. Small group of three adults on exercise mats doing an easy upright seated stretching class in a neighborhood studio, diverse natural body shapes, black sportswear, charcoal studio and lime detail, professional editorial sports photo, realistic anatomy.",
+    "original": "exec-bd125704-1514-49c6-b692-ad540275d191.png",
+    "output": "public/template-images/fitness-1.webp"
+  },
+  {
+    "slug": "market-1",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for a fictional Korean small-business demo, no text, logos, watermark or collage, natural soft daylight, realistic materials, generous crop margin. Fresh vegetable bundle in a woven basket on grocery counter: lettuce, carrots, cucumber, spring onions, zucchini, tomatoes, green neighborhood market interior softly blurred.",
+    "original": "exec-a291c240-5eb7-44fc-aaf6-de62d5cb3c8d.png",
+    "output": "public/template-images/market-1.webp"
+  },
+  {
+    "slug": "market-2",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for a fictional Korean small-business demo, no text, logos, watermark or collage, natural soft daylight, realistic materials, generous crop margin. Useful everyday household goods neatly displayed in a neighborhood grocery: plain unlabeled dishwashing liquid bottles, folded cleaning cloths, wooden brushes, paper towel rolls, cream and green shelf, not luxury cosmetics.",
+    "original": "exec-4317c16d-3474-4f80-b8fa-f72bbd9300db.png",
+    "output": "public/template-images/market-2.webp"
+  },
+  {
+    "slug": "professional-1",
+    "prompt": "One photorealistic landscape 3:2 premium editorial photograph for a fictional Korean small-business demo, no text, logos, watermark or collage, natural soft daylight, realistic materials, generous crop margin. Close-up accountant's tidy desk, calculator, laptop corner and blank unmarked folders and papers, pen neatly placed, navy grey and oak palette, no numbers or readable content, calm window light.",
+    "original": "exec-c0d26392-a708-443d-b215-327f7003edca.png",
+    "output": "public/template-images/professional-1.webp"
+  },
+  {
+    "slug": "professional-2",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean small-business website demo. No text, logos, watermark or collage, believable natural materials and anatomy, calm soft daylight, generous margin for responsive cropping. Two adult Korean business owners in smart casual clothes having a friendly consultation at a tidy accounting office meeting table, navy grey palette, open blank folder and laptop, natural relaxed hands and expressions, no handshakes, no readable papers.",
+    "original": "exec-63a55505-c22a-4297-b833-9f67fb200fd7.png",
+    "output": "public/template-images/professional-2.webp"
+  },
+  {
+    "slug": "care-1",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean small-business website demo. No text, logos, watermark or collage, believable natural materials and anatomy, calm soft daylight, generous margin for responsive cropping. Empty private consultation room in a small neighborhood clinic, pale teal chairs, light wood desk, desktop computer and plant, cream walls and soft daylight, no medical procedures, no certificates or signage.",
+    "original": "exec-e4fcfa95-5720-4945-90cd-136c3532ddde.png",
+    "output": "public/template-images/care-1.webp"
+  },
+  {
+    "slug": "care-2",
+    "prompt": "One photorealistic landscape 3:2 editorial photograph for a fictional Korean small-business website demo. No text, logos, watermark or collage, believable natural materials and anatomy, calm soft daylight, generous margin for responsive cropping. Detail of a welcoming clinic visit preparation space: light wood reception countertop, blank clipboard and pen, folded plain brochure without writing, comfortable teal waiting seats softly out of focus, bright natural light, no people, no medication.",
+    "original": "exec-8c027960-a3cd-4e78-89ed-fe74e8b2bfef.png",
+    "output": "public/template-images/care-2.webp"
+  }
+]

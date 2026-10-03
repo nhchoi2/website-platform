@@ -1,6 +1,6 @@
 # 업종별 템플릿 안내와 구성 미리보기
 
-`/templates`에서 정보 배치가 서로 다른 7종의 제작 상담용 예시를 제공합니다. 실제 고객 자료가 아닌 예시 브랜드·콘텐츠이며, 음식 사진 외 업종별 그림은 직접 만든 SVG입니다. 기존 혜화 고객 관리·게시 데이터와 별개이고, 용스 원본 프로젝트는 사용하지 않았습니다. 실제 업체 홈페이지를 조사한 근거와 적용 범위는 [참고 기록](template-reference-research.md)에 정리했습니다.
+`/templates`에서 정보 배치가 서로 다른 7종의 제작 상담용 예시를 제공합니다. 실제 고객 자료가 아닌 예시 브랜드·콘텐츠이며, 업종별 사진 22장은 내장 이미지 생성 도구로 제작한 AI 예시입니다. 기존 혜화 고객 관리·게시 데이터와 별개이고, 용스 원본 프로젝트는 사용하지 않았습니다. 실제 업체 홈페이지를 조사한 근거와 적용 범위는 [참고 기록](template-reference-research.md)에 정리했습니다.
 
 ## 화면과 수정 위치
 
@@ -9,6 +9,7 @@
 - `templates/catalog/TemplateArt.tsx`, `catalog.css`: 직접 만든 그림, 메뉴·방문·푸터 등의 공통 스타일. 기존 혜화 디자인은 `templates/hyehwa/`에 유지.
 - `templates/catalog/DesignThumbnail.tsx`, `thumbnails.css`: 각 실제 구성에 맞춘 카탈로그 썸네일.
 - `templates/catalog/DemoSite.tsx`, `Visit.tsx`: 페이지 프레임, 디자인 선택, 공통 방문 안내.
+- `templates/catalog/images.ts`: 업종별 대표·메뉴·서비스 사진과 대체 텍스트. 정적 예시 파일은 `public/template-images/`, 제작 프롬프트는 `docs/template-image-prompts.json`.
 - `templates/catalog/ContentFeatures.tsx`: 갤러리·가격 비교표·담당자·요일별 시간표·공지·이용 절차.
 - `templates/catalog/options.ts`: 허용 기능, 페이지 구성, URL 직렬화, 문의 내용, 견적 기준.
 - `templates/catalog/CommonFeatures.tsx`: 모든 예시 페이지의 공통 플로팅 버튼. URL 미입력 시 접수가 아닌 예시 안내만 표시.

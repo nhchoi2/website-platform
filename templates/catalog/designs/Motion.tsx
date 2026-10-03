@@ -33,6 +33,7 @@ export function Motion({ template: t, options, page, href }: DesignProps) {
           <div>
             {t.items.map((item, i) => (
               <article key={item.name}>
+                <TemplateArt template={t} compact photoIndex={i} />
                 <span className="d-motion-index">0{i + 1}</span>
                 <small>{item.category}</small>
                 <h3>{item.name}</h3>

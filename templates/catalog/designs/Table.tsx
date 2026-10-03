@@ -33,7 +33,7 @@ export function Table({ template: t, options, page, href }: DesignProps) {
           <div>
             {t.items.map((item, i) => (
               <article key={item.name} className="d-menu-row">
-                <span>0{i + 1}</span>
+                <TemplateArt template={t} compact photoIndex={i} />
                 <div>
                   <small>{item.category}</small>
                   <h3>{item.name}</h3>

@@ -28,7 +28,7 @@ export function CategoryItems({
       <div className="d-category-grid">
         {items.map((item) => (
           <article key={item.name}>
-            <TemplateArt template={template} compact />
+            <TemplateArt template={template} compact photoIndex={template.items.indexOf(item)} />
             <small>{item.category}</small>
             <h3>{item.name}</h3>
             <p>{item.detail}</p>

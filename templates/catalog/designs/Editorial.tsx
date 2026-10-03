@@ -37,7 +37,7 @@ export function Editorial({ template: t, options, page, href }: DesignProps) {
           </div>
           {t.items.map((item, i) => (
             <article key={item.name}>
-              <span className="d-collection-number">0{i + 1}</span>
+              <TemplateArt template={t} compact photoIndex={i} />
               <div>
                 <small>{item.category}</small>
                 <h3>{item.name}</h3>
