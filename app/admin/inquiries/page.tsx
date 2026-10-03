@@ -8,7 +8,7 @@ export default async function Inquiries() {
   const user = await requireUser(true);
   const inquiries = await rpc<Inquiry[]>(user, 'list_inquiries');
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <header className="workspace-header">
         <div>
           <p className="eyebrow">INQUIRIES</p>

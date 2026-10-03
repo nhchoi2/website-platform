@@ -8,7 +8,7 @@ export default async function AdminEdit({ params }: { params: Promise<{ id: stri
   const detail = await siteDetail(user, (await params).id).catch(() => null);
   if (!detail) notFound();
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <Editor detail={detail} admin />
     </Shell>
   );

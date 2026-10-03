@@ -11,7 +11,7 @@ export default async function EvidencePage() {
     rpc<Project[]>(user, 'list_projects'),
   ]);
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <EvidencePanel items={items} projects={projects} admin={true} />
     </Shell>
   );

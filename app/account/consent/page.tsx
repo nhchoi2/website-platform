@@ -8,7 +8,7 @@ export default async function ConsentPage() {
   const user = await requireUser(false, true);
   if (await rpc<boolean>(user, 'has_account_consent')) redirect('/account');
   return (
-    <Shell user={user} active="account">
+    <Shell user={user}>
       <ConsentForm />
     </Shell>
   );

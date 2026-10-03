@@ -14,7 +14,7 @@ export default async function Admin() {
     ),
   ]);
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <header className="workspace-header">
         <div>
           <p className="eyebrow">ADMIN WORKSPACE</p>

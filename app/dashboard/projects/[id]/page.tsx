@@ -13,7 +13,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const detail = await rpc<ProjectDetail>(user, 'get_project', { p_project: id }).catch(() => null);
   if (!detail) notFound();
   return (
-    <Shell user={user} active="dashboard">
+    <Shell user={user}>
       <ProjectPanel detail={detail} admin={false} />
     </Shell>
   );

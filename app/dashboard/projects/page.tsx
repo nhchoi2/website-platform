@@ -12,7 +12,7 @@ export default async function Projects() {
     rpc<Inquiry[]>(user, 'get_my_inquiries'),
   ]);
   return (
-    <Shell user={user} active="dashboard">
+    <Shell user={user}>
       <ProjectList projects={projects} inquiries={inquiries} admin={false} />
     </Shell>
   );

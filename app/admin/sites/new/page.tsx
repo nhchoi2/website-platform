@@ -15,7 +15,7 @@ export default async function NewSite({
     ? (await rpc<Inquiry[]>(user, 'list_inquiries')).find((i) => i.id === query.inquiry)
     : undefined;
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <div className="page-body">
         <h1>고객 홈페이지 제작</h1>
         <SiteSetup customers={customers.filter((c) => c.id !== user.id)} inquiry={inquiry} admin />

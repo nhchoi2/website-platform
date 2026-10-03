@@ -15,7 +15,7 @@ export default async function AdminSite({ params }: { params: Promise<{ id: stri
     p_user: detail.site.owner_id,
   });
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <section className="account-page">
         <details className="panel">
           <summary>고객 담당자 연락 정보 · 비공개</summary>

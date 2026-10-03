@@ -12,7 +12,7 @@ export default async function Dashboard() {
   const ownId = await rpc<string | null>(user, 'get_own_site');
   const own = ownId ? await siteDetail(user, ownId) : null;
   return (
-    <Shell user={user} active="dashboard">
+    <Shell user={user}>
       {own ? <Editor detail={own} /> : <TemplatePicker />}
     </Shell>
   );

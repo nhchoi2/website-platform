@@ -8,7 +8,7 @@ export default async function Notifications() {
   const user = await requireUser(true);
   const jobs = await rpc<NotificationJob[]>(user, 'list_notifications');
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <NotificationPanel jobs={jobs} configured={!!emailConfigured()} local={mode() === 'local'} />
     </Shell>
   );

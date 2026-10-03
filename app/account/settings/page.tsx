@@ -8,7 +8,7 @@ export default async function SettingsPage() {
   const user = await requireUser();
   const details = await rpc<AccountDetails>(user, 'get_account_details');
   return (
-    <Shell user={user} active="account">
+    <Shell user={user}>
       <ContactForm details={details} email={user.email} admin={user.admin} />
     </Shell>
   );

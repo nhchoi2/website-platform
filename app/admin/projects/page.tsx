@@ -10,7 +10,7 @@ export default async function Projects() {
   const projects = await rpc<Project[]>(user, 'list_projects');
   const inquiries: Inquiry[] = [];
   return (
-    <Shell user={user} active="admin">
+    <Shell user={user}>
       <ProjectList projects={projects} inquiries={inquiries} admin={true} />
     </Shell>
   );
