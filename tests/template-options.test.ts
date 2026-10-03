@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { findTemplate } from '../templates/catalog/catalog';
+import { findTemplate, demoContent } from '../templates/catalog/catalog';
 import {
   parseOptions,
   optionsQuery,
@@ -53,11 +53,43 @@ test('inquiry contains selected configuration and never invents unknown add-on p
   const url = new URL(inquiryHref(template, options));
   assert.equal(url.pathname, 'koofylab@gmail.com');
   const body = url.searchParams.get('body')!;
-  assert.match(body, /모브 스튜디오/);
+  assert.match(body, /모션 · 프로그램형/);
   assert.match(body, /3페이지/);
   assert.match(body, /상담 플로팅 버튼/);
   assert.match(body, /상단 안내 배너/);
   assert.doesNotMatch(body, /예약 플로팅 버튼/);
   assert.deepEqual(quoteSummary(options), { base: 390000, needsQuote: true });
   assert.equal(quoteSummary(parseOptions({})).needsQuote, false);
+});
+
+test('a design accepts another industry without changing its layout identity, palette or URL', () => {
+  const design = findTemplate('salon')!;
+  const food = findTemplate('hyehwa')!;
+  const options = parseOptions({
+    pages: '4',
+    business: 'hyehwa',
+    features: 'gallery,priceTable,team,schedule,news,process',
+  });
+  const content = demoContent(design, options.business);
+  assert.equal(content.slug, design.slug);
+  assert.equal(content.name, design.name);
+  assert.equal(content.accent, design.accent);
+  assert.equal(content.brand, food.brand);
+  assert.equal(content.artSlug, food.slug);
+  assert.deepEqual(content.items, food.items);
+  assert.equal(content.serviceLabel, '메뉴');
+  assert.deepEqual(
+    parseOptions(Object.fromEntries(new URLSearchParams(optionsQuery(options)))),
+    options,
+  );
+  assert.match(
+    previewHref(design.slug, 'visit', options),
+    /\/salon\/visit\?pages=4&business=hyehwa&features=/,
+  );
+  const body = new URL(inquiryHref(design, options)).searchParams.get('body')!;
+  assert.match(body, /아틀리에/);
+  assert.match(body, /예시 콘텐츠 업종: 음식점/);
+  assert.match(body, /가격·서비스 비교표/);
+  assert.equal(parseOptions({ business: 'unknown' }).business, undefined);
+  assert.equal(demoContent(design, 'unknown').brand, design.brand);
 });

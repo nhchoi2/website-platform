@@ -27,10 +27,6 @@
 .m-catalog-browser small {
   font-size: 8px;
 }
-.m-catalog-visual .t-art {
-  height: 210px;
-  aspect-ratio: auto;
-}
 .m-catalog-visual .t-art img {
   object-position: center 60%;
 }
@@ -38,20 +34,85 @@
   transform: translateY(-5px);
   transition: transform 0.2s;
 }
-.m-catalog-headline {
-  padding: 18px 20px;
-  background: #f9f8f4;
+.m-industry-filters {
+  margin: 35px 0 20px;
 }
-.m-catalog-headline strong {
-  display: block;
-  font-size: 17px;
-  letter-spacing: -0.05em;
+.m-industry-filters > strong {
+  font-size: 13px;
 }
-.m-catalog-headline span {
+.m-industry-filters > div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+.m-industry-filters > div button {
+  border: 1px solid #dce0d5;
+  padding: 10px 15px;
+  border-radius: 25px;
+  background: #fff;
+  font-size: 12px;
+}
+.m-industry-filters > div button[aria-pressed='true'] {
+  background: #263a32;
+  color: #fff;
+  border-color: #263a32;
+}
+.m-industry-filters > p {
+  font-size: 12px;
+  color: #6b7066;
+}
+.m-design-flow {
+  border-top: 1px solid #e1e2db;
+  padding-top: 15px;
+  font-size: 11px !important;
+  min-height: 0 !important;
+}
+.m-layout-explanation {
+  margin: 28px 0;
+  padding: 25px;
+  border: 1px solid #dce0d5;
+  border-radius: 8px;
+  background: #fff;
+}
+.m-layout-explanation > strong {
+  font-size: 13px;
+}
+.m-layout-explanation > p {
+  font-size: 15px;
+  margin: 12px 0 18px;
+}
+.m-layout-explanation details {
+  font-size: 12px;
+  color: #6b7066;
+}
+.m-layout-explanation summary {
+  cursor: pointer;
+}
+.m-layout-explanation details p {
+  max-width: 850px;
+}
+.m-business-choice {
+  margin-bottom: 28px;
+}
+.m-business-choice label {
+  font-size: 13px;
+  font-weight: 700;
+}
+.m-business-choice select {
   display: block;
-  font-size: 9px;
+  width: 100%;
+  border: 1px solid #dce0d5;
+  border-radius: 5px;
+  padding: 11px;
+  background: #fff;
   margin-top: 12px;
-  color: #72776b;
+  font-size: 12px;
+}
+.m-business-choice p {
+  font-size: 11px;
+  color: #6b7066;
+  line-height: 1.8;
 }
 .m-catalog-caption {
   padding: 24px 20px;
@@ -293,6 +354,24 @@
   gap: 7px;
   flex-wrap: wrap;
   border-inline: 1px solid #dce0d5;
+}
+.m-preview-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #fff;
+  border-inline: 1px solid #dce0d5;
+}
+.m-preview-features:empty {
+  display: none;
+}
+.m-preview-features button {
+  font-size: 10px;
+  color: #3158e8;
+  padding: 7px 9px;
+  background: #f3f5ff;
+  border-radius: 4px;
 }
 .m-template-viewport {
   background: #e9ece5;

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Template } from '@/templates/catalog/catalog';
 import type { PreviewOptions } from '@/templates/catalog/options';
+import { designDetails } from '@/templates/catalog/designs/details';
 import { TemplateConfigurator } from './TemplateConfigurator';
 import './templates.css';
 export function TemplateDetail({
@@ -20,13 +21,33 @@ export function TemplateDetail({
           <p className="m-kicker">{template.english}</p>
           <h1>{template.name}</h1>
           <p>{template.description}</p>
-          <span>{template.industry}</span>
+          <span>대표 예시 업종: {template.industry} · 다른 업종에도 적용 가능</span>
         </div>
         <p className="m-config-instruction">
           페이지 구성을 고르고 기능을 체크해 보세요.
           <br />
           선택한 모습이 미리보기에 바로 적용됩니다.
         </p>
+      </div>
+      <div className="m-layout-explanation">
+        <strong>이 디자인의 정보 순서</strong>
+        <p>{designDetails[template.slug].flow}</p>
+        <details>
+          <summary>참고한 실제 홈페이지의 정보 구성</summary>
+          <p>{designDetails[template.slug].reference.observation}</p>
+          <a
+            className="m-text-link"
+            href={designDetails[template.slug].reference.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {designDetails[template.slug].reference.name} 보기 ↗
+          </a>
+          <p>
+            참고 업체와 제휴된 템플릿이 아닙니다. 사진·상표·문구를 복제하지 않고 별도의 디자인과
+            예시 콘텐츠로 구성했습니다.
+          </p>
+        </details>
       </div>
       <div className="m-template-fit">
         <div>

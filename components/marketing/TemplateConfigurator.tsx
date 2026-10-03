@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { Template } from '@/templates/catalog/catalog';
+import { demoContent, templateCatalog, type Template } from '@/templates/catalog/catalog';
 import {
   featureOptions,
   demoPages,
@@ -28,14 +28,19 @@ export function TemplateConfigurator({
   const [page, setPage] = useState<DemoPage>('home');
   const [device, setDevice] = useState('desktop');
   const [copied, setCopied] = useState('');
+  const [focusFeature, setFocusFeature] = useState('');
   const frame = useRef<HTMLIFrameElement>(null);
   const canvas = useRef<HTMLDivElement>(null);
   const [canvasWidth, setCanvasWidth] = useState(760);
   const desktopScale = Math.min(canvasWidth / 1080, 1);
-  const choices = demoPages(options.pages, template);
+  const content = demoContent(template, options.business);
+  const choices = demoPages(options.pages, content);
   const currentPage =
     options.pages === 1 || !choices.some((choice) => choice.id === page) ? 'home' : page;
-  const src = previewHref(template.slug, currentPage, options);
+  const selectedAnchor =
+    focusFeature === 'faq' ? 'visit' : focusFeature ? `feature-${focusFeature}` : '';
+  const src =
+    previewHref(template.slug, currentPage, options) + (selectedAnchor ? `#${selectedAnchor}` : '');
   const quote = quoteSummary(options);
   useEffect(() => {
     if (!canvas.current) return;
@@ -58,12 +63,14 @@ export function TemplateConfigurator({
         event.data.slug !== template.slug
       )
         return;
-      if (demoPages(options.pages, template).some((choice) => choice.id === event.data.page))
+      if (demoPages(options.pages, template).some((choice) => choice.id === event.data.page)) {
+        if (event.data.page !== page) setFocusFeature('');
         setPage(event.data.page);
+      }
     };
     window.addEventListener('message', listener);
     return () => window.removeEventListener('message', listener);
-  }, [template, options.pages]);
+  }, [template, options.pages, page]);
   async function copySelection() {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -75,6 +82,28 @@ export function TemplateConfigurator({
   return (
     <div className="m-configurator">
       <aside className="m-config-options" aria-label="템플릿 구성 선택">
+        <div className="m-business-choice">
+          <label htmlFor="sample-business">예시 콘텐츠 업종</label>
+          <select
+            id="sample-business"
+            value={options.business || template.slug}
+            onChange={(event) => {
+              setOptions({ ...options, business: event.target.value });
+              setPage('home');
+              setFocusFeature('');
+            }}
+          >
+            {templateCatalog.map((t) => (
+              <option key={t.slug} value={t.slug}>
+                {t.industry}
+              </option>
+            ))}
+          </select>
+          <p>
+            디자인은 그대로, 예시 내용만 바뀝니다. 내 업종에 추천되지 않은 디자인도 선택할 수
+            있습니다.
+          </p>
+        </div>
         <fieldset>
           <legend>01 · 페이지 구성</legend>
           <div className="m-page-choices">
@@ -87,6 +116,7 @@ export function TemplateConfigurator({
                   onChange={() => {
                     setOptions({ ...options, pages: count });
                     setPage('home');
+                    setFocusFeature('');
                   }}
                 />
                 <span>
@@ -95,66 +125,87 @@ export function TemplateConfigurator({
                     {count === 1
                       ? '메뉴 클릭 → 같은 페이지의 섹션'
                       : count === 3
-                        ? `홈·소개 / ${template.serviceLabel} / 방문·문의`
-                        : `홈 / 소개 / ${template.serviceLabel} / 방문·문의`}
+                        ? `홈·소개 / ${content.serviceLabel} / 방문·문의`
+                        : `홈 / 소개 / ${content.serviceLabel} / 방문·문의`}
                   </small>
                 </span>
               </label>
             ))}
           </div>
         </fieldset>
-        <fieldset>
-          <legend>02 · 추가 기능 미리보기</legend>
-          {featureOptions.map((feature) => (
-            <div className="m-feature-choice" key={feature.id}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={options.features.includes(feature.id)}
-                  onChange={(event) =>
-                    setOptions({
-                      ...options,
-                      features: event.target.checked
-                        ? [...options.features, feature.id]
-                        : options.features.filter((id) => id !== feature.id),
-                    })
-                  }
-                />
-                <span>
-                  <strong>{feature.label}</strong>
-                  <small>{feature.description}</small>
-                </span>
-              </label>
-              {feature.floating &&
-                feature.id !== 'top' &&
-                options.features.includes(feature.id) && (
-                  <label className="m-link-input">
-                    <span>{feature.label} 연결 주소 (선택)</span>
+        {[
+          {
+            title: '02 · 콘텐츠 기능',
+            ids: ['gallery', 'priceTable', 'team', 'schedule', 'news', 'process', 'faq'],
+          },
+          {
+            title: '03 · 안내·외부 연결',
+            ids: ['notice', 'consult', 'reserve', 'place', 'kakao', 'top'],
+          },
+        ].map((group) => (
+          <fieldset key={group.title}>
+            <legend>{group.title}</legend>
+            {featureOptions
+              .filter((feature) => group.ids.includes(feature.id))
+              .map((feature) => (
+                <div className="m-feature-choice" key={feature.id}>
+                  <label>
                     <input
-                      type="url"
-                      placeholder="https://..."
-                      value={options.links[feature.id] || ''}
-                      onChange={(event) =>
+                      type="checkbox"
+                      checked={options.features.includes(feature.id)}
+                      onChange={(event) => {
+                        setFocusFeature(
+                          event.target.checked && !feature.floating && feature.id !== 'notice'
+                            ? feature.id
+                            : '',
+                        );
+                        if (event.target.checked && feature.id === 'faq' && options.pages !== 1)
+                          setPage('visit');
                         setOptions({
                           ...options,
-                          links: { ...options.links, [feature.id]: event.target.value },
-                        })
-                      }
-                      aria-invalid={
-                        !!options.links[feature.id] && !safeExternalLink(options.links[feature.id]!)
-                      }
+                          features: event.target.checked
+                            ? [...options.features, feature.id]
+                            : options.features.filter((id) => id !== feature.id),
+                        });
+                      }}
                     />
-                    {!!options.links[feature.id] &&
-                      !safeExternalLink(options.links[feature.id]!) && (
-                        <small className="m-input-error">
-                          HTTPS 주소를 입력하세요. 연결 전에는 예시 안내만 표시합니다.
-                        </small>
-                      )}
+                    <span>
+                      <strong>{feature.label}</strong>
+                      <small>{feature.description}</small>
+                    </span>
                   </label>
-                )}
-            </div>
-          ))}
-        </fieldset>
+                  {feature.floating &&
+                    feature.id !== 'top' &&
+                    options.features.includes(feature.id) && (
+                      <label className="m-link-input">
+                        <span>{feature.label} 연결 주소 (선택)</span>
+                        <input
+                          type="url"
+                          placeholder="https://..."
+                          value={options.links[feature.id] || ''}
+                          onChange={(event) =>
+                            setOptions({
+                              ...options,
+                              links: { ...options.links, [feature.id]: event.target.value },
+                            })
+                          }
+                          aria-invalid={
+                            !!options.links[feature.id] &&
+                            !safeExternalLink(options.links[feature.id]!)
+                          }
+                        />
+                        {!!options.links[feature.id] &&
+                          !safeExternalLink(options.links[feature.id]!) && (
+                            <small className="m-input-error">
+                              HTTPS 주소를 입력하세요. 연결 전에는 예시 안내만 표시합니다.
+                            </small>
+                          )}
+                      </label>
+                    )}
+                </div>
+              ))}
+          </fieldset>
+        ))}
         <div className="m-config-quote" aria-live="polite">
           <p>기본 원페이지 제작</p>
           <strong>
@@ -212,11 +263,31 @@ export function TemplateConfigurator({
               <button
                 key={choice.id}
                 aria-current={currentPage === choice.id ? 'page' : undefined}
-                onClick={() => setPage(choice.id)}
+                onClick={() => {
+                  setPage(choice.id);
+                  setFocusFeature('');
+                }}
               >
                 {choice.label}
               </button>
             ))}
+          </nav>
+        )}
+        {!!options.features.length && (
+          <nav className="m-preview-features" aria-label="추가한 콘텐츠 바로 보기">
+            {featureOptions
+              .filter((f) => !f.floating && f.id !== 'notice' && options.features.includes(f.id))
+              .map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => {
+                    setFocusFeature(f.id);
+                    if (f.id === 'faq' && options.pages !== 1) setPage('visit');
+                  }}
+                >
+                  {f.label} ↓
+                </button>
+              ))}
           </nav>
         )}
         <div
@@ -241,8 +312,8 @@ export function TemplateConfigurator({
         </div>
         <div className="m-preview-footnote">
           <p>
-            체크한 기능은 모든 예시 페이지에 유지됩니다. 링크를 입력하지 않은 버튼은 예시 안내를
-            보여줍니다.
+            체크한 기능은 모든 예시 페이지에 유지됩니다. 콘텐츠 기능은 화면 아래에 추가됩니다. FAQ는
+            방문 안내에 표시됩니다. 링크를 입력하지 않은 버튼은 예시 안내를 보여줍니다.
           </p>
           <Link href={src} target="_blank" rel="noopener noreferrer">
             새 창에서 전체 화면 보기 ↗

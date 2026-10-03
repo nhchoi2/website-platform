@@ -1,7 +1,43 @@
 import { pricing } from '@/components/marketing/content';
-import type { Template } from './catalog';
+import { findTemplate, type Template } from './catalog';
 
 export const featureOptions = [
+  {
+    id: 'gallery',
+    label: '사진 갤러리',
+    description: '공간·작업 사진을 크게 열고 넘겨 볼 수 있습니다.',
+    floating: false,
+  },
+  {
+    id: 'priceTable',
+    label: '가격·서비스 비교표',
+    description: '메뉴·상품·서비스 가격과 설명을 한눈에 비교합니다.',
+    floating: false,
+  },
+  {
+    id: 'team',
+    label: '직원·전문가 소개',
+    description: '담당자와 역할을 소개하는 영역을 추가합니다.',
+    floating: false,
+  },
+  {
+    id: 'schedule',
+    label: '요일별 운영·시간표',
+    description: '요일을 선택해 운영시간과 프로그램을 확인합니다.',
+    floating: false,
+  },
+  {
+    id: 'news',
+    label: '공지·소식 목록',
+    description: '휴무·행사·운영 소식을 펼쳐 볼 수 있습니다.',
+    floating: false,
+  },
+  {
+    id: 'process',
+    label: '이용·상담 절차',
+    description: '처음 문의한 뒤 이용하기까지의 순서를 설명합니다.',
+    floating: false,
+  },
   {
     id: 'consult',
     label: '상담 플로팅 버튼',
@@ -50,6 +86,7 @@ export type PageCount = 1 | 3 | 4;
 export type DemoPage = 'home' | 'about' | 'services' | 'visit';
 export type PreviewOptions = {
   pages: PageCount;
+  business?: string;
   features: FeatureId[];
   links: Partial<Record<FeatureId, string>>;
 };
@@ -74,10 +111,18 @@ export function parseOptions(query: Query): PreviewOptions {
     if (typeof value === 'string' && safeExternalLink(value))
       links[option.id] = safeExternalLink(value);
   }
-  return { pages: query.pages === '3' ? 3 : query.pages === '4' ? 4 : 1, features, links };
+  const business =
+    typeof query.business === 'string' && findTemplate(query.business) ? query.business : undefined;
+  return {
+    pages: query.pages === '3' ? 3 : query.pages === '4' ? 4 : 1,
+    features,
+    links,
+    ...(business ? { business } : {}),
+  };
 }
 export function optionsQuery(options: PreviewOptions) {
   const params = new URLSearchParams({ pages: String(options.pages) });
+  if (options.business && findTemplate(options.business)) params.set('business', options.business);
   if (options.features.length) params.set('features', options.features.join(','));
   for (const [key, value] of Object.entries(options.links)) {
     if (options.features.includes(key as FeatureId) && safeExternalLink(value))
@@ -101,7 +146,8 @@ export function quoteSummary(options: PreviewOptions) {
 export function inquiryHref(template: Template, options: PreviewOptions) {
   const chosen = featureOptions.filter((f) => options.features.includes(f.id)).map((f) => f.label);
   const body = [
-    `템플릿: ${template.name} (${template.industry})`,
+    `디자인: ${template.name}`,
+    `예시 콘텐츠 업종: ${(options.business && findTemplate(options.business)?.industry) || template.industry} (다른 업종에도 적용 가능)`,
     `페이지 구성: ${options.pages === 1 ? '원페이지 · 메뉴 클릭 시 섹션 이동' : `${options.pages}페이지 · 독립 페이지 이동`}`,
     `선택 기능: ${chosen.join(', ') || '기본 구성'}`,
     '추가 페이지·기능 비용: 상담 후 확정',
@@ -114,5 +160,5 @@ export function inquiryHref(template: Template, options: PreviewOptions) {
     '업종 / 상호:',
     '필요한 제작 내용:',
   ].join('\n');
-  return `mailto:koofylab@gmail.com?${new URLSearchParams({ subject: `[홈페이지 제작 문의] ${template.name}`, body })}`;
+  return `mailto:koofylab@gmail.com?subject=${encodeURIComponent(`[홈페이지 제작 문의] ${template.name}`)}&body=${encodeURIComponent(body)}`;
 }

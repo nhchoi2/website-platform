@@ -15,6 +15,7 @@ export type Template = {
   accent: string;
   background: string;
   ink: string;
+  artSlug?: string;
   items: { name: string; detail: string; price: string; category: string }[];
   highlights: string[];
 };
@@ -24,7 +25,7 @@ export type Template = {
 export const templateCatalog: Template[] = [
   {
     slug: 'hyehwa',
-    name: '담백한 식탁',
+    name: '테이블 · 메뉴 중심형',
     industry: '음식점 · 치킨 · 분식',
     english: 'THE TABLE',
     brand: '담백한 식탁',
@@ -64,7 +65,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'cafe',
-    name: '느린 오후',
+    name: '에디토리얼 · 화보형',
     industry: '카페 · 베이커리 · 꽃집',
     english: 'SLOW AFTERNOON',
     brand: '느린 오후',
@@ -104,7 +105,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'salon',
-    name: '온결 살롱',
+    name: '아틀리에 · 포트폴리오형',
     industry: '미용실 · 네일 · 피부관리',
     english: 'ONGYEOL STUDIO',
     brand: '온결 살롱',
@@ -145,7 +146,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'fitness',
-    name: '모브 스튜디오',
+    name: '모션 · 프로그램형',
     industry: '헬스장 · PT · 필라테스 · 요가',
     english: 'MOVE YOUR EVERYDAY',
     brand: 'MOVE STUDIO',
@@ -186,7 +187,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'market',
-    name: '우리동네 마켓',
+    name: '마켓 · 상품 안내형',
     industry: '마트 · 정육점 · 식자재 · 소매점',
     english: 'FRESH IN YOUR NEIGHBORHOOD',
     brand: '우리동네 마켓',
@@ -227,7 +228,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'professional',
-    name: '바른 파트너스',
+    name: '파트너 · 상담형',
     industry: '세무사 · 회계사 · 노무사 · 전문 사무실',
     english: 'BAREUN PARTNERS',
     brand: '바른 파트너스',
@@ -268,7 +269,7 @@ export const templateCatalog: Template[] = [
   },
   {
     slug: 'care',
-    name: '이음 케어',
+    name: '케어 · 방문 안내형',
     industry: '병원 · 의원 · 약국',
     english: 'CARE, CLOSE TO YOU',
     brand: '이음 케어',
@@ -311,4 +312,18 @@ export const templateCatalog: Template[] = [
 
 export function findTemplate(slug: string) {
   return templateCatalog.find((template) => template.slug === slug);
+}
+
+// Design identity and sample business content are independent. No industry lock.
+export function demoContent(design: Template, business?: string): Template {
+  const content = (business && findTemplate(business)) || design;
+  return {
+    ...content,
+    slug: design.slug,
+    name: design.name,
+    accent: design.accent,
+    background: design.background,
+    ink: design.ink,
+    artSlug: content.slug,
+  };
 }

@@ -10,11 +10,15 @@ export default function Templates() {
   return (
     <main id="main" className="m-container">
       <PageIntro label="TEMPLATES / 07" title="내 사업에 어울리는 홈페이지.">
-        업종에 맞는 디자인을 고르고, 필요한 페이지와 기능을 직접 확인하세요.
+        정보 배치가 서로 다른 디자인을 고르고, 필요한 페이지와 기능을 직접 확인하세요.
         <br />
         회원가입 없이 둘러보고 선택한 구성으로 제작을 문의할 수 있습니다.
       </PageIntro>
       <aside className="m-catalog-note">
+        <p>
+          업종은 추천 기준입니다. 음식점이 화보형을, 미용실이 가격 목록형을 선택해도 좋습니다.
+          상세보기에서 같은 디자인에 다른 업종의 예시 내용을 넣어 비교할 수 있습니다.
+        </p>
         <p>
           <strong>원페이지도 메뉴가 있습니다.</strong> 메뉴를 누르면 같은 화면 안의
           소개·서비스·위치로 이동합니다. 3·4페이지 구성은 각각의 주소로 이동합니다.

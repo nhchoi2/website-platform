@@ -10,6 +10,7 @@ export function TemplateArt({
   template: Template;
   compact?: boolean;
 }) {
+  const artwork = template.artSlug || template.slug;
   const style = {
     '--t-accent': template.accent,
     '--t-paper': template.background,
@@ -17,17 +18,17 @@ export function TemplateArt({
   } as CSSProperties;
   return (
     <div
-      className={`t-art t-art-${template.slug} ${compact ? 't-art-compact' : ''}`}
+      className={`t-art t-art-${artwork} ${compact ? 't-art-compact' : ''}`}
       style={style}
       role="img"
       aria-label={`${template.industry} 템플릿 예시 일러스트`}
     >
-      {template.slug === 'hyehwa' ? (
+      {artwork === 'hyehwa' ? (
         <img src="/marketing/hyehwa-food.jpeg" alt="삼겹살과 김치 예시 음식 사진" />
       ) : (
         <svg viewBox="0 0 600 520" aria-hidden="true">
           <circle cx="390" cy="190" r="170" fill="currentColor" opacity=".08" />
-          {template.slug === 'cafe' && (
+          {artwork === 'cafe' && (
             <>
               <path d="M70 390H535" stroke="currentColor" strokeWidth="3" />
               <ellipse cx="240" cy="390" rx="155" ry="28" fill="currentColor" opacity=".12" />
@@ -48,7 +49,7 @@ export function TemplateArt({
               />
             </>
           )}
-          {template.slug === 'salon' && (
+          {artwork === 'salon' && (
             <>
               <rect x="110" y="45" width="250" height="340" rx="125" fill="#cdb7bd" />
               <rect x="125" y="60" width="220" height="310" rx="110" fill="#ede4e0" />
@@ -65,7 +66,7 @@ export function TemplateArt({
               <path d="M385 410h145" stroke="currentColor" strokeWidth="3" />
             </>
           )}
-          {template.slug === 'fitness' && (
+          {artwork === 'fitness' && (
             <>
               <path
                 d="M90 410L485 110M155 435L550 135"
@@ -115,7 +116,7 @@ export function TemplateArt({
               </text>
             </>
           )}
-          {template.slug === 'market' && (
+          {artwork === 'market' && (
             <>
               <path d="M110 265h390l-40 165H155z" fill="#d7b37d" />
               <path
@@ -142,7 +143,7 @@ export function TemplateArt({
               />
             </>
           )}
-          {template.slug === 'professional' && (
+          {artwork === 'professional' && (
             <>
               <rect x="85" y="90" width="325" height="330" rx="10" fill="#dbe4f0" />
               <rect x="110" y="115" width="275" height="270" rx="4" fill="#fff" />
@@ -154,7 +155,7 @@ export function TemplateArt({
               <path d="M392 340l22 22 42-49" fill="none" stroke="#fff" strokeWidth="10" />
             </>
           )}
-          {template.slug === 'care' && (
+          {artwork === 'care' && (
             <>
               <rect x="100" y="85" width="350" height="350" rx="110" fill="#c2e5df" />
               <path d="M255 165h45v70h70v45h-70v70h-45v-70h-70v-45h70z" fill="#fff" />

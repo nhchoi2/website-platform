@@ -124,6 +124,7 @@ try {
   assert.match((await get('/projects')).body, /Intranet System/);
   assert.equal((await get('/marketing/projects/yongs-dining.webp')).status, 200);
   assert.match((await get('/templates/hyehwa/classic?theme=warm')).body, /#653c2c/);
+  const renderedLayouts = new Set<string>();
   for (const template of templateCatalog) {
     assert.equal((await get(`/templates/${template.slug}`)).status, 200);
     for (const pages of [1, 3, 4]) {
@@ -139,6 +140,8 @@ try {
         );
         assert.equal(res.status, 200, `${template.slug}/${pages}${section}`);
         assert.equal(res.headers['x-robots-tag'], 'noindex, nofollow');
+        if (!section)
+          renderedLayouts.add(res.body.match(/data-design="([a-z]+)"/)?.[1] || 'missing');
         assert.match(res.body, /네이버|예약하기/);
         assert.match(res.body, /https:\/\/booking.naver.com\/example/);
         assert.match(res.body, /휴무나 행사/);
@@ -147,6 +150,23 @@ try {
       }
     }
   }
+  assert.equal(
+    renderedLayouts.size,
+    templateCatalog.length,
+    'every design must use a distinct composition',
+  );
+  assert.ok(!renderedLayouts.has('missing'));
+  const crossIndustry = await get(
+    '/template-preview/salon/services?pages=4&business=hyehwa&features=gallery,priceTable,team,schedule,news,process',
+  );
+  assert.equal(crossIndustry.status, 200);
+  assert.match(crossIndustry.body, /data-design="atelier"/);
+  assert.match(crossIndustry.body, /담백한 식탁/);
+  assert.match(crossIndustry.body, /숙성 삼겹살/);
+  assert.match(crossIndustry.body, /business=hyehwa/);
+  for (const id of ['gallery', 'priceTable', 'team', 'schedule', 'news', 'process'])
+    assert.match(crossIndustry.body, new RegExp(`id="feature-${id}"`));
+  assert.doesNotMatch(crossIndustry.body, /디자인 커트/);
   for (const path of [
     '/templates/unknown',
     '/template-preview/unknown',
