@@ -1242,3 +1242,185 @@
     font-size: 28px;
   }
 }
+
+/* Pricing: one-time setup and ongoing care are separate costs. */
+.m-pricing-page .m-page-intro h1 {
+  white-space: pre-line;
+}
+.m-pricing-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.m-pricing-nav a {
+  padding: 10px 16px;
+  border: 1px solid #d6dbd0;
+  border-radius: 100px;
+  font-size: 13px;
+}
+.m-pricing-nav a:hover {
+  background: #eaece3;
+}
+.m-pricing-page [id] {
+  scroll-margin-top: 100px;
+}
+.m-pricing-page .m-plan {
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.m-pricing-page .m-plan-setup {
+  background: #eaece3;
+  border-color: #b9c0ad;
+}
+.m-pricing-page .m-plan .m-button {
+  margin-top: auto;
+}
+.m-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-block: 28px;
+}
+.m-scope-card {
+  background: #fff;
+  border: 1px solid #d6dbd0;
+  border-radius: 18px;
+  padding: 30px;
+}
+.m-cost-tag {
+  display: inline-block;
+  background: #edf0e6;
+  color: #425138;
+  padding: 7px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  margin-bottom: 22px;
+}
+.m-cost-tag-paid {
+  background: #e9edfa;
+  color: #294f9a;
+}
+.m-scope-card h3 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+.m-scope-card > p {
+  font-size: 13px;
+  color: var(--m-muted);
+  line-height: 1.9;
+}
+.m-pricing-faq details {
+  border-bottom: 1px solid #d6dbd0;
+  padding: 22px 0;
+}
+.m-pricing-faq summary {
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 550;
+}
+.m-pricing-faq details p {
+  max-width: 820px;
+  line-height: 1.9;
+  color: var(--m-muted);
+  margin-top: 16px;
+}
+.m-pricing-cta {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+  background: #eaece3;
+  padding: 38px;
+  border-radius: 20px;
+  margin-block: 55px 80px;
+}
+.m-pricing-cta h2 {
+  font-size: 28px;
+}
+.m-pricing-cta p {
+  color: var(--m-muted);
+}
+.m-pricing-cta .m-button {
+  flex-shrink: 0;
+}
+.legal-summary {
+  padding: 24px;
+  background: #edf0e6;
+  border-radius: 14px;
+  margin-block: 24px;
+  line-height: 1.9;
+}
+.legal-summary h2 {
+  font-size: 20px;
+}
+.legal-toc {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  border-block: 1px solid #d6dbd0;
+  padding: 24px 0;
+  margin-block: 30px;
+}
+.legal-toc strong {
+  grid-column: 1/-1;
+}
+.legal-toc a {
+  font-size: 14px;
+}
+.legal-document section {
+  scroll-margin-top: 100px;
+}
+.legal-table-wrap {
+  overflow-x: auto;
+}
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.legal-table caption {
+  text-align: left;
+  padding: 12px 0;
+  font-weight: 600;
+}
+.legal-table th,
+.legal-table td {
+  border: 1px solid #d6dbd0;
+  padding: 14px;
+  text-align: left;
+  vertical-align: top;
+}
+.legal-table thead th {
+  background: #edf0e6;
+}
+.legal-table tbody th {
+  width: 24%;
+}
+@media (max-width: 760px) {
+  .m-scope-grid {
+    grid-template-columns: 1fr;
+  }
+  .m-scope-card {
+    padding: 24px;
+  }
+  .m-pricing-cta {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 26px;
+  }
+  .m-pricing-cta h2 {
+    font-size: 24px;
+  }
+  .legal-toc {
+    grid-template-columns: 1fr;
+  }
+  .legal-table th,
+  .legal-table td {
+    padding: 10px;
+    font-size: 12px;
+  }
+}
