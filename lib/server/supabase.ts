@@ -1,10 +1,12 @@
 import 'server-only';
+import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 import { websocketTransport } from '../websocket';
 import { supabaseConfig } from './config';
-export async function sessionClient() {
+// Reuse the cookie-bound client only within this server render.
+export const sessionClient = cache(async () => {
   const jar = await cookies();
   const { url, key } = supabaseConfig();
   return createServerClient(url, key, {
@@ -26,7 +28,7 @@ export async function sessionClient() {
       },
     },
   });
-}
+});
 export function publicClient() {
   const { url, key } = supabaseConfig();
   return createClient(url, key, {

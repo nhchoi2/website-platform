@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { WorkspaceLink as Link } from './WorkspaceLink';
 import type { User } from '@/lib/types';
 import { Logout } from './auth/Logout';
 export function Shell({

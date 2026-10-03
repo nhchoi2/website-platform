@@ -13,8 +13,17 @@ export async function proxy(request: NextRequest) {
     return new NextResponse('Not found', { status: 404 });
   let response = NextResponse.next({ request });
   response.headers.set('Cache-Control', 'private, no-store');
+  const needsSession =
+    ['/admin', '/dashboard', '/account', '/login', '/auth'].some(
+      (prefix) => pathname === prefix || pathname.startsWith(prefix + '/'),
+    ) ||
+    pathname === '/preview' ||
+    pathname.startsWith('/preview/') ||
+    (pathname.startsWith('/api/') &&
+      (!pathname.startsWith('/api/media/') || request.nextUrl.searchParams.get('private') === '1'));
   if (
     platform &&
+    needsSession &&
     process.env.APP_MODE === 'supabase' &&
     process.env.SUPABASE_URL &&
     process.env.SUPABASE_PUBLISHABLE_KEY
@@ -43,7 +52,9 @@ export async function proxy(request: NextRequest) {
         },
       },
     );
-    await client.auth.getUser();
+    // Refresh/verify the signed token here. Each protected page/API still calls
+    // currentUser().getUser() to check the live session and role before returning data.
+    await client.auth.getClaims();
   }
   // Apply these after session refresh, which can replace the response object.
   if (

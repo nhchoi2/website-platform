@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { WorkspaceLink as Link } from '@/components/WorkspaceLink';
 import type { Metadata } from 'next';
 import { requireUser } from '@/lib/server/auth';
 import { listSites, rpc } from '@/lib/server/data';
@@ -6,10 +6,13 @@ import { Shell } from '@/components/Shell';
 export const metadata: Metadata = { title: '운영자 관리', robots: { index: false, follow: false } };
 export default async function Admin() {
   const user = await requireUser(true);
-  const sites = await listSites(user);
-  const customers = await rpc<
-    { id: string; email: string; site_id: string | null; slug: string | null }[]
-  >(user, 'list_customers');
+  const [sites, customers] = await Promise.all([
+    listSites(user),
+    rpc<{ id: string; email: string; site_id: string | null; slug: string | null }[]>(
+      user,
+      'list_customers',
+    ),
+  ]);
   return (
     <Shell user={user} active="admin">
       <header className="workspace-header">
