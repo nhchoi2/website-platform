@@ -45,6 +45,9 @@ export default async function Admin() {
         </div>
         <div className="section-title">
           <h2>고객 및 사이트</h2>
+          <Link className="text-link" href="/admin/inquiries">
+            제작 상담 요청 관리 ↗
+          </Link>
           <span className="muted">최근 편집 순</span>
         </div>
         <details className="panel customer-directory">

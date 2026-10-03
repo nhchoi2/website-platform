@@ -8,7 +8,7 @@ import {
   optionsQuery,
   previewHref,
   safeExternalLink,
-  inquiryHref,
+  consultationHref,
   quoteSummary,
   type PreviewOptions,
   type PageCount,
@@ -250,10 +250,10 @@ export function TemplateConfigurator({
           <small>
             운영·관리 월 {formatWon(pricing.monthly)}부터 · 기본 호스팅 포함 · 도메인 별도
           </small>
-          <a className="m-button" href={inquiryHref(template, options)}>
+          <a className="m-button" href={consultationHref(template, options)}>
             이 구성으로 제작 문의 ↗
           </a>
-          <small>메일 앱에 선택 내용을 넣습니다. 직접 발송해야 문의가 전달됩니다.</small>
+          <small>회원가입 없이 선택한 구성으로 상담을 접수할 수 있습니다.</small>
           <button className="m-copy-selection" onClick={copySelection}>
             선택한 구성 링크 복사
           </button>

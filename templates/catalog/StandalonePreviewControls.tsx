@@ -7,7 +7,7 @@ import { templateCatalog, type Template } from './catalog';
 import {
   demoPages,
   featureOptions,
-  inquiryHref,
+  consultationHref,
   optionsQuery,
   previewHref,
   safeExternalLink,
@@ -193,7 +193,7 @@ export function StandalonePreviewControls({
             설정을 닫고 사이트 메뉴로 페이지를 이동하세요. 유료 옵션과 추가 페이지 비용은 상담 후
             확정합니다.
           </p>
-          <a className="sp-inquiry" href={inquiryHref(template, options)}>
+          <a className="sp-inquiry" href={consultationHref(template, options)}>
             이 구성으로 제작 문의 ↗
           </a>
         </div>

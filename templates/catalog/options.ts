@@ -203,3 +203,7 @@ export function inquiryHref(template: Template, options: PreviewOptions) {
   ].join('\n');
   return `mailto:koofylab@gmail.com?subject=${encodeURIComponent(`[홈페이지 제작 문의] ${template.name}`)}&body=${encodeURIComponent(body)}`;
 }
+
+export function consultationHref(template: Template, options: PreviewOptions) {
+  return `/contact?template=${encodeURIComponent(template.slug)}&${optionsQuery(options)}`;
+}

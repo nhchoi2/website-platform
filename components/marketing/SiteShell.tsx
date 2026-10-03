@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import './marketing.css';
 
-export const contactUrl = 'mailto:koofylab@gmail.com?subject=쿠피%20사이트%20제작%20상담';
+export const contactUrl = '/contact';
 export function Brand() {
   return (
     <Link href="/" className="m-brand" aria-label="쿠피 사이트 홈">

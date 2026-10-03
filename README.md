@@ -229,3 +229,7 @@ node --import tsx scripts/marketing-acceptance.ts
 이 스크립트는 별도 임시 PGlite DB와 `127.0.0.1:3011` 서버에서 실제 로컬 로그인, 고객/운영자 이동, 고객의 운영자 접근 차단, 고객 도메인 분리, 공개 페이지·샘플 색상·SEO를 검증한 뒤 서버와 DB를 정리합니다. 운영 Supabase 계정이나 권한을 수정하지 않습니다. 실제 운영 인증은 새 배포에서 별도로 검증합니다.
 
 제작 사례·가격 데이터는 `components/marketing/content.ts`에서 수정합니다. 공개 가격 비교와 산정 이유, 원본 사례 이미지 출처는 [요금·사례 근거](docs/pricing-basis.md)에 기록합니다.
+
+### 온라인 제작 상담
+
+`/contact`에서 선택 구성을 함께 접수하고 `/admin/inquiries`에서 운영자가 관리합니다. 운영 활성화 전 `005_inquiries.sql` 적용과 `INQUIRIES_ENABLED=true` 설정이 필요합니다. 로컬 모드에서는 별도 표시되는 시연 DB에 저장합니다. 접수·권한·개인정보 파기·배포 절차는 [상담 기능 안내](docs/inquiries.md)를 확인하세요.
