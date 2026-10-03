@@ -166,7 +166,14 @@ try {
   assert.match(crossIndustry.body, /business=hyehwa/);
   for (const id of ['gallery', 'priceTable', 'team', 'schedule', 'news', 'process'])
     assert.match(crossIndustry.body, new RegExp(`id="feature-${id}"`));
-  assert.doesNotMatch(crossIndustry.body, /디자인 커트/);
+  // Client controls serialize all sample data in RSC scripts. Check the actual site content,
+  // rather than treating non-rendered configuration data as visible business content.
+  const crossIndustryMain = crossIndustry.body
+    .split('<main id="demo-main">')[1]
+    ?.split('</main>')[0];
+  assert.ok(crossIndustryMain, 'cross-industry demo main content');
+  assert.match(crossIndustryMain, /숙성 삼겹살/);
+  assert.doesNotMatch(crossIndustryMain, /디자인 커트/);
   for (const path of [
     '/templates/unknown',
     '/template-preview/unknown',
