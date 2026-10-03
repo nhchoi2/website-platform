@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PageIntro, contactUrl } from '@/components/marketing/SiteShell';
 import { pricing, formatWon } from '@/components/marketing/content';
 import { marketingMetadata } from '@/lib/server/marketing';
@@ -21,7 +22,7 @@ export default function Pricing() {
         <section className="m-plan m-plan-setup">
           <p className="m-kicker">01 / WEBSITE SETUP</p>
           <h2>기본 홈페이지 제작</h2>
-          <p className="m-plan-description">혜화 템플릿으로 가게의 첫 홈페이지를 준비합니다.</p>
+          <p className="m-plan-description">기본 원페이지 홈페이지의 제작비 기준입니다.</p>
           <p className="m-plan-price">
             {formatWon(pricing.setup)}
             <span>부터 / 1회</span>
@@ -83,6 +84,42 @@ export default function Pricing() {
         시작되지는 않습니다.
       </p>
       <section className="m-section">
+        <h2>페이지 구성에 따라 견적이 달라집니다.</h2>
+        <div className="m-info-grid">
+          <article>
+            <span>01</span>
+            <h3>원페이지 · 메뉴 포함</h3>
+            <p>
+              한 페이지 안에 소개·메뉴 또는 서비스·위치를 구성합니다. 메뉴를 누르면 해당 섹션으로
+              이동합니다. 기본 제작 {formatWon(pricing.setup)}부터(부가세 포함).
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>3페이지</h3>
+            <p>
+              홈·소개 / 메뉴 또는 서비스 / 방문·문의로 나눕니다. 페이지마다 별도 주소가 있으며 추가
+              제작비는 상담 후 확정합니다.
+            </p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>4페이지</h3>
+            <p>
+              홈 / 소개 / 메뉴 또는 서비스 / 방문·문의로 구성합니다. 추가 페이지와 선택 기능 요금은
+              아직 미정이며 기본 원페이지 요금과 구분합니다.
+            </p>
+          </article>
+        </div>
+        <p>
+          플로팅 상담·예약·플레이스·카카오 링크, 안내 배너, FAQ 등을 미리 적용해 볼 수 있습니다.
+          기능을 선택했다고 계약이나 결제가 진행되지는 않습니다.
+        </p>
+        <Link className="m-text-link" href="/templates">
+          구성·기능별 템플릿 미리보기 ↗
+        </Link>
+      </section>
+      <section className="m-section">
         <h2>포함 범위와 별도 비용을 확인하세요.</h2>
         <div className="m-info-grid">
           <article>
@@ -105,7 +142,8 @@ export default function Pricing() {
             <span>03</span>
             <h3>현재 제작 범위</h3>
             <p>
-              기본 요금은 혜화 템플릿 1종을 사용하는 음식점 홈페이지 기준입니다. 온라인
+              기본 요금의 기준은 기존 혜화 원페이지 구성입니다. 업종별 7종 예시와 3·4페이지 구성은
+              템플릿 안내에서 비교할 수 있으며 실제 제작·관리 범위는 상담 후 확정합니다. 온라인
               주문·결제·자체 예약 시스템은 포함되지 않으며, 기존 예약 서비스나 SNS는 링크로 연결할
               수 있습니다.
             </p>

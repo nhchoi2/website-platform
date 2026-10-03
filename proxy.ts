@@ -44,9 +44,17 @@ export async function proxy(request: NextRequest) {
   // Apply these after session refresh, which can replace the response object.
   if (
     process.env.VERCEL_ENV === 'preview' ||
-    ['/dashboard', '/admin', '/preview', '/login', '/account', '/auth', '/api', '/s/'].some(
-      (prefix) => pathname.startsWith(prefix),
-    )
+    [
+      '/dashboard',
+      '/admin',
+      '/preview',
+      '/template-preview/',
+      '/login',
+      '/account',
+      '/auth',
+      '/api',
+      '/s/',
+    ].some((prefix) => pathname.startsWith(prefix))
   )
     response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;

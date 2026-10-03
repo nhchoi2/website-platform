@@ -24,15 +24,15 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="m-container m-header-inner">
           <Brand />
           <nav aria-label="서비스 안내" className="m-nav">
-            <Link href="/templates">템플릿</Link>
+            <Link href="/templates">웹페이지 템플릿 안내</Link>
             <Link href="/projects">제작 사례</Link>
             <Link href="/pricing">비용 안내</Link>
             <Link href="/guide">이용 방법</Link>
           </nav>
           <div className="m-header-actions">
             <Link href="/login">로그인</Link>
-            <Link className="m-button m-small" href="/account">
-              내 홈페이지 만들기 <span>↗</span>
+            <Link className="m-button m-small" href="/templates">
+              템플릿 선택·제작 문의 <span>↗</span>
             </Link>
           </div>
         </div>
@@ -98,8 +98,8 @@ export function StartCTA() {
         </h2>
       </div>
       <div>
-        <Link className="m-button m-white" href="/account">
-          내 홈페이지 만들기 ↗
+        <Link className="m-button m-white" href="/templates">
+          템플릿 선택·제작 문의 ↗
         </Link>
         <a className="m-text-link" href={contactUrl}>
           먼저 상담하고 싶어요 ↗

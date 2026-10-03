@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   if (isPlatformHost(host))
     return marketingMetadata(
       '소상공인 웹사이트 제작·관리 | 쿠피',
-      '음식점 홈페이지를 직접 편집하고, 쿠피의 검수 후 공개하세요. 템플릿 선택부터 사진·메뉴 관리, 고객 도메인 연결까지 함께합니다.',
+      '음식점·미용실·헬스장·마트·전문 사무실을 위한 홈페이지 제작. 업종별 템플릿과 페이지 구성, 추가 기능을 미리 보고 제작을 문의하세요.',
     );
   const site = await rpc<{ content: Content } | null>(null, 'get_public_site', {
     p_slug: null,

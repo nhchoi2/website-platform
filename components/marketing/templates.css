@@ -1,0 +1,429 @@
+.m-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 25px 0 70px;
+}
+.m-catalog-card {
+  background: #fff;
+  border: 1px solid #e1e2db;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 0;
+}
+.m-catalog-visual {
+  display: block;
+  background: #f2f2ed;
+}
+.m-catalog-browser {
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 15px;
+  font-size: 8px;
+  color: #82857c;
+  border-bottom: 1px solid #deded7;
+}
+.m-catalog-browser small {
+  font-size: 8px;
+}
+.m-catalog-visual .t-art {
+  height: 210px;
+  aspect-ratio: auto;
+}
+.m-catalog-visual .t-art img {
+  object-position: center 60%;
+}
+.m-catalog-visual:hover .t-art svg {
+  transform: translateY(-5px);
+  transition: transform 0.2s;
+}
+.m-catalog-headline {
+  padding: 18px 20px;
+  background: #f9f8f4;
+}
+.m-catalog-headline strong {
+  display: block;
+  font-size: 17px;
+  letter-spacing: -0.05em;
+}
+.m-catalog-headline span {
+  display: block;
+  font-size: 9px;
+  margin-top: 12px;
+  color: #72776b;
+}
+.m-catalog-caption {
+  padding: 24px 20px;
+}
+.m-catalog-caption h2 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+.m-catalog-caption > p:not(.m-kicker) {
+  color: #6b7066;
+  font-size: 13px;
+  min-height: 65px;
+}
+.m-catalog-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.m-catalog-tags span {
+  background: #f1f3ed;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.m-catalog-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 22px;
+  border-top: 1px solid #ebeee5;
+  padding-top: 18px;
+}
+.m-catalog-bottom small {
+  font-size: 10px;
+  color: #707565;
+}
+.m-catalog-bottom a {
+  font-size: 12px;
+  font-weight: 700;
+  color: #3158e8;
+  white-space: nowrap;
+}
+.m-template-back {
+  display: inline-block;
+  font-size: 13px;
+  color: #6b7066;
+  margin: 35px 0;
+}
+.m-template-detail-intro {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  align-items: center;
+}
+.m-template-detail-intro h1 {
+  font-size: 44px;
+  margin: 15px 0;
+}
+.m-template-detail-intro p:not(.m-kicker) {
+  font-size: 15px;
+  color: #6b7066;
+}
+.m-template-detail-intro span {
+  font-size: 12px;
+}
+.m-config-instruction {
+  text-align: right;
+  line-height: 1.9;
+}
+.m-template-fit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 30px 0;
+  padding: 22px 25px;
+  background: #eceee6;
+  border-radius: 8px;
+}
+.m-template-fit strong {
+  font-size: 13px;
+}
+.m-template-fit p {
+  font-size: 12px;
+  color: #666e5c;
+  margin: 8px 0 0;
+}
+.m-configurator {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 25px;
+  align-items: start;
+}
+.m-mobile-preview-jump {
+  display: none;
+}
+.m-config-options {
+  background: #fff;
+  border: 1px solid #dce0d5;
+  border-radius: 10px;
+  padding: 22px;
+}
+.m-config-options fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 28px;
+  min-width: 0;
+}
+.m-config-options legend {
+  font-size: 14px;
+  font-weight: 750;
+  margin-bottom: 20px;
+}
+.m-config-options label {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 11px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+.m-config-options input[type='checkbox'],
+.m-config-options input[type='radio'] {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  flex-shrink: 0;
+  margin: 3px 0 0;
+  accent-color: #3158e8;
+}
+.m-config-options strong {
+  display: block;
+  font-size: 12px;
+}
+.m-config-options small {
+  display: block;
+  font-size: 10px;
+  color: #6e7565;
+  margin-top: 4px;
+  font-weight: 400;
+}
+.m-page-choices label {
+  border: 1px solid #dfe3d8;
+  padding: 12px;
+  border-radius: 7px;
+}
+.m-page-choices label:has(input:checked) {
+  border-color: #3158e8;
+  background: #f3f5ff;
+}
+.m-config-options .m-link-input {
+  flex-direction: column;
+  gap: 5px;
+  margin-left: 28px;
+  font-size: 10px;
+}
+.m-link-input input {
+  font-size: 11px;
+  padding: 8px;
+  min-height: 38px;
+}
+.m-config-options .m-input-error {
+  color: #b13c27;
+}
+.m-config-quote {
+  border-top: 1px solid #dfe3d8;
+  padding-top: 20px;
+}
+.m-config-quote > p {
+  font-size: 11px;
+  color: #657059;
+}
+.m-config-quote > strong {
+  font-size: 26px;
+}
+.m-config-quote > strong small {
+  display: inline;
+  font-size: 10px;
+}
+.m-config-quote .m-button {
+  width: 100%;
+  font-size: 12px;
+  margin: 18px 0 8px;
+  padding: 12px 14px;
+}
+.m-copy-selection {
+  background: transparent;
+  text-decoration: underline;
+  font-size: 11px;
+  margin-top: 18px;
+  color: #42503a;
+  padding: 0;
+}
+.m-preview-area {
+  min-width: 0;
+  position: sticky;
+  top: 15px;
+}
+.m-config-toolbar {
+  background: #fff;
+  border: 1px solid #dce0d5;
+  border-radius: 10px 10px 0 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.m-config-toolbar strong {
+  font-size: 13px;
+}
+.m-config-toolbar small {
+  display: block;
+  font-size: 10px;
+  color: #6b7066;
+  margin-top: 4px;
+}
+.m-device-choices {
+  display: flex;
+  gap: 4px;
+}
+.m-device-choices button,
+.m-preview-page-tabs button {
+  padding: 8px 11px;
+  border-radius: 4px;
+  background: #edf0e8;
+  font-size: 11px;
+  color: #49523e;
+}
+.m-device-choices button[aria-pressed='true'],
+.m-preview-page-tabs button[aria-current] {
+  background: #3158e8;
+  color: #fff;
+}
+.m-preview-page-tabs {
+  background: #fff;
+  padding: 10px 16px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  border-inline: 1px solid #dce0d5;
+}
+.m-template-viewport {
+  background: #e9ece5;
+  padding: 12px;
+  border: 1px solid #dce0d5;
+  border-top: 0;
+  height: 706px;
+  overflow: hidden;
+}
+.m-template-viewport iframe {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: 0;
+  background: #fff;
+}
+.m-template-viewport.is-mobile iframe {
+  width: 390px;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.m-preview-footnote {
+  display: flex;
+  gap: 20px;
+  align-items: start;
+  justify-content: space-between;
+  margin-top: 15px;
+  font-size: 10px;
+  color: #707565;
+}
+.m-preview-footnote a {
+  white-space: nowrap;
+  color: #3158e8;
+}
+.m-template-basics {
+  margin: 55px 0;
+  border-top: 1px solid #dce0d5;
+  padding-top: 35px;
+}
+.m-template-basics h2 {
+  font-size: 24px;
+}
+.m-template-basics ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 30px;
+  padding-left: 18px;
+  font-size: 13px;
+}
+.m-template-basics p {
+  color: #6b7066;
+  font-size: 12px;
+}
+.m-catalog-note {
+  padding: 20px 25px;
+  border: 1px solid #dce0d5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #6b7066;
+  margin-bottom: 30px;
+}
+.m-catalog-note p {
+  margin: 5px 0;
+}
+@media (max-width: 1050px) {
+  .m-catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .m-configurator {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 15px;
+  }
+  .m-config-options {
+    padding: 18px;
+  }
+}
+@media (max-width: 750px) {
+  .m-mobile-preview-jump {
+    display: block;
+    position: sticky;
+    bottom: 12px;
+    z-index: 20;
+    background: #3158e8;
+    color: #fff;
+    padding: 13px 20px;
+    text-align: center;
+    border-radius: 7px;
+    box-shadow: 0 5px 20px #0002;
+  }
+  .m-catalog-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .m-template-detail-intro {
+    display: block;
+  }
+  .m-template-detail-intro h1 {
+    font-size: 34px;
+  }
+  .m-config-instruction {
+    text-align: left;
+    margin-top: 20px;
+  }
+  .m-template-fit {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+  }
+  .m-configurator {
+    grid-template-columns: 1fr;
+  }
+  .m-preview-area {
+    position: static;
+  }
+  .m-config-toolbar {
+    flex-wrap: wrap;
+  }
+  .m-template-viewport {
+    padding: 6px;
+    height: 694px;
+  }
+  .m-template-viewport iframe {
+    height: 680px;
+  }
+  .m-preview-footnote {
+    display: block;
+  }
+  .m-template-basics ul {
+    display: block;
+  }
+  .m-template-basics li {
+    margin: 10px 0;
+  }
+}

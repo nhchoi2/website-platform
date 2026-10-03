@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { SiteShell, StartCTA, contactUrl } from './SiteShell';
 import { TemplateVisual } from './TemplateCard';
 import { pricing, formatWon } from './content';
+import { TemplateCatalog } from './TemplateCatalog';
 export function HomePage() {
   return (
     <SiteShell>
@@ -19,18 +20,18 @@ export function HomePage() {
             <p className="m-hero-description">
               손님이 궁금해하는 우리 가게의 모든 것.
               <br />
-              직접 고치고, 함께 확인하는
+              업종에 맞게 만들고, 함께 관리하는
               <br className="m-mobile-break" /> 소상공인 홈페이지 제작·관리.
             </p>
             <div className="m-actions">
-              <Link className="m-button" href="/account">
-                내 홈페이지 만들기 <span>↗</span>
+              <Link className="m-button" href="/templates">
+                웹페이지 템플릿 안내 <span>↗</span>
               </Link>
               <Link className="m-text-link" href="/templates">
                 템플릿 먼저 보기 <span>→</span>
               </Link>
             </div>
-            <p className="m-hero-note">지금은 음식점 홈페이지부터 시작합니다.</p>
+            <p className="m-hero-note">음식점부터 미용실·헬스장·마트·전문 사무실까지.</p>
           </div>
           <div className="m-hero-stage">
             <div className="m-orbit-label">
@@ -50,7 +51,7 @@ export function HomePage() {
         </section>
         <div className="m-feature-strip">
           <div className="m-container">
-            <span>사진과 메뉴를 직접 편집</span>
+            <span>업종에 맞는 제작 구성</span>
             <i>✳</i>
             <span>모바일에서도 편하게</span>
             <i>✳</i>
@@ -80,7 +81,7 @@ export function HomePage() {
               [
                 '01',
                 '블로그처럼 쉽게',
-                '사진을 올리고 메뉴와 매장 정보를 입력하세요. 정해진 디자인 안에서 콘텐츠만 바꾸면 됩니다.',
+                '오픈 후에는 정해진 디자인 안에서 사진과 정보를 관리합니다. 업종별 관리 항목은 제작 상담에서 함께 정합니다.',
                 '사진 · 메뉴 · 매장 정보',
               ],
               [
@@ -108,30 +109,43 @@ export function HomePage() {
         <section className="m-template-section">
           <div className="m-container m-template-grid">
             <div>
-              <p className="m-kicker">THE FIRST TEMPLATE</p>
+              <p className="m-kicker">TEMPLATES FOR YOUR BUSINESS</p>
               <h2>
                 가게의 개성이
                 <br />
                 주인공이 되도록.
               </h2>
               <p>
-                복잡한 장식 대신 사진, 메뉴, 그리고 이야기.
+                사진과 메뉴, 시술과 프로그램, 전문성과 상담.
                 <br />
-                혜화의 간결한 디자인에서 출발한
-                <br />첫 번째 음식점 템플릿을 만나보세요.
+                사업에 맞는 디자인과 필요한 기능을
+                <br />
+                미리 보고 제작을 문의하세요.
               </p>
               <div className="m-swatches" aria-label="올리브, 차콜, 웜 색상 선택 가능">
                 <span />
                 <span />
                 <span />
-                <small>세 가지 색상 · 하나의 정돈된 구성</small>
+                <small>7가지 업종별 예시 · 원페이지와 3·4페이지</small>
               </div>
-              <Link className="m-text-link" href="/templates/hyehwa">
-                혜화 템플릿 전체 보기 ↗
+              <Link className="m-text-link" href="/templates">
+                웹페이지 템플릿 안내 ↗
               </Link>
             </div>
             <TemplateVisual />
           </div>
+        </section>
+        <section className="m-container m-section">
+          <div className="m-section-heading">
+            <div>
+              <p className="m-kicker">FIND YOUR FIT</p>
+              <h2>필요한 모습부터 골라보세요.</h2>
+            </div>
+            <Link className="m-text-link" href="/templates">
+              7개 템플릿 전체 보기 ↗
+            </Link>
+          </div>
+          <TemplateCatalog featured />
         </section>
         <section className="m-container m-section m-process-section">
           <div className="m-section-heading">
@@ -145,10 +159,13 @@ export function HomePage() {
           </div>
           <ol className="m-steps">
             {[
-              ['템플릿 선택', '회원가입 후 가게에 어울리는 디자인을 고릅니다.'],
-              ['우리 가게 채우기', '사진과 메뉴, 찾아오는 길을 입력하고 미리 봅니다.'],
-              ['게시 요청과 검수', '제출한 내용을 쿠피가 확인하고 보완을 안내합니다.'],
-              ['홈페이지 공개', '승인한 내용을 게시하고 도메인을 연결합니다.'],
+              ['템플릿 둘러보기', '회원가입 없이 디자인·페이지 구성·추가 기능을 확인합니다.'],
+              ['제작 상담', '선택한 구성과 사업장의 요구를 전달하고 견적을 확인합니다.'],
+              [
+                '자료 준비와 제작',
+                '사진과 소개 자료를 바탕으로 홈페이지를 제작하고 함께 확인합니다.',
+              ],
+              ['공개와 운영', '도메인을 연결하고 콘텐츠 관리 범위와 사용 방법을 안내합니다.'],
             ].map(([t, d], i) => (
               <li key={t}>
                 <span>0{i + 1}</span>

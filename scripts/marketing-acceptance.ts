@@ -12,6 +12,7 @@ import { localRegister } from '../lib/local/auth';
 import { emptyContent } from '../lib/content';
 import { legalAcceptance } from '../lib/legal';
 import type { Site, SiteDetail, Submission } from '../lib/types';
+import { templateCatalog } from '../templates/catalog/catalog';
 const port = 3011;
 const host = `127.0.0.1:${port}`;
 const base = `http://${host}`;
@@ -122,7 +123,40 @@ try {
   assert.match((await get('/pricing')).body, /33,000원/);
   assert.match((await get('/projects')).body, /Intranet System/);
   assert.equal((await get('/marketing/projects/yongs-dining.webp')).status, 200);
-  assert.match((await get('/templates/hyehwa?theme=warm')).body, /#653c2c/);
+  assert.match((await get('/templates/hyehwa/classic?theme=warm')).body, /#653c2c/);
+  for (const template of templateCatalog) {
+    assert.equal((await get(`/templates/${template.slug}`)).status, 200);
+    for (const pages of [1, 3, 4]) {
+      const sections =
+        pages === 1
+          ? ['']
+          : pages === 3
+            ? ['', '/services', '/visit']
+            : ['', '/about', '/services', '/visit'];
+      for (const section of sections) {
+        const res = await get(
+          `/template-preview/${template.slug}${section}?pages=${pages}&features=reserve,notice,faq&reserve=https%3A%2F%2Fbooking.naver.com%2Fexample`,
+        );
+        assert.equal(res.status, 200, `${template.slug}/${pages}${section}`);
+        assert.equal(res.headers['x-robots-tag'], 'noindex, nofollow');
+        assert.match(res.body, /네이버|예약하기/);
+        assert.match(res.body, /https:\/\/booking.naver.com\/example/);
+        assert.match(res.body, /휴무나 행사/);
+        if (pages !== 1) assert.match(res.body, /features=reserve%2Cnotice%2Cfaq/);
+        if (section === '/visit' || pages === 1) assert.match(res.body, /자주 묻는 질문/);
+      }
+    }
+  }
+  for (const path of [
+    '/templates/unknown',
+    '/template-preview/unknown',
+    '/template-preview/salon/about?pages=3',
+    '/template-preview/salon/services?pages=1',
+    '/template-preview/salon/visit/extra?pages=4',
+  ])
+    assert.equal((await get(path)).status, 404, path);
+  const unsafe = await get('/template-preview/salon?features=kakao&kakao=javascript%3Aalert(1)');
+  assert.doesNotMatch(unsafe.body, /href="javascript:/);
   assert.equal((await get('/marketing/hyehwa-food.jpeg')).status, 200);
   for (const path of ['/account', '/dashboard', '/admin']) {
     const res = await get(path);
@@ -203,9 +237,12 @@ try {
   for (const path of ['/', '/templates', '/admin', '/s/customer-a'])
     assert.equal((await get(path, { host: 'unknown.local.test' })).status, 404);
   assert.equal((await get('/templates', { host: 'customer.local.test' })).status, 404);
+  assert.equal((await get('/template-preview/salon', { host: 'customer.local.test' })).status, 404);
   const sitemap = await get('/sitemap.xml');
   assert.match(sitemap.body, /<loc>http:\/\/127.0.0.1:3011\/guide<\/loc>/);
   assert.doesNotMatch(sitemap.body, /dashboard|admin|customer-a/);
+  assert.doesNotMatch(sitemap.body, /template-preview/);
+  assert.match(sitemap.body, /\/templates\/professional/);
   assert.match((await get('/robots.txt')).body, /Disallow: \/admin/);
   console.log(
     'PASS: public pages, template themes, assets, SEO, real local login, role routing, recovery access, tenant host isolation.',

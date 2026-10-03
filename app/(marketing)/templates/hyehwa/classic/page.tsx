@@ -5,7 +5,7 @@ import { marketingMetadata } from '@/lib/server/marketing';
 export const metadata = marketingMetadata(
   '혜화 음식점 템플릿 미리보기',
   '혜화 음식점 템플릿의 실제 화면을 예시 콘텐츠로 확인하세요. 올리브, 차콜, 웜 색상을 선택해 볼 수 있습니다.',
-  '/templates/hyehwa',
+  '/templates/hyehwa/classic',
 );
 const photo = '00000000-0000-4000-8000-000000000001';
 export default async function HyehwaDemo({
@@ -54,7 +54,7 @@ export default async function HyehwaDemo({
           ).map(([value, label]) => (
             <Link
               key={value}
-              href={`/templates/hyehwa?theme=${value}`}
+              href={`/templates/hyehwa/classic?theme=${value}`}
               aria-current={theme === value ? 'true' : undefined}
             >
               {label}
