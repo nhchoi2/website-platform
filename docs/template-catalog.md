@@ -38,3 +38,7 @@
 ## 검증
 
 `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`, `node --import tsx scripts/marketing-acceptance.ts`. 핵심 테스트는 옵션 주소의 위험한 스킴 차단, 문의 구성 일치, 모든 업종의 페이지 구성과 옵션 유지, 잘못된 페이지 404, 예시 검색 제외, 고객 도메인 격리를 확인합니다. 브라우저에서 체크·메뉴 이동·모바일 화면도 확인합니다.
+
+## 별도 창 미리보기
+
+`/template-preview/...`를 별도 창에서 열면 상단 ‘미리보기 설정’으로 페이지 수, 예시 업종, 모든 콘텐츠·안내 옵션과 외부 연결 주소를 바꿀 수 있습니다. 선택은 URL에 기록되며 메뉴 이동과 새로고침 후 유지됩니다. 4페이지 소개 화면에서 3페이지로 바꾸거나 내부 화면에서 원페이지로 바꾸면 유효한 홈으로 이동합니다. ‘상세보기’로 돌아갈 때도 선택 구성을 전달합니다. 임베드된 iframe 안에서는 별도 설정을 숨기고 원래 상세 화면의 설정을 사용합니다. 구현 위치는 `templates/catalog/StandalonePreviewControls.tsx`와 `preview-controls.css`입니다.

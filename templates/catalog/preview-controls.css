@@ -1,0 +1,131 @@
+.sp-controls {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #182c25;
+  color: white;
+  font:
+    12px/1.5 Arial,
+    sans-serif;
+}
+.sp-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.sp-summary a {
+  color: white;
+  text-decoration: none;
+}
+.sp-summary span {
+  color: #d0dfd8;
+}
+.sp-settings summary {
+  list-style-position: inside;
+  cursor: pointer;
+  padding: 7px 12px;
+  background: #ffffff18;
+  border: 1px solid #ffffff50;
+  border-radius: 6px;
+}
+.sp-panel {
+  position: absolute;
+  top: 100%;
+  right: 12px;
+  width: min(410px, calc(100% - 24px));
+  max-height: calc(100dvh - 76px);
+  overflow: auto;
+  padding: 22px;
+  color: #182c25;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 16px 40px #0003;
+}
+.sp-panel p {
+  margin: 0 0 16px;
+  font-size: 12px;
+}
+.sp-panel fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.sp-panel legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.sp-panel label {
+  display: block;
+  margin-bottom: 14px;
+}
+.sp-panel select,
+.sp-panel input[type='url'] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  background: #fff;
+  color: #182c25;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font: inherit;
+}
+.sp-feature-group h2 {
+  font:
+    bold 13px/1.5 Arial,
+    sans-serif;
+  margin: 22px 0 12px;
+}
+.sp-panel .sp-feature {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+}
+.sp-feature input {
+  margin-top: 3px;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  accent-color: #182c25;
+}
+.sp-feature small {
+  display: block;
+  color: #626b67;
+  margin-top: 3px;
+  font-size: 11px;
+}
+.sp-link-input {
+  padding-left: 27px;
+}
+.sp-inquiry {
+  display: block;
+  padding: 12px;
+  text-align: center;
+  color: white;
+  background: #182c25;
+  border-radius: 4px;
+  text-decoration: none;
+}
+@media (max-width: 480px) {
+  .sp-controls {
+    padding: 10px 12px;
+  }
+  .sp-summary {
+    display: block;
+  }
+  .sp-summary span {
+    display: block;
+    font-size: 10px;
+  }
+}

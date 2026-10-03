@@ -5,6 +5,7 @@ import { demoPages, previewHref, type DemoPage, type PreviewOptions } from './op
 import { CommonFeatures } from './CommonFeatures';
 import { ContentFeatures } from './ContentFeatures';
 import { PreviewBridge } from './PreviewBridge';
+import { StandalonePreviewControls } from './StandalonePreviewControls';
 import { Visit } from './Visit';
 import { Table } from './designs/Table';
 import { Editorial } from './designs/Editorial';
@@ -52,6 +53,7 @@ export function DemoSite({
       }
     >
       <PreviewBridge slug={design.slug} page={page} />
+      <StandalonePreviewControls template={design} options={options} page={page} />
       <a className="skip-link" href="#demo-main">
         본문으로 이동
       </a>
