@@ -85,8 +85,8 @@ export function ContactForm({
           </span>
         </label>
         <p className="muted">
-          정보를 삭제하려면 이름과 번호를 비우고 저장하세요. 현금영수증·세금계산서 정보는 현재
-          수집하지 않습니다.
+          정보를 삭제하려면 이름과 번호를 비우고 저장하세요. 증빙 정보는 별도의 증빙 요청 화면에서
+          동의 후 입력할 수 있습니다.
         </p>
         {error && (
           <p role="alert" className="error-message">

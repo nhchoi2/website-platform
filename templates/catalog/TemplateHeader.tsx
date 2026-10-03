@@ -7,11 +7,15 @@ export function TemplateHeader({
   home,
   options,
   children,
+  logo,
+  live = false,
 }: {
   brand: string;
   home: string;
   options: PreviewOptions;
   children: ReactNode;
+  logo?: string;
+  live?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -19,6 +23,7 @@ export function TemplateHeader({
       className={`t-header t-nav-${options.nav || 'right'} ${options.mobileNav === 'hamburger' ? 't-mobile-hamburger' : ''}`}
     >
       <a className="t-brand" href={home}>
+        {logo && <img className="customer-logo" src={logo} alt={`${brand} 로고`} />}
         {brand}
         <span>✳</span>
       </a>
@@ -32,7 +37,7 @@ export function TemplateHeader({
       </button>
       <nav
         id="template-menu"
-        aria-label="예시 사이트 메뉴"
+        aria-label={live ? '사이트 메뉴' : '예시 사이트 메뉴'}
         className={open ? 'is-open' : ''}
         onClick={() => setOpen(false)}
       >

@@ -16,6 +16,11 @@ export type Template = {
   background: string;
   ink: string;
   artSlug?: string;
+  customPhotos?: {
+    hero: { src: string; small: string; alt: string };
+    items: { src: string; small: string; alt: string }[];
+  };
+  live?: boolean;
   items: { name: string; detail: string; price: string; category: string }[];
   highlights: string[];
 };

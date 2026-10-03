@@ -16,9 +16,9 @@
 - 게시 이력과 이전 공개본 복구, 고객별 JSON+이미지 ZIP 내보내기
 - 고객 소유 도메인·연결 상태·만료일·메모, 정확한 Host 기반 라우팅
 
-결제, 주문, 자체 예약, AI, 리뷰 수집, 자유 배치 편집기는 포함하지 않습니다. 용스 파일은 아직 전달되지 않아 템플릿을 추가하지 않았습니다. 기존 혜화·용스 프로젝트와 배포는 수정하지 않습니다.
+결제, 주문, 자체 예약, AI, 리뷰 수집, 자유 배치 편집기는 포함하지 않습니다. 용스 원본 파일은 아직 전달되지 않아 원본 템플릿을 추가하지 않았습니다. 기존 혜화·용스 프로젝트와 배포는 수정하지 않습니다.
 
-새 업종별 카탈로그는 제작 상담용 예시입니다. 고객 편집·검수·게시가 실제 연결된 템플릿은 기존 혜화 1종이며, 새 업종·다중 페이지·옵션의 고객 관리 연동은 별도 작업입니다. 추가 페이지·기능 가격은 아직 미정입니다. 문의 버튼은 메일 앱을 열며 직접 발송 전 접수되지 않습니다.
+카탈로그는 제작 상담용 예시이며, 새 고객 사이트에는 예시 상호·가격·사진을 자동 등록하지 않습니다. 7종 디자인과 1·3·4페이지, 공지·로고·추가 기능을 고객 초안/제출본/공개본에 연결했습니다. 기존 혜화 기본 디자인과 공개 이력은 유지됩니다. 추가 페이지·기능 가격은 상담 후 확정합니다. 실제 운영 활성화와 외부 연동 상태는 [제작 관리 연결 문서](docs/managed-workflow.md)를 확인하세요.
 
 ## 실행
 
@@ -59,7 +59,7 @@ PGlite는 여러 프로세스가 동일한 데이터 폴더를 동시에 열면 
 ## Supabase 설정
 
 1. 별도 프로젝트를 생성합니다. 현재 대상은 `website-platform`, 서울 리전입니다.
-2. SQL Editor에서 `supabase/migrations/001_platform.sql`, `002_storage.sql`, `003_customer_directory.sql`, `004_accounts_and_consent.sql` 순서대로 실행합니다. 새 프로젝트에 한 번만 적용합니다. 기존 프로젝트에는 아직 적용하지 않은 번호만 실행합니다. 전체를 `begin; ... commit;`으로 감싸면 함께 적용할 수 있습니다. 이후 변경은 기존 파일을 고치지 말고 번호가 증가하는 새 마이그레이션으로 기록하세요.
+2. SQL Editor에서 `supabase/migrations/001_platform.sql`, `002_storage.sql`, `003_customer_directory.sql`, `004_accounts_and_consent.sql`, `005_inquiries.sql` 순서대로 실행합니다. 새 프로젝트에 한 번만 적용합니다. 기존 프로젝트에는 아직 적용하지 않은 번호만 실행합니다. 전체를 `begin; ... commit;`으로 감싸면 함께 적용할 수 있습니다. 006~009 추가 적용은 [제작 관리 연결 문서](docs/managed-workflow.md)를 따릅니다. 이후 변경은 기존 파일을 고치지 말고 번호가 증가하는 새 마이그레이션으로 기록하세요.
 3. 앱의 모든 테이블에 RLS를 적용합니다. `anon`은 테이블을 조회할 수 없고, `authenticated`는 소유자 또는 DB의 `admin_users`에 등록된 운영자만 조회합니다. 테이블 직접 쓰기는 금지하고, 권한을 검사하는 DB 함수로만 변경합니다.
 4. `restaurant-images` 버킷은 **private**입니다. JPG/PNG/WebP 입력을 서버에서 실제 디코딩하고 최대 2400px WebP로 재인코딩합니다. EXIF 정보는 제거합니다. 입력 한 장 3MB, 4천만 픽셀 이하, 고객별 원본 250개 제한입니다. 저장소의 직접 INSERT/UPDATE/DELETE는 허용하지 않습니다. 서버는 소유권을 검사한 후 기존 키를 덮어쓰지 않는 방식으로 업로드합니다.
 5. Authentication → URL Configuration에 `APP_URL`을 Site URL로 지정하고, 정확한 `/auth/confirm`과 `/auth/confirm?flow=recovery`를 Redirect URLs에 등록합니다. 개발 주소도 필요하면 별도로 등록합니다. 임의의 외부 URL이나 넓은 wildcard는 허용하지 마세요.
@@ -171,12 +171,12 @@ Supabase DB/Storage/전송량·백업, SMTP 발송 서비스, Vercel의 상업�
 - 회사 홈페이지: `https://www.koofy.co.kr/` (별도 기존 프로젝트)
 - 이 서비스의 대표 주소: `https://sites.koofy.co.kr/`
 - `/`: 로그인 없이 볼 수 있는 서비스 소개와 시작 버튼
-- `/templates`: 구조가 다른 제작 상담용 디자인 7종과 업종별 추천 필터. 새 디자인은 고객 편집·게시와 아직 연동되지 않음
+- `/templates`: 구조가 다른 디자인 7종과 업종별 추천 필터. 고객 사이트의 편집·검수·게시 연동 구현
 - `/templates/[slug]`: 예시 업종·페이지·기능을 선택하는 상세보기
 - `/template-preview/[slug]/[[...section]]`: 선택 구성을 유지하는 공개 예시 사이트 (검색 제외, 실제 고객의 비공개 초안과 별개)
 - `/templates/hyehwa/classic`: 기존 Restaurant 컴포넌트로 렌더링한 공개 샘플. `?theme=olive|charcoal|warm` 지원
 - `/projects`: 쿠피랩의 실제 썸네일·설명을 옮긴 제작 사례 3개와 콘셉트 1개
-- `/pricing`: 기본 제작 390,000원부터 / 운영·관리 월 33,000원부터의 요금 초안과 제공 범위 (부가세 포함, 최종 견적 상담)
+- `/pricing`: 기본 제작 390,000원부터 / 운영·관리 월 44,000원부터의 요금 초안과 제공 범위 (부가세 포함, 최종 견적 상담)
 - `/guide`: 제작 절차, 자료 준비, FAQ
 - `/account`: 서버가 인증·운영자 권한을 확인해 `/admin` 또는 `/dashboard`로 이동
 - `/login`: 가입·로그인·복구. 로그인된 계정은 자신의 관리 화면으로 이동하며 복구/비밀번호 재설정 경로는 유지
@@ -232,4 +232,15 @@ node --import tsx scripts/marketing-acceptance.ts
 
 ### 온라인 제작 상담
 
-`/contact`에서 선택 구성을 함께 접수하고 `/admin/inquiries`에서 운영자가 관리합니다. 운영 활성화 전 `005_inquiries.sql` 적용과 `INQUIRIES_ENABLED=true` 설정이 필요합니다. 로컬 모드에서는 별도 표시되는 시연 DB에 저장합니다. 접수·권한·개인정보 파기·배포 절차는 [상담 기능 안내](docs/inquiries.md)를 확인하세요.
+`/contact`에서 선택 구성을 함께 접수하고 `/admin/inquiries`에서 운영자가 관리합니다. 현재 접수 코드의 운영 활성화 전 `005~009` migration 적용과 `INQUIRIES_ENABLED=true` 설정이 필요합니다. 기존 운영 Supabase의 migration은 2026-10-03 적용·익명 접근 차단 검증을 완료했습니다. 로컬 모드에서는 별도 표시되는 시연 DB에 저장합니다. 접수·권한·개인정보 파기·배포 절차는 [상담 기능 안내](docs/inquiries.md)를 확인하세요.
+
+## 상담 → 제작 → 고객 관리
+
+- `/admin/sites/new`: 가입 고객에 새 홈페이지 생성/기존 홈페이지 연결, 상담 선택 구성을 초안에 반영.
+- `/admin/[id]/edit`: 운영자 제작·편집, 고객과 동일한 저장 충돌 방지 및 제출본 고정.
+- `/dashboard/projects`, `/admin/projects`: 상담 이력, 견적 확인, 제작 단계와 안내 이력.
+- `/api/project-files/[id]`: 고객·운영자만 제작 자료 다운로드. 웹 공개 이미지와 별도 private bucket.
+- `/dashboard/evidence`, `/admin/evidence`: 증빙 발행 요청/철회와 외부 발행 결과 기록. 자동 발행·결제 없음.
+- `/admin/notifications`: Resend 메일 발송 대기/성공/실패 확인과 재처리. 미설정이면 실제 메일을 발송하지 않음.
+- 공지·사진·로고·탭 아이콘·기능 설정은 제출본에 함께 고정되며 승인한 버전만 공개됩니다.
+- `node --import tsx scripts/managed-acceptance.ts`: 격리 DB·HTTP 서버로 전체 흐름, 7종 × 4페이지, 고객 도메인/파일 접근 분리 검증.

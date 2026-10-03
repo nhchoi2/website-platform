@@ -26,7 +26,10 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
     const bytes = await getImage(asset.path);
     return new Response(new Uint8Array(bytes), {
       headers: {
-        'Content-Type': 'image/webp',
+        'Content-Type': asset.mime || 'image/webp',
+        ...(asset.mime === 'application/pdf'
+          ? { 'Content-Disposition': `attachment; filename="${asset.id}.pdf"` }
+          : {}),
         'Cache-Control': 'private, no-store',
         'X-Content-Type-Options': 'nosniff',
       },

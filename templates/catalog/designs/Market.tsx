@@ -10,7 +10,7 @@ export function Market({ template: t, options, page, href }: DesignProps) {
       {home && (
         <section id="home" className="d-market-cover d-width">
           <div>
-            <span className="d-market-label">이번 주 추천 · 예시</span>
+            <span className="d-market-label">{t.live ? '매장 안내' : '이번 주 추천 · 예시'}</span>
             <h1>{t.headline}</h1>
             <p>{t.tagline}</p>
             <a className="t-button" href={href('services')}>

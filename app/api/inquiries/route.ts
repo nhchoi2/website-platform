@@ -12,7 +12,18 @@ export async function POST(request: Request) {
       );
     const input = inquirySchema.parse(await readJson(request));
     if (input.website) throw new HttpError(400, '요청을 확인해 주세요.');
-    const id = await submitInquiry(input);
+    const { currentUser } = await import('@/lib/server/auth');
+    const user = await currentUser();
+    const id = await submitInquiry(input, user && !user.admin ? user.id : null);
+    const { after } = await import('next/server');
+    const { deliverNotifications } = await import('@/lib/server/notifications');
+    after(async () => {
+      try {
+        await deliverNotifications();
+      } catch {
+        /* persisted jobs are retryable */
+      }
+    });
     return json({ id });
   } catch (error) {
     // Do not log contact information or submitted SQL argument values.

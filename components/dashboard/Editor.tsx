@@ -5,8 +5,11 @@ import { statusLabels, type Content } from '@/lib/content';
 import type { Asset, SiteDetail, Submission } from '@/lib/types';
 import { useDraft } from './useDraft';
 import { PhotoEditor } from './PhotoEditor';
+import { AdditionalEditor } from './AdditionalEditor';
+import { PostEditor } from './PostEditor';
+import { findTemplate } from '@/templates/catalog/catalog';
 import { MenuEditor } from './MenuEditor';
-export function Editor({ detail }: { detail: SiteDetail }) {
+export function Editor({ detail, admin = false }: { detail: SiteDetail; admin?: boolean }) {
   const { site } = detail;
   const draft = useDraft(site);
   const [tab, setTab] = useState('info');
@@ -66,7 +69,7 @@ export function Editor({ detail }: { detail: SiteDetail }) {
       <header className="workspace-header">
         <div>
           <p className="breadcrumb">
-            내 홈페이지 <span>/</span> 콘텐츠 편집
+            {admin ? '고객 홈페이지 제작' : '내 홈페이지'} <span>/</span> 콘텐츠 편집
           </p>
           <h1>{content.name || '우리 가게 홈페이지'}</h1>
         </div>
@@ -105,7 +108,7 @@ export function Editor({ detail }: { detail: SiteDetail }) {
               </a>
             )}
           </div>
-          <span>혜화 · 담백한 식탁</span>
+          <span>{findTemplate(content.template)?.name}</span>
         </div>
         <div className="workflow">
           <span className="active">
@@ -158,6 +161,8 @@ export function Editor({ detail }: { detail: SiteDetail }) {
                 ['photos', '사진'],
                 ['menus', '메뉴'],
                 ['design', '디자인'],
+                ['features', '페이지·추가 기능'],
+                ['posts', '공지·소식'],
                 ['history', '요청 이력'],
               ].map(([id, label]) => (
                 <button
@@ -172,6 +177,24 @@ export function Editor({ detail }: { detail: SiteDetail }) {
               ))}
             </nav>
             <section className="panel editor-panel">
+              {tab === 'features' && (
+                <AdditionalEditor
+                  content={content}
+                  update={update}
+                  siteId={site.id}
+                  assets={assets}
+                  onAsset={addAsset}
+                />
+              )}
+              {tab === 'posts' && (
+                <PostEditor
+                  content={content}
+                  update={update}
+                  siteId={site.id}
+                  assets={assets}
+                  onAsset={addAsset}
+                />
+              )}
               {tab === 'info' && (
                 <>
                   <div className="section-title">
@@ -325,7 +348,7 @@ export function Editor({ detail }: { detail: SiteDetail }) {
                     siteId={site.id}
                     photos={content.photos}
                     onChange={(photos) => field('photos', photos)}
-                    assets={assets}
+                    assets={assets.filter((a) => a.mime !== 'application/pdf')}
                     onAsset={addAsset}
                   />
                   <details className="asset-library">

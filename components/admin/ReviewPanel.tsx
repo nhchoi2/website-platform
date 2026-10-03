@@ -67,6 +67,9 @@ export function ReviewPanel({ detail }: { detail: SiteDetail }) {
           <small>{detail.owner_email}</small>
         </div>
         <div className="header-actions">
+          <Link className="button secondary" href={`/admin/${site.id}/edit`}>
+            고객 홈페이지 제작·편집
+          </Link>
           <a className="button secondary" href={`/api/admin/sites/${site.id}/export`}>
             데이터·이미지 내보내기 ↓
           </a>

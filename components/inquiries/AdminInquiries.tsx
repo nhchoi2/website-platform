@@ -94,6 +94,9 @@ function InquiryRow({ inquiry }: { inquiry: Inquiry }) {
         </dd>
       </dl>
       <p>{selectionPrices(inquiry.selection)}</p>
+      <Link className="button primary" href={`/admin/sites/new?inquiry=${inquiry.id}`}>
+        고객 계정 연결·홈페이지 제작 →
+      </Link>
       {inquiry.selection.template && (
         <Link
           href={`/templates/${inquiry.selection.template}?${inquiry.selection.query}`}
@@ -169,8 +172,8 @@ export function AdminInquiries({ inquiries }: { inquiries: Inquiry[] }) {
         </label>
       </div>
       <p className="muted">
-        최근 200건 중 {filtered.length}건 · 연락은 선택한 방법으로 직접 진행합니다. 자동 안내 메일은
-        발송하지 않습니다.
+        최근 200건 중 {filtered.length}건 · 연락은 선택한 방법으로 직접 진행합니다. 자동 안내 메일의
+        실제 발송 여부는 알림 발송 상태에서 확인합니다.
       </p>
       {filtered.map((i) => (
         <InquiryRow key={i.id} inquiry={i} />

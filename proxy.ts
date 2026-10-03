@@ -5,7 +5,11 @@ import { isPlatformHost } from './lib/hosts';
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const platform = isPlatformHost(request.headers.get('host') || '');
-  if (!platform && pathname !== '/' && !pathname.startsWith('/api/media/'))
+  if (
+    !platform &&
+    !['/', '/about', '/services', '/visit'].includes(pathname) &&
+    !pathname.startsWith('/api/media/')
+  )
     return new NextResponse('Not found', { status: 404 });
   let response = NextResponse.next({ request });
   response.headers.set('Cache-Control', 'private, no-store');

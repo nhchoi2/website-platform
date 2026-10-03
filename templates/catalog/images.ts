@@ -68,5 +68,6 @@ export const templateImageSets: Record<string, PhotoSet> = {
 };
 // Content choice determines imagery; design choice determines layout and palette.
 export function templatePhotos(template: Template): PhotoSet {
+  if (template.customPhotos) return template.customPhotos;
   return templateImageSets[template.artSlug || template.slug] || templateImageSets.hyehwa;
 }

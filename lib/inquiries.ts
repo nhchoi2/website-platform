@@ -39,6 +39,7 @@ export const inquirySchema = z
   });
 export type InquiryInput = z.infer<typeof inquirySchema>;
 export type Inquiry = {
+  customer_id?: string | null;
   id: string;
   key: string;
   name: string;

@@ -45,6 +45,9 @@ export default async function Admin() {
         </div>
         <div className="section-title">
           <h2>고객 및 사이트</h2>
+          <Link className="button primary" href="/admin/sites/new">
+            고객 홈페이지 제작 시작
+          </Link>
           <Link className="text-link" href="/admin/inquiries">
             제작 상담 요청 관리 ↗
           </Link>

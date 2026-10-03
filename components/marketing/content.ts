@@ -44,7 +44,7 @@ export const projects = [
 
 // Proposed entry prices, VAT-inclusive. Research and scope: docs/pricing-basis.md.
 // This is display content, not payment or subscription configuration.
-export const pricing = { setup: 390_000, monthly: 33_000 };
+export const pricing = { setup: 390_000, monthly: 44_000 };
 export function formatWon(amount: number) {
   return `${amount.toLocaleString('ko-KR')}원`;
 }

@@ -1,0 +1,57 @@
+.customer-site img {
+  max-width: 100%;
+  object-fit: cover;
+}
+.customer-site .customer-logo {
+  width: auto;
+  height: 44px;
+  object-fit: contain;
+}
+.customer-site .t-art-empty {
+  display: grid;
+  place-items: center;
+  background: #ecebe6;
+  min-height: 180px;
+  color: #777;
+}
+.customer-site .d-gallery img {
+  width: 100%;
+  aspect-ratio: 4/3;
+}
+.customer-site .d-gallery-dialog img {
+  max-height: 70vh;
+}
+.customer-site .t-team-grid img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+}
+.customer-site p {
+  white-space: pre-line;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+.customer-site table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.customer-site th,
+.customer-site td {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+.customer-site .t-news-row a {
+  display: inline-block;
+  margin: 12px;
+}
+.customer-site iframe {
+  border: 0;
+  border-radius: 12px;
+}
+.customer-site .t-team-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}

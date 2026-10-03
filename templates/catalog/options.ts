@@ -34,7 +34,8 @@ export const featureOptions = [
     id: 'news',
     cost: 'paid',
     label: '공지·소식 게시판',
-    description: '공지 목록·펼치기 시연입니다. 실제 글 관리 연동은 제작 시 추가합니다.',
+    description:
+      '공지 목록을 확인할 수 있습니다. 고객 관리 화면에서 글과 첨부를 편집하고 승인 후 공개합니다.',
     floating: false,
   },
   {

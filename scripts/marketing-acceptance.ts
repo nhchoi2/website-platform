@@ -120,7 +120,7 @@ try {
     assert.equal(res.headers['x-robots-tag'], undefined);
   }
   assert.match((await get('/pricing')).body, /390,000원/);
-  assert.match((await get('/pricing')).body, /33,000원/);
+  assert.match((await get('/pricing')).body, /44,000원/);
   assert.match((await get('/projects')).body, /Intranet System/);
   assert.equal((await get('/marketing/projects/yongs-dining.webp')).status, 200);
   assert.match((await get('/templates/hyehwa/classic?theme=warm')).body, /#653c2c/);

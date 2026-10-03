@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { isPlatformHost, normalizeHost } from '@/lib/hosts';
 import { rpc } from '@/lib/server/data';
 import { contentSchema, type Content } from '@/lib/content';
-import { Restaurant } from '@/templates/hyehwa/Restaurant';
+import { SiteRenderer } from '@/templates/shared/SiteRenderer';
 import { HomePage } from '@/components/marketing/HomePage';
 import { marketingMetadata } from '@/lib/server/marketing';
 import type { Metadata } from 'next';
@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: { absolute: site?.content.name || '매장을 찾을 수 없습니다' },
     description: site?.content.tagline || '',
+    icons: site?.content.iconId ? { icon: `/api/media/${site.content.iconId}` } : undefined,
     robots: { index: !!site, follow: !!site },
   };
 }
@@ -32,5 +33,5 @@ export default async function Home() {
     p_host: host,
   });
   if (!site) notFound();
-  return <Restaurant content={contentSchema.parse(site.content)} siteId={site.id} />;
+  return <SiteRenderer content={contentSchema.parse(site.content)} siteId={site.id} />;
 }

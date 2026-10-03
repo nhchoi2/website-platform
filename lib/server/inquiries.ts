@@ -1,10 +1,9 @@
 import 'server-only';
 import { createHmac } from 'node:crypto';
-import { createClient } from '@supabase/supabase-js';
-import { mode, supabaseConfig } from './config';
-import { websocketTransport } from '../websocket';
+import { mode } from './config';
+import { serviceRpc } from './service-rpc';
 import { selectionFromInput, type InquiryInput } from '../inquiries';
-export async function submitInquiry(input: InquiryInput) {
+export async function submitInquiry(input: InquiryInput, customerId: string | null = null) {
   const local = mode() === 'local';
   const secret = local ? 'local-consultation-demo-only' : process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!secret) throw new Error('INQUIRY_UNAVAILABLE');
@@ -21,38 +20,27 @@ export async function submitInquiry(input: InquiryInput) {
     p_contact_hash: createHmac('sha256', secret).update(contact).digest('hex'),
     p_consent: input.consentVersion,
   };
-  if (local) {
-    const { localDatabase } = await import('../local/database');
-    const db = await localDatabase();
-    return db.transaction(async (tx) => {
-      await tx.exec('set local role service_role');
-      const values = Object.values(args).map((v) =>
-        typeof v === 'object' ? JSON.stringify(v) : v,
-      );
-      const result = await tx.query<{ id: string }>(
-        'select public.submit_inquiry($1,$2,$3,$4,$5,$6,$7,$8,$9) as id',
-        values,
-      );
-      return result.rows[0].id;
+  try {
+    return await serviceRpc<string>('submit_notified_inquiry', {
+      ...args,
+      p_customer: customerId,
+      p_admin_email: process.env.NOTIFICATION_ADMIN_EMAIL || 'koofylab@gmail.com',
     });
-  }
-  const { url } = supabaseConfig();
-  // Narrow server-only function; never expose this client to customer data routes.
-  const client = createClient(url, secret, {
-    auth: { persistSession: false, autoRefreshToken: false },
-    realtime: { transport: websocketTransport },
-  });
-  const { data, error } = await client.rpc('submit_inquiry', args);
-  if (error)
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : String((error as { message?: string })?.message || '');
     throw new Error(
-      error.message.includes('RATE_LIMIT')
+      message.includes('RATE_LIMIT')
         ? 'RATE_LIMIT'
-        : error.message.includes('IDEMPOTENCY_CONFLICT')
+        : message.includes('IDEMPOTENCY_CONFLICT')
           ? 'IDEMPOTENCY_CONFLICT'
           : 'INQUIRY_UNAVAILABLE',
     );
-  return data as string;
+  }
 }
+
 export function inquiryEnabled() {
   return mode() === 'local' || process.env.INQUIRIES_ENABLED === 'true';
 }

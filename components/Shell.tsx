@@ -32,6 +32,22 @@ export function Shell({
             </Link>
           )}
         </nav>
+        <nav aria-label="제작·상담 관리">
+          {user.admin ? (
+            <>
+              <Link href="/admin/inquiries">상담 요청</Link>
+              <Link href="/admin/projects">제작 진행</Link>
+              <Link href="/admin/sites/new">고객 홈페이지 제작</Link>
+              <Link href="/admin/evidence">증빙 요청</Link>
+              <Link href="/admin/notifications">알림 발송 상태</Link>
+            </>
+          ) : (
+            <>
+              <Link href="/dashboard/projects">상담·제작 진행</Link>
+              <Link href="/dashboard/evidence">증빙 요청</Link>
+            </>
+          )}
+        </nav>
         <div className="sidebar-bottom">
           <span className="avatar">{user.email[0]?.toUpperCase()}</span>
           <div>

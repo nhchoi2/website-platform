@@ -95,7 +95,7 @@ test('anonymous and customer cannot submit directly, read private contacts or ma
   });
   await db.transaction(async (tx) => {
     await tx.exec('set local role authenticated');
-    const r = await tx.query('select * from inquiries');
+    const r = await tx.query('select id,contact from inquiries');
     assert.equal(r.rows.length, 0);
   });
   await db.transaction(async (tx) => {

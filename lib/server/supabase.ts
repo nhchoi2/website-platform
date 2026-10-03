@@ -34,13 +34,17 @@ export function publicClient() {
     realtime: { transport: websocketTransport },
   });
 }
-// Only for immutable object I/O after per-user authorization, never for customer DB writes.
-export function storageService() {
+// Server-only privileged client, used only after authorization for narrow RPCs or private object I/O.
+export function serviceClient() {
   const { url } = supabaseConfig();
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) throw new Error('SUPABASE_SERVICE_ROLE_KEY가 필요합니다.');
   return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
     realtime: { transport: websocketTransport },
-  }).storage.from('restaurant-images');
+  });
+}
+
+export function storageService(bucket = 'restaurant-images') {
+  return serviceClient().storage.from(bucket);
 }

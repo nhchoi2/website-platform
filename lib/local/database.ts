@@ -29,6 +29,9 @@ export async function createLocalDatabase(directory: string) {
     '003_customer_directory.sql',
     '004_accounts_and_consent.sql',
     '005_inquiries.sql',
+    '006_managed_templates.sql',
+    '007_customer_workflow.sql',
+    '009_notifications.sql',
   ]) {
     const applied = await db.query('select name from local_migrations where name=$1', [migration]);
     if (!applied.rows.length) {
@@ -53,6 +56,29 @@ export function localDatabase() {
 
 // Exactly the same stored functions and RLS as production; only Auth/Storage are local.
 export const rpcParameters: Record<string, string[]> = {
+  create_customer_site: ['p_owner', 'p_slug', 'p_content'],
+  register_document: ['p_site', 'p_id', 'p_name', 'p_bytes'],
+  get_my_inquiries: [],
+  start_project: ['p_inquiry', 'p_customer', 'p_site'],
+  list_projects: [],
+  get_project: ['p_project'],
+  update_project: ['p_project', 'p_expected', 'p_stage', 'p_message', 'p_quote'],
+  see_project_quote: ['p_project', 'p_expected'],
+  register_project_file: ['p_project', 'p_id', 'p_name', 'p_bytes', 'p_mime', 'p_consent'],
+  remove_project_file: ['p_project', 'p_file'],
+  request_evidence: [
+    'p_project',
+    'p_key',
+    'p_kind',
+    'p_identifier',
+    'p_name',
+    'p_email',
+    'p_type',
+    'p_consent',
+  ],
+  list_evidence: [],
+  update_evidence: ['p_id', 'p_status', 'p_reference', 'p_message'],
+  list_notifications: [],
   delete_inquiry: ['p_id'],
   list_inquiries: [],
   update_inquiry: ['p_id', 'p_status', 'p_notes'],

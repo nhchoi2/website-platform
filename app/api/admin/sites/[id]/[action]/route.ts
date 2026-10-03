@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { after } from 'next/server';
+import { deliverNotifications } from '@/lib/server/notifications';
 import { Zip, ZipPassThrough, strToU8 } from 'fflate';
 import { assetIds } from '@/lib/content';
 import { apiUser, sameOrigin, readJson, json, failure, HttpError } from '@/lib/server/http';
@@ -34,16 +36,20 @@ export async function POST(request: Request, context: Context) {
           await getImage(asset.path);
         }
       }
-      return json(
-        await rpc(user, 'review_submission', {
-          p_site: id,
-          p_submission: data.submission,
-          p_revision: data.revision,
-          p_action: data.action,
-          p_feedback: data.feedback,
-          p_key: data.key,
-        }),
-      );
+      const result = await rpc(user, 'review_submission', {
+        p_site: id,
+        p_submission: data.submission,
+        p_revision: data.revision,
+        p_action: data.action,
+        p_feedback: data.feedback,
+        p_key: data.key,
+      });
+      after(async () => {
+        try {
+          await deliverNotifications();
+        } catch {}
+      });
+      return json(result);
     }
     if (action === 'restore') {
       const data = z.object({ revision: z.uuid(), expected: z.uuid(), key: z.uuid() }).parse(body);
@@ -55,14 +61,18 @@ export async function POST(request: Request, context: Context) {
         if (!asset) throw new Error('Missing image');
         await getImage(asset.path);
       }
-      return json(
-        await rpc(user, 'restore_publication', {
-          p_site: id,
-          p_revision: data.revision,
-          p_expected: data.expected,
-          p_key: data.key,
-        }),
-      );
+      const result = await rpc(user, 'restore_publication', {
+        p_site: id,
+        p_revision: data.revision,
+        p_expected: data.expected,
+        p_key: data.key,
+      });
+      after(async () => {
+        try {
+          await deliverNotifications();
+        } catch {}
+      });
+      return json(result);
     }
     if (action === 'domain') {
       const data = z
@@ -133,12 +143,15 @@ export async function GET(request: Request, context: Context) {
           add(
             'README.txt',
             strToU8(
-              '사진은 images/{assetId}.webp에 저장됩니다. site.json의 assets가 원본 파일명과 버전을 매핑합니다. 계정 비밀번호/인증 세션은 포함하지 않습니다. 복구 방법은 프로젝트 README를 참고하세요.',
+              '파일은 files/{assetId}.webp 또는 .pdf에 저장됩니다. site.json의 assets가 원본 파일명과 버전을 매핑합니다. 계정 비밀번호/인증 세션은 포함하지 않습니다. 복구 방법은 프로젝트 README를 참고하세요.',
             ),
           );
           for (const asset of detail.assets) {
             if (cancelled) break;
-            add(`images/${asset.id}.webp`, new Uint8Array(await getImage(asset.path)));
+            add(
+              `files/${asset.id}.${asset.mime === 'application/pdf' ? 'pdf' : 'webp'}`,
+              new Uint8Array(await getImage(asset.path)),
+            );
           }
           if (!cancelled) zip.end();
         } catch (error) {

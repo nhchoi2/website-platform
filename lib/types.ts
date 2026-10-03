@@ -56,6 +56,7 @@ export type Asset = {
   path: string;
   bytes: number;
   original_name: string;
+  mime: 'image/webp' | 'application/pdf';
   created_at: string;
 };
 export type Domain = {

@@ -3,7 +3,13 @@ import { useState, useRef } from 'react';
 import { featureOptions, safeExternalLink, type PreviewOptions, type FeatureId } from './options';
 
 // Reused for every demo page. No booking/contact is submitted by example buttons.
-export function CommonFeatures({ options }: { options: PreviewOptions }) {
+export function CommonFeatures({
+  options,
+  live = false,
+}: {
+  options: PreviewOptions;
+  live?: boolean;
+}) {
   const [example, setExample] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   function openExample(label: string) {
@@ -29,6 +35,7 @@ export function CommonFeatures({ options }: { options: PreviewOptions }) {
                 </button>
               );
             const url = safeExternalLink(options.links[feature.id] || '');
+            if (live && !url) return null;
             return url ? (
               <a key={feature.id} href={url} target="_blank" rel="noopener noreferrer">
                 {labels[feature.id]} ↗
