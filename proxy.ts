@@ -20,7 +20,10 @@ export async function proxy(request: NextRequest) {
     pathname === '/preview' ||
     pathname.startsWith('/preview/') ||
     (pathname.startsWith('/api/') &&
-      (!pathname.startsWith('/api/media/') || request.nextUrl.searchParams.get('private') === '1'));
+      (!pathname.startsWith('/api/media/') ||
+        request.nextUrl.searchParams.get('private') === '1') &&
+      !pathname.startsWith('/api/proposal-images/') &&
+      !pathname.startsWith('/api/proposals/'));
   if (
     platform &&
     needsSession &&
@@ -64,6 +67,7 @@ export async function proxy(request: NextRequest) {
       '/admin',
       '/preview',
       '/template-preview/',
+      '/proposals/',
       '/login',
       '/account',
       '/auth',

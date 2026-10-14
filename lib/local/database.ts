@@ -32,6 +32,8 @@ export async function createLocalDatabase(directory: string) {
     '006_managed_templates.sql',
     '007_customer_workflow.sql',
     '009_notifications.sql',
+    '010_design_proposals.sql',
+    '012_resume_design_proposals.sql',
   ]) {
     const applied = await db.query('select name from local_migrations where name=$1', [migration]);
     if (!applied.rows.length) {
@@ -56,6 +58,11 @@ export function localDatabase() {
 
 // Exactly the same stored functions and RLS as production; only Auth/Storage are local.
 export const rpcParameters: Record<string, string[]> = {
+  get_design_proposal: ['p_hash'],
+  select_design_proposal: ['p_hash', 'p_style'],
+  revoke_design_proposal: ['p_id'],
+  resume_design_proposal: ['p_id'],
+  list_design_proposals: [],
   create_customer_site: ['p_owner', 'p_slug', 'p_content'],
   register_document: ['p_site', 'p_id', 'p_name', 'p_bytes'],
   get_my_inquiries: [],

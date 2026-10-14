@@ -14,6 +14,7 @@ export default function robots(): MetadataRoute.Robots {
         '/admin',
         '/preview',
         '/template-preview/',
+        '/proposals/',
         '/auth/',
         '/api/',
         '/s/',

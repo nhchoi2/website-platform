@@ -15,6 +15,7 @@ export function WorkspaceNavigation({ admin }: { admin: boolean }) {
     ? [
         { href: '/admin/inquiries', label: '상담 요청' },
         { href: '/admin/projects', label: '제작 진행' },
+        { href: '/admin/proposals', label: '고객 디자인 시안' },
         { href: '/admin/sites/new', label: '고객 홈페이지 제작' },
         { href: '/admin/evidence', label: '증빙 요청' },
         { href: '/admin/notifications', label: '알림 발송 상태' },
